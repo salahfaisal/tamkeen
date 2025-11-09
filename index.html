@@ -69,6 +69,39 @@
       </div>
     </section>
 
+
+
+        <!-- أحدث الأعمال -->
+    <section id="latest" class="section section-alt">
+      <div class="container">
+        <h2 data-aos="fade-up">أحدث الأعمال</h2>
+        <p class="section-sub" data-aos="fade-up" data-aos-delay="100">
+          لمحة سريعة عن بعض الأعمال المنفذة مؤخرًا من منصة تمكين. يمكنك استعراض الكتالوج الكامل من القسم الخاص به.
+        </p>
+
+        <div class="latest-grid">
+          <article class="latest-card" data-aos="fade-up" data-aos-delay="0">
+            <h3>مشروع تخرج – إدارة أعمال</h3>
+            <p>إعداد بحث كامل وعرض تقديمي احترافي لطالبة في كلية إدارة الأعمال.</p>
+            <a href="#catalog" class="latest-link">عرض في كتالوج الأعمال</a>
+          </article>
+
+          <article class="latest-card" data-aos="fade-up" data-aos-delay="100">
+            <h3>عرض تفاعلي لمقرر العلوم</h3>
+            <p>شرائح عرض تفاعلية للمرحلة المتوسطة مع أنشطة وأسئلة فورية.</p>
+            <a href="#catalog" class="latest-link">عرض في كتالوج الأعمال</a>
+          </article>
+
+          <article class="latest-card" data-aos="fade-up" data-aos-delay="200">
+            <h3>تنسيق رسالة ماجستير</h3>
+            <p>تنسيق كامل وفق دليل الجامعة مع فهرسة دقيقة للمراجع والجداول.</p>
+            <a href="#catalog" class="latest-link">عرض في كتالوج الأعمال</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    
     <!-- من نحن -->
     <section id="about" class="section">
       <div class="container grid-2">
@@ -157,12 +190,13 @@
 
         <!-- أزرار الفلترة -->
         <div class="catalog-filters" data-aos="fade-up" data-aos-delay="150">
-          <button class="btn btn-ghost catalog-filter active" data-filter="all">الكل</button>
-          <button class="btn btn-ghost catalog-filter" data-filter="students">طلاب</button>
-          <button class="btn btn-ghost catalog-filter" data-filter="teachers">معلمون</button>
-          <button class="btn btn-ghost catalog-filter" data-filter="researchers">باحثون</button>
-          <button class="btn btn-ghost catalog-filter" data-filter="business">أعمال وتصميم</button>
-        </div>
+  <button class="btn btn-ghost catalog-filter active" data-filter="all">🌟 الكل</button>
+  <button class="btn btn-ghost catalog-filter" data-filter="students">🎓 طلاب</button>
+  <button class="btn btn-ghost catalog-filter" data-filter="teachers">🧑‍🏫 معلمون</button>
+  <button class="btn btn-ghost catalog-filter" data-filter="researchers">📚 باحثون</button>
+  <button class="btn btn-ghost catalog-filter" data-filter="business">💼 أعمال وتصميم</button>
+</div>
+
 
         <!-- شبكة الأعمال -->
         <div class="portfolio-grid">
@@ -281,17 +315,28 @@
         <div class="modal-backdrop"></div>
         <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
           <button class="modal-close" aria-label="إغلاق">×</button>
+
           <div class="modal-img-wrap">
             <img class="modal-img" src="" alt="">
           </div>
+
           <div class="modal-body">
             <h3 id="modalTitle" class="modal-title"></h3>
             <p class="modal-desc"></p>
-            <a class="modal-pdf btn btn-primary" href="#" target="_blank">فتح ملف PDF</a>
+
+            <div class="modal-actions-row">
+              <a class="modal-pdf btn btn-primary" href="#" target="_blank">
+                فتح ملف PDF في نافذة جديدة
+              </a>
+            </div>
+
+            <div class="modal-pdf-preview">
+              <iframe class="modal-pdf-frame" src="" title="معاينة ملف PDF"></iframe>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+
 
     <!-- طلب خدمة + تتبع -->
     <section id="order" class="section section-alt">

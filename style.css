@@ -562,16 +562,7 @@ body {
   color: var(--gray-dark);
 }
 
-.modal-pdf {
-  font-size: 0.85rem;
-}
-
-/* أزرار ومعاينة PDF داخل المودال */
-.modal-actions-row {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
+/* معاينة PDF داخل المودال */
 .modal-pdf-preview {
   margin-top: 0.8rem;
   border-radius: 0.75rem;
@@ -584,6 +575,14 @@ body {
   width: 100%;
   height: 260px;
   border: none;
+}
+
+/* ملاحظة أسفل المعاينة */
+.modal-note {
+  margin-top: 0.7rem;
+  font-size: 0.8rem;
+  color: #6B7280;
+  text-align: center;
 }
 
 .modal-close {

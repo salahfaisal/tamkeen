@@ -310,25 +310,42 @@
         </div>
       </div>
 
-      <!-- نافذة منبثقة لتفاصيل الأعمال -->
-      <div id="portfolioModal" class="modal" aria-hidden="true">
-        <div class="modal-backdrop"></div>
-        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-          <button class="modal-close" aria-label="إغلاق">×</button>
+    
 
-          <div class="modal-img-wrap">
-            <img class="modal-img" src="" alt="">
-          </div>
+<!-- نافذة منبثقة لتفاصيل الأعمال -->
+<div id="portfolioModal" class="modal" aria-hidden="true">
+  <div class="modal-backdrop"></div>
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" aria-label="إغلاق">×</button>
 
-          <div class="modal-body">
-            <h3 id="modalTitle" class="modal-title"></h3>
-            <p class="modal-desc"></p>
+    <!-- صورة العمل -->
+    <div class="modal-img-wrap">
+      <img class="modal-img" src="" alt="">
+    </div>
 
-            <div class="modal-actions-row">
-              <a class="modal-pdf btn btn-primary" href="#" target="_blank">
-                فتح ملف PDF في نافذة جديدة
-              </a>
-            </div>
+    <!-- محتوى التفاصيل -->
+    <div class="modal-body">
+      <h3 id="modalTitle" class="modal-title"></h3>
+      <p class="modal-desc"></p>
+
+      <!-- عرض PDF داخل الصفحة فقط -->
+      <div class="modal-pdf-preview">
+        <iframe 
+          class="modal-pdf-frame" 
+          src="" 
+          title="معاينة ملف PDF"
+          sandbox="allow-same-origin allow-scripts allow-top-navigation"
+        ></iframe>
+      </div>
+
+      <!-- ملاحظة -->
+      <p class="modal-note">
+        🔒 هذا الملف مخصص للعرض فقط داخل المنصة — التحميل غير متاح.
+      </p>
+    </div>
+  </div>
+</div>
+
 
             <div class="modal-pdf-preview">
               <iframe class="modal-pdf-frame" src="" title="معاينة ملف PDF"></iframe>

@@ -169,4 +169,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  // ========= تشغيل AOS للأنيميشن =========
+  if (window.AOS) {
+    AOS.init({
+      duration: 700,
+      easing: "ease-out",
+      once: true,
+    });
+  }
 });

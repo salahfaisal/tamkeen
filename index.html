@@ -27,8 +27,6 @@
           <a href="#about">من نحن</a>
           <a href="#services">خدماتنا</a>
           <a href="#catalog">كتالوج الأعمال</a>
-          <a href="#groups">الجروبات التعليمية</a>
-          <a href="#blog">المدونة</a>
           <a href="#contact">تواصل معنا</a>
           <a href="#order" class="nav-cta">طلب خدمة</a>
         </nav>
@@ -62,7 +60,7 @@
       </div>
     </section>
 
-    <!-- باقي الأقسام -->
+    <!-- من نحن -->
     <section id="about" class="section">
       <div class="container grid-2">
         <div>
@@ -88,6 +86,7 @@
       </div>
     </section>
 
+    <!-- خدماتنا -->
     <section id="services" class="section section-alt">
       <div class="container">
         <h2>خدماتنا</h2>
@@ -134,6 +133,133 @@
         </div>
       </div>
     </section>
+
+    <!-- كتالوج الأعمال -->
+    <section id="catalog" class="section section-alt">
+      <div class="container">
+        <h2>كتالوج الأعمال</h2>
+        <p class="section-sub">
+          نماذج من الأعمال المنفذة لطلاب، معلمين، باحثين وروّاد أعمال. يمكنك تعديل هذه النماذج وإضافة صور وملفات PDF حقيقية لاحقًا.
+        </p>
+
+        <!-- أزرار الفلترة -->
+        <div class="catalog-filters">
+          <button class="btn btn-ghost catalog-filter active" data-filter="all">الكل</button>
+          <button class="btn btn-ghost catalog-filter" data-filter="students">طلاب</button>
+          <button class="btn btn-ghost catalog-filter" data-filter="teachers">معلمون</button>
+          <button class="btn btn-ghost catalog-filter" data-filter="researchers">باحثون</button>
+          <button class="btn btn-ghost catalog-filter" data-filter="business">أعمال وتصميم</button>
+        </div>
+
+        <!-- شبكة الأعمال -->
+        <div class="portfolio-grid">
+          <!-- عمل 1: طلاب -->
+          <article class="portfolio-item" data-category="students">
+            <div class="portfolio-thumb">
+              <img src="images2/work-student1.jpg" alt="نموذج مشروع تخرج" loading="lazy">
+            </div>
+            <div class="portfolio-body">
+              <h3>مشروع تخرج – إدارة أعمال</h3>
+              <p>إعداد بحث كامل + عرض تقديمي احترافي للعرض أمام لجنة المناقشة.</p>
+              <div class="portfolio-meta">
+                <span class="portfolio-tag">طلاب</span>
+                <a href="pdfs/work-student1.pdf" target="_blank" class="portfolio-link">عرض ملف PDF</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- عمل 2: معلمون -->
+          <article class="portfolio-item" data-category="teachers">
+            <div class="portfolio-thumb">
+              <img src="images2/work-teacher1.jpg" alt="عرض تفاعلي لمعلم" loading="lazy">
+            </div>
+            <div class="portfolio-body">
+              <h3>عرض تفاعلي لمقرر العلوم</h3>
+              <p>شرائح PowerPoint مع أنشطة وأسئلة تفاعلية للمرحلة المتوسطة.</p>
+              <div class="portfolio-meta">
+                <span class="portfolio-tag">معلمون</span>
+                <a href="pdfs/work-teacher1.pdf" target="_blank" class="portfolio-link">عرض ملف PDF</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- عمل 3: باحثون -->
+          <article class="portfolio-item" data-category="researchers">
+            <div class="portfolio-thumb">
+              <img src="images2/work-research1.jpg" alt="تنسيق رسالة علمية" loading="lazy">
+            </div>
+            <div class="portfolio-body">
+              <h3>تنسيق رسالة ماجستير</h3>
+              <p>تنسيق الرسالة حسب دليل الجامعة + فهرسة + قائمة مراجع منظمة.</p>
+              <div class="portfolio-meta">
+                <span class="portfolio-tag">باحثون</span>
+                <a href="pdfs/work-research1.pdf" target="_blank" class="portfolio-link">عرض ملف PDF</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- عمل 4: أعمال وتصميم -->
+          <article class="portfolio-item" data-category="business">
+            <div class="portfolio-thumb">
+              <img src="images2/work-business1.jpg" alt="تصميم شعار وهوية" loading="lazy">
+            </div>
+            <div class="portfolio-body">
+              <h3>تصميم شعار وهوية لنشاط تعليمي</h3>
+              <p>تصميم شعار، بطاقة عمل، وصورة غلاف لوسائل التواصل الاجتماعي.</p>
+              <div class="portfolio-meta">
+                <span class="portfolio-tag">أعمال وتصميم</span>
+                <a href="pdfs/work-business1.pdf" target="_blank" class="portfolio-link">عرض ملف PDF</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- تواصل معنا (نموذج بسيط) -->
+    <section id="contact" class="section">
+      <div class="container grid-2">
+        <div>
+          <h2>تواصل معنا</h2>
+          <p class="section-sub">
+            يمكنك التواصل معنا عبر النموذج التالي أو مباشرة عبر الواتساب والقنوات الأخرى.
+          </p>
+          <form id="contactForm" class="form">
+            <label>
+              الاسم
+              <input type="text" name="name" placeholder="الاسم الكامل" required />
+            </label>
+            <label>
+              البريد الإلكتروني
+              <input type="email" name="email" placeholder="example@email.com" required />
+            </label>
+            <label>
+              الرسالة
+              <textarea name="message" rows="4" placeholder="اكتب رسالتك هنا..." required></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary">إرسال</button>
+          </form>
+        </div>
+        <div class="contact-box">
+          <h3>معلومات التواصل</h3>
+          <ul>
+            <li>البريد: tamkeenplatformed@gmail.com</li>
+            <li>واتساب: قناة رسمية للمنصة</li>
+          </ul>
+          <div class="social-links">
+            <a href="https://whatsapp.com/channel/0029Vb6mwuEDzgT4oZ39wN43" target="_blank">WhatsApp</a>
+            <a href="#" target="_blank">Telegram</a>
+            <a href="#" target="_blank">Instagram</a>
+            <a href="#" target="_blank">YouTube</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- زر واتساب عائم -->
+    <a href="https://whatsapp.com/channel/0029Vb6mwuEDzgT4oZ39wN43" target="_blank" class="wa-float" aria-label="تواصل عبر الواتساب">
+      WA
+    </a>
 
     <!-- تذييل -->
     <footer class="footer">

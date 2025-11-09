@@ -175,7 +175,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalImg = modal?.querySelector(".modal-img");
   const modalTitle = modal?.querySelector(".modal-title");
   const modalDesc = modal?.querySelector(".modal-desc");
-  const modalPdf = modal?.querySelector(".modal-pdf");
   const modalClose = modal?.querySelector(".modal-close");
   const modalBackdrop = modal?.querySelector(".modal-backdrop");
   const modalPdfPreview = modal?.querySelector(".modal-pdf-preview");
@@ -197,17 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
       modalImg.alt = title;
     }
 
-    // زر فتح PDF في نافذة جديدة
-    if (modalPdf) {
-      if (pdf === "#" || !pdf) {
-        modalPdf.style.display = "none";
-      } else {
-        modalPdf.style.display = "inline-flex";
-        modalPdf.href = pdf;
-      }
-    }
-
-    // معاينة PDF داخل المودال
+    // معاينة PDF داخل المودال فقط (بدون زر تحميل خارجي)
     if (modalPdfPreview && modalPdfFrame) {
       if (pdf === "#" || !pdf) {
         modalPdfPreview.style.display = "none";

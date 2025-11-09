@@ -309,21 +309,33 @@
         </div>
       </div>
 
-      <!-- نافذة منبثقة لتفاصيل الأعمال -->
+           <!-- نافذة منبثقة لتفاصيل الأعمال -->
       <div id="portfolioModal" class="modal" aria-hidden="true">
         <div class="modal-backdrop"></div>
         <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
           <button class="modal-close" aria-label="إغلاق">×</button>
+
           <div class="modal-img-wrap">
             <img class="modal-img" src="" alt="">
           </div>
+
           <div class="modal-body">
             <h3 id="modalTitle" class="modal-title"></h3>
             <p class="modal-desc"></p>
-            <a class="modal-pdf btn btn-primary" href="#" target="_blank">فتح ملف PDF</a>
+
+            <div class="modal-actions-row">
+              <a class="modal-pdf btn btn-primary" href="#" target="_blank">
+                فتح ملف PDF في نافذة جديدة
+              </a>
+            </div>
+
+            <div class="modal-pdf-preview">
+              <iframe class="modal-pdf-frame" src="" title="معاينة ملف PDF"></iframe>
+            </div>
           </div>
         </div>
       </div>
+
     </section>
 
     <!-- طلب خدمة + تتبع -->

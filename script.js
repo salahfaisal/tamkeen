@@ -170,6 +170,78 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ========= نافذة تفاصيل كتالوج الأعمال =========
+  const modal = document.getElementById("portfolioModal");
+  const modalImg = modal?.querySelector(".modal-img");
+  const modalTitle = modal?.querySelector(".modal-title");
+  const modalDesc = modal?.querySelector(".modal-desc");
+  const modalPdf = modal?.querySelector(".modal-pdf");
+  const modalClose = modal?.querySelector(".modal-close");
+  const modalBackdrop = modal?.querySelector(".modal-backdrop");
+
+  function openModalFromItem(item) {
+    if (!modal) return;
+
+    const title = item.getAttribute("data-title") || "";
+    const desc = item.getAttribute("data-desc") || "";
+    const img = item.getAttribute("data-img") || "";
+    const pdf = item.getAttribute("data-pdf") || "#";
+
+    if (modalTitle) modalTitle.textContent = title;
+    if (modalDesc) modalDesc.textContent = desc;
+    if (modalImg && img) {
+      modalImg.src = img;
+      modalImg.alt = title;
+    }
+    if (modalPdf) {
+      modalPdf.href = pdf;
+      modalPdf.style.display = pdf === "#" ? "none" : "inline-flex";
+    }
+
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
+
+  if (modal) {
+    // أزرار "عرض التفاصيل"
+    const openButtons = document.querySelectorAll(".portfolio-open");
+    openButtons.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const item = btn.closest(".portfolio-item");
+        if (item) {
+          openModalFromItem(item);
+        }
+      });
+    });
+
+    // أيضًا الضغط على الصورة يفتح التفاصيل
+    const thumbs = document.querySelectorAll(".portfolio-thumb");
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener("click", () => {
+        const item = thumb.closest(".portfolio-item");
+        if (item) {
+          openModalFromItem(item);
+        }
+      });
+    });
+
+    // إغلاق النافذة
+    function closeModal() {
+      modal.classList.remove("show");
+      document.body.style.overflow = "";
+    }
+
+    modalClose?.addEventListener("click", closeModal);
+    modalBackdrop?.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("show")) {
+        closeModal();
+      }
+    });
+  }
+
   // ========= تشغيل AOS للأنيميشن =========
   if (window.AOS) {
     AOS.init({

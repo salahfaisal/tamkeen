@@ -1,5 +1,7 @@
+// مفتاح التخزين في المتصفح
 const ORDERS_KEY = "tamkeen_orders";
 
+// تحميل الطلبات من localStorage
 function loadOrders() {
   try {
     const raw = localStorage.getItem(ORDERS_KEY);
@@ -9,12 +11,17 @@ function loadOrders() {
   }
 }
 
+// حفظ الطلبات في localStorage
 function saveOrders(orders) {
   localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
 }
 
+// إنشاء طلب جديد
 function createOrder(type, desc, links) {
-  const id = "TMK" + Math.random().toString(36).substring(2, 6).toUpperCase();
+  // رقم طلب عشوائي مثل TMK-A1B2
+  const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const id = "TMK-" + randomPart;
+
   const order = {
     id,
     type,
@@ -23,17 +30,22 @@ function createOrder(type, desc, links) {
     status: "جديد",
     createdAt: new Date().toISOString(),
   };
+
   const orders = loadOrders();
   orders.unshift(order);
   saveOrders(orders);
   return order;
 }
 
+// البحث عن طلب برقم معيّن
 function findOrder(id) {
   const orders = loadOrders();
-  return orders.find((o) => o.id.trim().toUpperCase() === id.trim().toUpperCase());
+  return orders.find(
+    (o) => o.id.trim().toUpperCase() === id.trim().toUpperCase()
+  );
 }
 
+// تشغيل الكود بعد تحميل الصفحة
 document.addEventListener("DOMContentLoaded", () => {
   const orderForm = document.getElementById("orderForm");
   const trackForm = document.getElementById("trackForm");
@@ -41,34 +53,61 @@ document.addEventListener("DOMContentLoaded", () => {
   const trackResult = document.getElementById("trackResult");
   const contactForm = document.getElementById("contactForm");
 
+  // إرسال طلب خدمة
   if (orderForm) {
     orderForm.addEventListener("submit", (e) => {
       e.preventDefault();
+
       const fd = new FormData(orderForm);
       const type = fd.get("type");
       const desc = fd.get("desc");
       const links = fd.get("links");
-      if (!type || !desc) return;
+
+      if (!type || !desc) {
+        alert("يرجى اختيار نوع الخدمة وكتابة الوصف.");
+        return;
+      }
 
       const order = createOrder(type, desc, links);
-      alert("تم إنشاء الطلب بنجاح. رقم الطلب الخاص بك هو: " + order.id + "\nاحفظ هذا الرقم لتتبّع طلبك لاحقًا.");
+
+      alert(
+        "تم إنشاء الطلب بنجاح.\n" +
+        "رقم الطلب الخاص بك هو: " + order.id + "\n" +
+        "احفظ هذا الرقم لتتبّع طلبك لاحقًا من نفس الجهاز والمتصفح."
+      );
+
       orderForm.reset();
+
+      // تعبئة حقل التتبع تلقائيًا
       if (trackIdInput) {
         trackIdInput.value = order.id;
-        if (trackResult) {
-          trackResult.textContent = "تم إنشاء الطلب برقم: " + order.id + " (الحالة: " + order.status + ")";
-        }
+      }
+      if (trackResult) {
+        trackResult.textContent =
+          "تم إنشاء الطلب برقم: " +
+          order.id +
+          " (الحالة: " +
+          order.status +
+          ").";
       }
     });
   }
 
+  // تتبّع الطلب
   if (trackForm) {
     trackForm.addEventListener("submit", (e) => {
       e.preventDefault();
+
       const id = trackIdInput.value.trim();
-      if (!id) return;
+      if (!id) {
+        alert("يرجى إدخال رقم الطلب.");
+        return;
+      }
+
       const order = findOrder(id);
+
       if (!trackResult) return;
+
       if (order) {
         trackResult.textContent =
           "رقم الطلب: " +
@@ -79,15 +118,20 @@ document.addEventListener("DOMContentLoaded", () => {
           order.type;
       } else {
         trackResult.textContent =
-          "لم يتم العثور على طلب بهذا الرقم في هذا المتصفح. تأكد من الرقم أو من أنك تستخدم نفس الجهاز والمتصفح.";
+          "لم يتم العثور على طلب بهذا الرقم في هذا المتصفح.\n" +
+          "تأكد من الرقم أو تأكد أنك تستخدم نفس الجهاز ونفس المتصفح.";
       }
     });
   }
 
+  // نموذج تواصل معنا
   if (contactForm) {
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      alert("شكرًا لتواصلك معنا. تم استلام رسالتك (نموذج تجريبي لا يرسل بريدًا حقيقيًا).");
+      alert(
+        "شكرًا لتواصلك معنا.\n" +
+        "تم استلام رسالتك (هذا نموذج تجريبي ولا يرسل بريدًا حقيقيًا)."
+      );
       contactForm.reset();
     });
   }

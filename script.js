@@ -1,4 +1,4 @@
-// مفتاح التخزين في المتصفح
+// مفتاح التخزين في المتصفح لطلبات الخدمات
 const ORDERS_KEY = "tamkeen_orders";
 
 // تحميل الطلبات من localStorage
@@ -18,6 +18,7 @@ function saveOrders(orders) {
 
 // إنشاء طلب جديد
 function createOrder(type, desc, links) {
+  // رقم طلب عشوائي مثل TMK-A1B2
   const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
   const id = "TMK-" + randomPart;
 
@@ -44,7 +45,7 @@ function findOrder(id) {
   );
 }
 
-// تشغيل الكود بعد تحميل الصفحة
+// تشغيل الكود بعد تحميل الصفحة بالكامل
 document.addEventListener("DOMContentLoaded", () => {
   const orderForm = document.getElementById("orderForm");
   const trackForm = document.getElementById("trackForm");
@@ -52,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const trackResult = document.getElementById("trackResult");
   const contactForm = document.getElementById("contactForm");
 
-  // إرسال طلب خدمة
+  // ========= إرسال طلب خدمة =========
   if (orderForm) {
     orderForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -79,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       orderForm.reset();
 
+      // تعبئة حقل التتبع تلقائيًا إن وجد
       if (trackIdInput) {
         trackIdInput.value = order.id;
       }
@@ -93,10 +95,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // تتبّع الطلب
+  // ========= تتبّع الطلب =========
   if (trackForm) {
     trackForm.addEventListener("submit", (e) => {
       e.preventDefault();
+
+      if (!trackIdInput) {
+        alert("حقل رقم الطلب غير موجود في الصفحة.");
+        return;
+      }
 
       const id = trackIdInput.value.trim();
       if (!id) {
@@ -124,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // نموذج تواصل معنا
+  // ========= نموذج تواصل معنا =========
   if (contactForm) {
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault();

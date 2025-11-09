@@ -178,6 +178,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalPdf = modal?.querySelector(".modal-pdf");
   const modalClose = modal?.querySelector(".modal-close");
   const modalBackdrop = modal?.querySelector(".modal-backdrop");
+  const modalPdfPreview = modal?.querySelector(".modal-pdf-preview");
+  const modalPdfFrame = modal?.querySelector(".modal-pdf-frame");
 
   function openModalFromItem(item) {
     if (!modal) return;
@@ -189,13 +191,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (modalTitle) modalTitle.textContent = title;
     if (modalDesc) modalDesc.textContent = desc;
+
     if (modalImg && img) {
       modalImg.src = img;
       modalImg.alt = title;
     }
+
+    // زر فتح PDF في نافذة جديدة
     if (modalPdf) {
-      modalPdf.href = pdf;
-      modalPdf.style.display = pdf === "#" ? "none" : "inline-flex";
+      if (pdf === "#" || !pdf) {
+        modalPdf.style.display = "none";
+      } else {
+        modalPdf.style.display = "inline-flex";
+        modalPdf.href = pdf;
+      }
+    }
+
+    // معاينة PDF داخل المودال
+    if (modalPdfPreview && modalPdfFrame) {
+      if (pdf === "#" || !pdf) {
+        modalPdfPreview.style.display = "none";
+        modalPdfFrame.src = "";
+      } else {
+        modalPdfPreview.style.display = "block";
+        modalPdfFrame.src = pdf;
+      }
     }
 
     modal.classList.add("show");

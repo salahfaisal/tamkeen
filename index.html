@@ -69,9 +69,7 @@
       </div>
     </section>
 
-
-
-        <!-- أحدث الأعمال -->
+    <!-- أحدث الأعمال -->
     <section id="latest" class="section section-alt">
       <div class="container">
         <h2 data-aos="fade-up">أحدث الأعمال</h2>
@@ -101,7 +99,6 @@
       </div>
     </section>
 
-    
     <!-- من نحن -->
     <section id="about" class="section">
       <div class="container grid-2">
@@ -189,15 +186,13 @@
         </p>
 
         <!-- أزرار الفلترة -->
-     <div class="catalog-filters" data-aos="fade-up" data-aos-delay="150">
-  <button class="btn btn-ghost catalog-filter active" data-filter="all">🌟 الكل</button>
-  <button class="btn btn-ghost catalog-filter" data-filter="students">🎓 طلاب</button>
-  <button class="btn btn-ghost catalog-filter" data-filter="teachers">🧑‍🏫 معلمون</button>
-  <button class="btn btn-ghost catalog-filter" data-filter="researchers">📚 باحثون</button>
-  <button class="btn btn-ghost catalog-filter" data-filter="business">💼 أعمال وتصميم</button>
-</div>
-
-
+        <div class="catalog-filters" data-aos="fade-up" data-aos-delay="150">
+          <button class="btn btn-ghost catalog-filter active" data-filter="all">🌟 الكل</button>
+          <button class="btn btn-ghost catalog-filter" data-filter="students">🎓 طلاب</button>
+          <button class="btn btn-ghost catalog-filter" data-filter="teachers">🧑‍🏫 معلمون</button>
+          <button class="btn btn-ghost catalog-filter" data-filter="researchers">📚 باحثون</button>
+          <button class="btn btn-ghost catalog-filter" data-filter="business">💼 أعمال وتصميم</button>
+        </div>
 
         <!-- شبكة الأعمال -->
         <div class="portfolio-grid">
@@ -311,50 +306,26 @@
         </div>
       </div>
 
-    
+      <!-- نافذة منبثقة لتفاصيل الأعمال -->
+      <div id="portfolioModal" class="modal" aria-hidden="true">
+        <div class="modal-backdrop"></div>
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+          <button class="modal-close" aria-label="إغلاق">×</button>
 
-<!-- نافذة منبثقة لتفاصيل الأعمال -->
-<div id="portfolioModal" class="modal" aria-hidden="true">
-  <div class="modal-backdrop"></div>
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <button class="modal-close" aria-label="إغلاق">×</button>
+          <div class="modal-img-wrap">
+            <img class="modal-img" src="" alt="">
+          </div>
 
-    <!-- صورة العمل -->
-    <div class="modal-img-wrap">
-      <img class="modal-img" src="" alt="">
-    </div>
-
-    <!-- محتوى التفاصيل -->
-    <div class="modal-body">
-      <h3 id="modalTitle" class="modal-title"></h3>
-      <p class="modal-desc"></p>
-
-      <!-- عرض PDF داخل الصفحة فقط -->
-      <div class="modal-pdf-preview">
-        <iframe 
-          class="modal-pdf-frame" 
-          src="" 
-          title="معاينة ملف PDF"
-          sandbox="allow-same-origin allow-scripts allow-top-navigation"
-        ></iframe>
-      </div>
-
-      <!-- ملاحظة -->
-      <p class="modal-note">
-        🔒 هذا الملف مخصص للعرض فقط داخل المنصة — التحميل غير متاح.
-      </p>
-    </div>
-  </div>
-</div>
-
-
-            <div class="modal-pdf-preview">
-              <iframe class="modal-pdf-frame" src="" title="معاينة ملف PDF"></iframe>
-            </div>
+          <div class="modal-body">
+            <h3 id="modalTitle" class="modal-title"></h3>
+            <p class="modal-desc"></p>
+            <a class="modal-pdf btn btn-primary" href="#" target="_blank">
+              فتح ملف PDF
+            </a>
           </div>
         </div>
       </div>
-
+    </section>
 
     <!-- طلب خدمة + تتبع -->
     <section id="order" class="section section-alt">

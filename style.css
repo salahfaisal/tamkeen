@@ -334,6 +334,47 @@ body {
   color: var(--primary-dark);
 }
 
+/* ====== قسم أحدث الأعمال ====== */
+.latest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.4rem;
+}
+
+.latest-card {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.3rem 1.2rem;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(209, 213, 219, 0.9);
+}
+
+.latest-card h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+}
+
+.latest-card p {
+  margin: 0 0 0.9rem;
+  font-size: 0.88rem;
+  color: var(--gray-dark);
+}
+
+.latest-link {
+  font-size: 0.82rem;
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+
+.latest-link::before {
+  content: "↪";
+  margin-left: 0.2rem;
+}
+
+.latest-link:hover {
+  text-decoration: underline;
+}
+
 /* ====== كتالوج الأعمال ====== */
 .catalog-filters {
   display: flex;
@@ -523,6 +564,26 @@ body {
 
 .modal-pdf {
   font-size: 0.85rem;
+}
+
+/* أزرار ومعاينة PDF داخل المودال */
+.modal-actions-row {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-pdf-preview {
+  margin-top: 0.8rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid #E5E7EB;
+  background: #F9FAFB;
+}
+
+.modal-pdf-frame {
+  width: 100%;
+  height: 260px;
+  border: none;
 }
 
 .modal-close {
@@ -732,5 +793,9 @@ body {
 
   .modal-dialog {
     width: 95%;
+  }
+
+  .modal-pdf-frame {
+    height: 220px;
   }
 }

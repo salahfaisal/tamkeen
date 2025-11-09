@@ -4,10 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>منصة تمكين للخدمات التعليمية الإلكترونية</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- الخطوط -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;500;700&display=swap"
+    rel="stylesheet">
+
+  <!-- AOS Animations -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <!-- ملف التنسيقات -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
@@ -27,15 +36,15 @@
           <a href="#about">من نحن</a>
           <a href="#services">خدماتنا</a>
           <a href="#catalog">كتالوج الأعمال</a>
+          <a href="#order">طلب خدمة</a>
           <a href="#contact">تواصل معنا</a>
-          <a href="#order" class="nav-cta">طلب خدمة</a>
         </nav>
       </div>
     </header>
 
-    <!-- قسم البداية -->
+    <!-- قسم البداية (Hero) -->
     <section id="hero" class="hero">
-      <div class="container hero-inner">
+      <div class="container hero-inner" data-aos="fade-up">
         <div class="hero-text">
           <p class="hero-tag">منصة تعليمية – خدمات احترافية</p>
           <h1>منصة تمكين للخدمات التعليمية الإلكترونية</h1>
@@ -44,8 +53,8 @@
             أبحاث، عروض تقديمية، تصميم، مونتاج، ترجمة، وإنشاء مواقع.
           </p>
           <div class="hero-actions">
-            <a href="#services" class="btn btn-primary">استعرض الخدمات</a>
-            <a href="#order" class="btn btn-ghost">اطلب خدمتك الآن</a>
+            <a href="#services" class="btn btn-primary btn-lg">استعرض الخدمات</a>
+            <a href="#catalog" class="btn btn-ghost btn-lg">كتالوج الأعمال</a>
           </div>
           <div class="hero-badges">
             <span>نماذج أعمال حقيقية</span>
@@ -54,7 +63,7 @@
           </div>
         </div>
 
-        <div class="hero-media">
+        <div class="hero-media" data-aos="zoom-in" data-aos-delay="150">
           <img src="images2/hero.jpg" alt="خدمات منصة تمكين" class="hero-img" />
         </div>
       </div>
@@ -63,7 +72,7 @@
     <!-- من نحن -->
     <section id="about" class="section">
       <div class="container grid-2">
-        <div>
+        <div data-aos="fade-up">
           <h2>من نحن</h2>
           <p>
             منصة <strong>تمكين</strong> هي منصة تعليمية إلكترونية تقدّم حزمة من الخدمات
@@ -75,7 +84,7 @@
             مع إمكانية متابعة حالة الطلب بطريقة واضحة.
           </p>
         </div>
-        <div class="about-highlight">
+        <div class="about-highlight" data-aos="fade-left">
           <h3>أهدافنا</h3>
           <ul>
             <li>توفير حلول تعليمية واحترافية عالية الجودة.</li>
@@ -89,12 +98,13 @@
     <!-- خدماتنا -->
     <section id="services" class="section section-alt">
       <div class="container">
-        <h2>خدماتنا</h2>
-        <p class="section-sub">
+        <h2 data-aos="fade-up">خدماتنا</h2>
+        <p class="section-sub" data-aos="fade-up" data-aos-delay="100">
           نخدم عدة فئات من خلال باقة متنوعة من الخدمات التعليمية والمهنية.
         </p>
         <div class="cards-grid">
-          <article class="card">
+          <article class="card" data-aos="fade-up" data-aos-delay="0">
+            <div class="card-icon">🎓</div>
             <h3>خدمات الطلاب</h3>
             <p>أبحاث – عروض تقديمية – مشاريع تخرج – تلخيص مقررات – أوراق عمل.</p>
             <ul class="tag-list">
@@ -103,7 +113,8 @@
               <li>عروض PowerPoint</li>
             </ul>
           </article>
-          <article class="card">
+          <article class="card" data-aos="fade-up" data-aos-delay="100">
+            <div class="card-icon">🧑‍🏫</div>
             <h3>خدمات المعلمين</h3>
             <p>ملفات شرح – عروض تفاعلية – خطط دراسية – اختبارات وتمارين.</p>
             <ul class="tag-list">
@@ -112,7 +123,8 @@
               <li>اختبارات</li>
             </ul>
           </article>
-          <article class="card">
+          <article class="card" data-aos="fade-up" data-aos-delay="200">
+            <div class="card-icon">📚</div>
             <h3>خدمات الباحثين</h3>
             <p>تنسيق رسائل علمية – مراجعة لغوية – تحكيم – إعداد عروض المناقشة.</p>
             <ul class="tag-list">
@@ -121,7 +133,8 @@
               <li>تحكيم علمي</li>
             </ul>
           </article>
-          <article class="card">
+          <article class="card" data-aos="fade-up" data-aos-delay="300">
+            <div class="card-icon">💼</div>
             <h3>خدمات إضافية</h3>
             <p>تصميم جرافيك – مونتاج – ترجمة – إنشاء مواقع – استشارات هندسية.</p>
             <ul class="tag-list">
@@ -135,15 +148,15 @@
     </section>
 
     <!-- كتالوج الأعمال -->
-    <section id="catalog" class="section section-alt">
+    <section id="catalog" class="section">
       <div class="container">
-        <h2>كتالوج الأعمال</h2>
-        <p class="section-sub">
+        <h2 data-aos="fade-up">كتالوج الأعمال</h2>
+        <p class="section-sub" data-aos="fade-up" data-aos-delay="100">
           نماذج من الأعمال المنفذة لطلاب، معلمين، باحثين وروّاد أعمال. يمكنك تعديل هذه النماذج وإضافة صور وملفات PDF حقيقية لاحقًا.
         </p>
 
         <!-- أزرار الفلترة -->
-        <div class="catalog-filters">
+        <div class="catalog-filters" data-aos="fade-up" data-aos-delay="150">
           <button class="btn btn-ghost catalog-filter active" data-filter="all">الكل</button>
           <button class="btn btn-ghost catalog-filter" data-filter="students">طلاب</button>
           <button class="btn btn-ghost catalog-filter" data-filter="teachers">معلمون</button>
@@ -154,7 +167,7 @@
         <!-- شبكة الأعمال -->
         <div class="portfolio-grid">
           <!-- عمل 1: طلاب -->
-          <article class="portfolio-item" data-category="students">
+          <article class="portfolio-item" data-category="students" data-aos="fade-up" data-aos-delay="0">
             <div class="portfolio-thumb">
               <img src="images2/work-student1.jpg" alt="نموذج مشروع تخرج" loading="lazy">
             </div>
@@ -169,7 +182,7 @@
           </article>
 
           <!-- عمل 2: معلمون -->
-          <article class="portfolio-item" data-category="teachers">
+          <article class="portfolio-item" data-category="teachers" data-aos="fade-up" data-aos-delay="100">
             <div class="portfolio-thumb">
               <img src="images2/work-teacher1.jpg" alt="عرض تفاعلي لمعلم" loading="lazy">
             </div>
@@ -184,7 +197,7 @@
           </article>
 
           <!-- عمل 3: باحثون -->
-          <article class="portfolio-item" data-category="researchers">
+          <article class="portfolio-item" data-category="researchers" data-aos="fade-up" data-aos-delay="200">
             <div class="portfolio-thumb">
               <img src="images2/work-research1.jpg" alt="تنسيق رسالة علمية" loading="lazy">
             </div>
@@ -199,7 +212,7 @@
           </article>
 
           <!-- عمل 4: أعمال وتصميم -->
-          <article class="portfolio-item" data-category="business">
+          <article class="portfolio-item" data-category="business" data-aos="fade-up" data-aos-delay="300">
             <div class="portfolio-thumb">
               <img src="images2/work-business1.jpg" alt="تصميم شعار وهوية" loading="lazy">
             </div>
@@ -216,10 +229,58 @@
       </div>
     </section>
 
-    <!-- تواصل معنا (نموذج بسيط) -->
+    <!-- طلب خدمة + تتبع -->
+    <section id="order" class="section section-alt">
+      <div class="container grid-2">
+        <div data-aos="fade-up">
+          <h2>طلب خدمة</h2>
+          <p class="section-sub">
+            املأ نموذج طلب الخدمة، وسيتم إنشاء رقم طلب يمكنك استخدامه لاحقًا في صفحة التتبع (محفوظ في هذا المتصفح فقط).
+          </p>
+          <form id="orderForm" class="form">
+            <label>
+              نوع الخدمة
+              <select name="type" required>
+                <option value="">اختر نوع الخدمة</option>
+                <option value="طلاب">خدمات الطلاب</option>
+                <option value="معلمون">خدمات المعلمين</option>
+                <option value="باحثون">خدمات الباحثين</option>
+                <option value="أعمال">خدمات الأعمال والتصميم</option>
+              </select>
+            </label>
+            <label>
+              الوصف التفصيلي للطلب
+              <textarea name="desc" rows="4" placeholder="اشرح ما تحتاجه بالتفصيل..." required></textarea>
+            </label>
+            <label>
+              روابط أو مرفقات (اختياري)
+              <input type="text" name="links" placeholder="رابط Google Drive أو ملفات أخرى" />
+            </label>
+            <button type="submit" class="btn btn-primary">إرسال الطلب</button>
+          </form>
+        </div>
+
+        <div data-aos="fade-left">
+          <h2>تتبّع الطلب</h2>
+          <p class="section-sub">
+            أدخل رقم الطلب الذي ظهر لك بعد الإرسال، لمعرفة حالته (محفوظ في هذا المتصفح فقط).
+          </p>
+          <form id="trackForm" class="form form-inline">
+            <label>
+              رقم الطلب
+              <input type="text" id="trackId" placeholder="مثال: TMK-A1B2" required />
+            </label>
+            <button type="submit" class="btn btn-ghost">تتبع</button>
+          </form>
+          <div id="trackResult" class="track-result"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- تواصل معنا -->
     <section id="contact" class="section">
       <div class="container grid-2">
-        <div>
+        <div data-aos="fade-up">
           <h2>تواصل معنا</h2>
           <p class="section-sub">
             يمكنك التواصل معنا عبر النموذج التالي أو مباشرة عبر الواتساب والقنوات الأخرى.
@@ -240,7 +301,7 @@
             <button type="submit" class="btn btn-primary">إرسال</button>
           </form>
         </div>
-        <div class="contact-box">
+        <div class="contact-box" data-aos="fade-left">
           <h3>معلومات التواصل</h3>
           <ul>
             <li>البريد: tamkeenplatformed@gmail.com</li>
@@ -257,8 +318,14 @@
     </section>
 
     <!-- زر واتساب عائم -->
-    <a href="https://whatsapp.com/channel/0029Vb6mwuEDzgT4oZ39wN43" target="_blank" class="wa-float" aria-label="تواصل عبر الواتساب">
+    <a href="https://whatsapp.com/channel/0029Vb6mwuEDzgT4oZ39wN43" target="_blank" class="wa-float"
+      aria-label="تواصل عبر الواتساب">
       WA
+    </a>
+
+    <!-- زر طلب خدمة عائم -->
+    <a href="#order" class="cta-float" aria-label="طلب خدمة">
+      طلب خدمة
     </a>
 
     <!-- تذييل -->
@@ -270,6 +337,10 @@
     </footer>
   </div>
 
+  <!-- AOS Script -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- ملف السكربت -->
   <script src="script.js"></script>
 </body>
 </html>

@@ -18,7 +18,6 @@ function saveOrders(orders) {
 
 // إنشاء طلب جديد
 function createOrder(type, desc, links) {
-  // رقم طلب عشوائي مثل TMK-A1B2
   const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
   const id = "TMK-" + randomPart;
 
@@ -72,13 +71,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       alert(
         "تم إنشاء الطلب بنجاح.\n" +
-        "رقم الطلب الخاص بك هو: " + order.id + "\n" +
-        "احفظ هذا الرقم لتتبّع طلبك لاحقًا من نفس الجهاز والمتصفح."
+          "رقم الطلب الخاص بك هو: " +
+          order.id +
+          "\n" +
+          "احفظ هذا الرقم لتتبّع طلبك لاحقًا من نفس الجهاز والمتصفح."
       );
 
       orderForm.reset();
 
-      // تعبئة حقل التتبع تلقائيًا
       if (trackIdInput) {
         trackIdInput.value = order.id;
       }
@@ -130,9 +130,36 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       alert(
         "شكرًا لتواصلك معنا.\n" +
-        "تم استلام رسالتك (هذا نموذج تجريبي ولا يرسل بريدًا حقيقيًا)."
+          "تم استلام رسالتك (هذا نموذج تجريبي ولا يرسل بريدًا حقيقيًا)."
       );
       contactForm.reset();
+    });
+  }
+
+  // ========= فلترة كتالوج الأعمال =========
+  const filterButtons = document.querySelectorAll(".catalog-filter");
+  const portfolioItems = document.querySelectorAll(".portfolio-item");
+
+  if (filterButtons.length && portfolioItems.length) {
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const filter = btn.getAttribute("data-filter");
+
+        // تفعيل الزر المختار
+        filterButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        // إظهار/إخفاء العناصر حسب الفئة
+        portfolioItems.forEach((item) => {
+          const category = item.getAttribute("data-category");
+
+          if (filter === "all" || category === filter) {
+            item.style.display = "flex";
+          } else {
+            item.style.display = "none";
+          }
+        });
+      });
     });
   }
 });

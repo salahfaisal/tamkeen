@@ -1,176 +1,48 @@
-// مفتاح التخزين في المتصفح لطلبات الخدمات
-const ORDERS_KEY = "tamkeen_orders";
-
-// تحميل الطلبات من localStorage
-function loadOrders() {
-  try {
-    const raw = localStorage.getItem(ORDERS_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-// حفظ الطلبات في localStorage
-function saveOrders(orders) {
-  localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
-}
-
-// إنشاء طلب جديد
-function createOrder(type, desc, links) {
-  // رقم طلب عشوائي مثل TMK-A1B2
-  const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
-  const id = "TMK-" + randomPart;
-
-  const order = {
-    id,
-    type,
-    desc,
-    links: links || "",
-    status: "جديد",
-    createdAt: new Date().toISOString(),
-  };
-
-  const orders = loadOrders();
-  orders.unshift(order);
-  saveOrders(orders);
-  return order;
-}
-
-// البحث عن طلب برقم معيّن
-function findOrder(id) {
-  const orders = loadOrders();
-  return orders.find(
-    (o) => o.id.trim().toUpperCase() === id.trim().toUpperCase()
-  );
-}
-
-// تشغيل الكود بعد تحميل الصفحة بالكامل
 document.addEventListener("DOMContentLoaded", () => {
-  const orderForm = document.getElementById("orderForm");
-  const trackForm = document.getElementById("trackForm");
-  const trackIdInput = document.getElementById("trackId");
-  const trackResult = document.getElementById("trackResult");
-  const contactForm = document.getElementById("contactForm");
-
-  // ========= إرسال طلب خدمة =========
-  if (orderForm) {
-    orderForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const fd = new FormData(orderForm);
-      const type = fd.get("type");
-      const desc = fd.get("desc");
-      const links = fd.get("links");
-
-      if (!type || !desc) {
-        alert("يرجى اختيار نوع الخدمة وكتابة الوصف.");
-        return;
-      }
-
-      const order = createOrder(type, desc, links);
-
-      alert(
-        "تم إنشاء الطلب بنجاح.\n" +
-          "رقم الطلب الخاص بك هو: " +
-          order.id +
-          "\n" +
-          "احفظ هذا الرقم لتتبّع طلبك لاحقًا من نفس الجهاز والمتصفح."
-      );
-
-      orderForm.reset();
-
-      // تعبئة حقل التتبع تلقائيًا إن وجد
-      if (trackIdInput) {
-        trackIdInput.value = order.id;
-      }
-      if (trackResult) {
-        trackResult.textContent =
-          "تم إنشاء الطلب برقم: " +
-          order.id +
-          " (الحالة: " +
-          order.status +
-          ").";
-      }
+  // ====== AOS Animations ======
+  if (window.AOS) {
+    AOS.init({
+      duration: 700,
+      once: true,
     });
   }
 
-  // ========= تتبّع الطلب =========
-  if (trackForm) {
-    trackForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      if (!trackIdInput) {
-        alert("حقل رقم الطلب غير موجود في الصفحة.");
-        return;
-      }
-
-      const id = trackIdInput.value.trim();
-      if (!id) {
-        alert("يرجى إدخال رقم الطلب.");
-        return;
-      }
-
-      const order = findOrder(id);
-
-      if (!trackResult) return;
-
-      if (order) {
-        trackResult.textContent =
-          "رقم الطلب: " +
-          order.id +
-          " | الحالة: " +
-          order.status +
-          " | نوع الخدمة: " +
-          order.type;
-      } else {
-        trackResult.textContent =
-          "لم يتم العثور على طلب بهذا الرقم في هذا المتصفح.\n" +
-          "تأكد من الرقم أو تأكد أنك تستخدم نفس الجهاز ونفس المتصفح.";
+  // ====== تمرير سلس للروابط الداخلية في الهيدر ======
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const href = link.getAttribute("href");
+      if (!href || href === "#") return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
-  }
+  });
 
-  // ========= نموذج تواصل معنا =========
-  if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert(
-        "شكرًا لتواصلك معنا.\n" +
-          "تم استلام رسالتك (هذا نموذج تجريبي ولا يرسل بريدًا حقيقيًا)."
-      );
-      contactForm.reset();
-    });
-  }
-
-  // ========= فلترة كتالوج الأعمال =========
+  // ====== فلترة كتالوج الأعمال ======
   const filterButtons = document.querySelectorAll(".catalog-filter");
   const portfolioItems = document.querySelectorAll(".portfolio-item");
 
-  if (filterButtons.length && portfolioItems.length) {
-    filterButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const filter = btn.getAttribute("data-filter");
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const filter = btn.getAttribute("data-filter") || "all";
 
-        // تفعيل الزر المختار
-        filterButtons.forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
+      filterButtons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
 
-        // إظهار/إخفاء العناصر حسب الفئة
-        portfolioItems.forEach((item) => {
-          const category = item.getAttribute("data-category");
-
-          if (filter === "all" || category === filter) {
-            item.style.display = "flex";
-          } else {
-            item.style.display = "none";
-          }
-        });
+      portfolioItems.forEach((item) => {
+        const category = item.getAttribute("data-category");
+        if (filter === "all" || category === filter) {
+          item.style.display = "";
+        } else {
+          item.style.display = "none";
+        }
       });
     });
-  }
+  });
 
-  // ========= نافذة تفاصيل كتالوج الأعمال =========
+  // ====== نافذة تفاصيل كتالوج الأعمال (المودال) ======
   const modal = document.getElementById("portfolioModal");
   const modalImg = modal?.querySelector(".modal-img");
   const modalTitle = modal?.querySelector(".modal-title");
@@ -199,17 +71,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // زر فتح PDF في نافذة جديدة
     if (modalPdf) {
-      if (pdf === "#" || !pdf) {
+      if (!pdf || pdf === "#") {
         modalPdf.style.display = "none";
       } else {
         modalPdf.style.display = "inline-flex";
-        modalPdf.href = pdf;
+        modalPdf.setAttribute("href", pdf);
       }
     }
 
-    // معاينة PDF داخل المودال
+    // معاينة PDF داخل المودال (إذا توفّر ملف)
     if (modalPdfPreview && modalPdfFrame) {
-      if (pdf === "#" || !pdf) {
+      if (!pdf || pdf === "#") {
         modalPdfPreview.style.display = "none";
         modalPdfFrame.src = "";
       } else {
@@ -235,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // أيضًا الضغط على الصورة يفتح التفاصيل
+    // الضغط على الصورة
     const thumbs = document.querySelectorAll(".portfolio-thumb");
     thumbs.forEach((thumb) => {
       thumb.addEventListener("click", () => {
@@ -246,7 +118,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // إغلاق النافذة
     function closeModal() {
       modal.classList.remove("show");
       document.body.style.overflow = "";
@@ -262,12 +133,185 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ========= تشغيل AOS للأنيميشن =========
-  if (window.AOS) {
-    AOS.init({
-      duration: 700,
-      easing: "ease-out",
-      once: true,
+  // ====== طلب خدمة + حفظ في localStorage ======
+  const orderForm = document.getElementById("orderForm");
+  const trackForm = document.getElementById("trackForm");
+  const trackResult = document.getElementById("trackResult");
+
+  const STORAGE_KEY = "tamkeen_orders";
+
+  function loadOrders() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      return JSON.parse(raw);
+    } catch {
+      return [];
+    }
+  }
+
+  function saveOrders(orders) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+  }
+
+  function generateOrderId() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let id = "TMK-";
+    for (let i = 0; i < 4; i++) {
+      id += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return id;
+  }
+
+  if (orderForm) {
+    orderForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const formData = new FormData(orderForm);
+      const type = formData.get("type");
+      const desc = formData.get("desc");
+      const links = formData.get("links");
+
+      const id = generateOrderId();
+      const orders = loadOrders();
+
+      orders.push({
+        id,
+        type,
+        desc,
+        links,
+        status: "تم الاستلام – جاري المراجعة",
+        createdAt: new Date().toISOString(),
+      });
+
+      saveOrders(orders);
+      orderForm.reset();
+
+      if (trackResult) {
+        trackResult.textContent = `تم إرسال طلبك بنجاح. رقم طلبك هو: ${id} – احتفظ به لتتبّع الطلب.`;
+      }
+
+      const trackSection = document.getElementById("trackForm");
+      if (trackSection) {
+        trackSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
+
+  if (trackForm && trackResult) {
+    trackForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const input = document.getElementById("trackId");
+      const id = input?.value.trim();
+      if (!id) return;
+
+      const orders = loadOrders();
+      const order = orders.find((o) => o.id === id);
+
+      if (!order) {
+        trackResult.textContent = "لم يتم العثور على طلب بهذا الرقم في هذا المتصفح.";
+      } else {
+        trackResult.textContent = `حالة الطلب (${order.id}): ${order.status}`;
+      }
+    });
+  }
+
+  // ====== نموذج تواصل – رسالة نجاح أنيقة ======
+  const contactForm = document.getElementById("contactForm");
+  const contactSuccess = document.getElementById("contactSuccess");
+
+  if (contactForm && contactSuccess) {
+    contactForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      contactForm.reset();
+      contactSuccess.textContent = "تم إرسال رسالتك بنجاح. سنعود إليك في أقرب وقت بإذن الله.";
+      contactSuccess.classList.add("show");
+    });
+  }
+
+  // ====== نموذج "احجز استشارة مجانية" ======
+  const consultForm = document.getElementById("consultForm");
+  const consultSuccess = document.getElementById("consultSuccess");
+
+  if (consultForm && consultSuccess) {
+    consultForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const formData = new FormData(consultForm);
+      const type = formData.get("type");
+      const channel = formData.get("channel");
+
+      consultForm.reset();
+      consultSuccess.textContent =
+        `تم استلام طلب الاستشارة (${type || "غير محدد"}) وسنتواصل معك عبر ${channel === "email" ? "البريد الإلكتروني" : "واتساب"} في أقرب وقت.`;
+      consultSuccess.classList.add("show");
+    });
+  }
+
+  // ====== زر واتساب متطوّر ======
+  const waButton = document.getElementById("waButton");
+  const waMenu = document.getElementById("waMenu");
+  const waMenuClose = waMenu?.querySelector(".wa-menu-close");
+  const waOptions = waMenu?.querySelectorAll(".wa-menu-item");
+
+  const WA_CHANNEL_URL = "https://whatsapp.com/channel/0029Vb6mwuEDzgT4oZ39wN43";
+
+  function openWaMenu() {
+    if (!waMenu) return;
+    waMenu.classList.add("show");
+  }
+
+  function closeWaMenu() {
+    if (!waMenu) return;
+    waMenu.classList.remove("show");
+  }
+
+  if (waButton && waMenu) {
+    waButton.addEventListener("click", () => {
+      if (waMenu.classList.contains("show")) {
+        closeWaMenu();
+      } else {
+        openWaMenu();
+      }
+    });
+
+    waMenuClose?.addEventListener("click", closeWaMenu);
+
+    waOptions?.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const type = btn.getAttribute("data-wa");
+        if (!type) return;
+
+        if (type === "track") {
+          // الانتقال لقسم تتبّع الطلب داخل الصفحة
+          const trackSection = document.getElementById("trackForm");
+          if (trackSection) {
+            trackSection.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        } else {
+          // استفسار عام أو طلب جديد → فتح قناة الواتساب
+          let message = "";
+          if (type === "general") {
+            message = "مرحبًا، أود الاستفسار عن خدمات منصة تمكين.";
+          } else if (type === "new") {
+            message = "مرحبًا، أود طلب خدمة جديدة من منصة تمكين.";
+          }
+          const url = `${WA_CHANNEL_URL}?text=${encodeURIComponent(message)}`;
+          window.open(url, "_blank");
+        }
+
+        closeWaMenu();
+      });
+    });
+
+    // إغلاق القائمة إذا ضغطنا خارجها (اختياري)
+    document.addEventListener("click", (e) => {
+      if (!waMenu.classList.contains("show")) return;
+      const target = e.target;
+      if (
+        target !== waButton &&
+        !waMenu.contains(target)
+      ) {
+        closeWaMenu();
+      }
     });
   }
 });

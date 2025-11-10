@@ -386,6 +386,66 @@
       </div>
     </section>
 
+
+    <!-- احجز استشارة مجانية -->
+    <section id="consult" class="section">
+      <div class="container grid-2">
+        <div data-aos="fade-up">
+          <h2>احجز استشارة مجانية</h2>
+          <p class="section-sub">
+            اختر نوع الاستشارة، وسجّل بياناتك لننسّق معك موعدًا مناسبًا عن بعد.
+          </p>
+          <form id="consultForm" class="form">
+            <label>
+              الاسم
+              <input type="text" name="name" placeholder="الاسم الكامل" required />
+            </label>
+            <label>
+              البريد الإلكتروني
+              <input type="email" name="email" placeholder="example@email.com" required />
+            </label>
+            <label>
+              نوع الاستشارة
+              <select name="type" required>
+                <option value="">اختر نوع الاستشارة</option>
+                <option value="تعليمي">تعليمي</option>
+                <option value="أكاديمي">أكاديمي (بحوث ودراسات عليا)</option>
+                <option value="هندسي">هندسي / تقني</option>
+              </select>
+            </label>
+            <label>
+              تفضيل طريقة التواصل
+              <select name="channel" required>
+                <option value="whatsapp">واتساب</option>
+                <option value="email">البريد الإلكتروني</option>
+              </select>
+            </label>
+            <label>
+              وصف مختصر لطلب الاستشارة
+              <textarea name="details" rows="3" placeholder="اكتب باختصار ما تحتاجه في هذه الاستشارة..." required></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary">إرسال طلب الاستشارة</button>
+
+            <!-- رسالة نجاح للاستشارة -->
+            <div id="consultSuccess" class="form-success" aria-live="polite"></div>
+          </form>
+        </div>
+
+        <div class="contact-box" data-aos="fade-left">
+          <h3>ماذا تشمل الاستشارة؟</h3>
+          <ul>
+            <li>توضيح المسار المناسب لحالتك (تعليمي أو أكاديمي أو هندسي).</li>
+            <li>اقتراح الخدمات التي تناسبك من منصة تمكين.</li>
+            <li>تحديد الخطوات التالية بوضوح معك.</li>
+          </ul>
+          <p class="section-sub">
+            مدة الاستشارة المجانية عادة من 10 إلى 15 دقيقة، عن بعد عبر واتساب أو البريد.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    
     <!-- تواصل معنا -->
     <section id="contact" class="section">
       <div class="container grid-2">
@@ -421,11 +481,32 @@
             <li>واتساب: قناة رسمية للمنصة</li>
           </ul>
           <div class="social-links">
-            <a href="https://whatsapp.com/channel/0029Vb6mwuEDzgT4oZ39wN43" target="_blank">WhatsApp</a>
-            <a href="#" target="_blank">Telegram</a>
-            <a href="#" target="_blank">Instagram</a>
-            <a href="#" target="_blank">YouTube</a>
+            <a href="https://whatsapp.com/channel/0029Vb6mwuEDzgT4oZ39wN43"
+               target="_blank"
+               class="social-icon social-wa"
+               aria-label="WhatsApp">
+              WA
+            </a>
+            <a href="#"
+               target="_blank"
+               class="social-icon social-tg"
+               aria-label="Telegram">
+              TG
+            </a>
+            <a href="#"
+               target="_blank"
+               class="social-icon social-ig"
+               aria-label="Instagram">
+              IG
+            </a>
+            <a href="#"
+               target="_blank"
+               class="social-icon social-yt"
+               aria-label="YouTube">
+              YT
+            </a>
           </div>
+
         </div>
       </div>
     </section>

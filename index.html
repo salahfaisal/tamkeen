@@ -408,7 +408,11 @@
               <textarea name="message" rows="4" placeholder="اكتب رسالتك هنا..." required></textarea>
             </label>
             <button type="submit" class="btn btn-primary">إرسال</button>
+
+            <!-- رسالة نجاح أنيقة -->
+            <div id="contactSuccess" class="form-success" aria-live="polite"></div>
           </form>
+
         </div>
         <div class="contact-box" data-aos="fade-left">
           <h3>معلومات التواصل</h3>
@@ -426,11 +430,22 @@
       </div>
     </section>
 
-    <!-- زر واتساب عائم -->
-    <a href="https://whatsapp.com/channel/0029Vb6mwuEDzgT4oZ39wN43" target="_blank" class="wa-float"
-      aria-label="تواصل عبر الواتساب">
+    <!-- زر واتساب عائم (يفتح قائمة خيارات) -->
+    <button type="button" class="wa-float" id="waButton" aria-label="تواصل عبر الواتساب">
       WA
-    </a>
+    </button>
+
+    <!-- قائمة خيارات واتساب -->
+    <div class="wa-menu" id="waMenu" aria-hidden="true">
+      <div class="wa-menu-inner">
+        <p class="wa-menu-title">اختر نوع التواصل:</p>
+        <button type="button" class="wa-menu-item" data-wa="general">💬 استفسار عام</button>
+        <button type="button" class="wa-menu-item" data-wa="new">📋 طلب خدمة جديدة</button>
+        <button type="button" class="wa-menu-item" data-wa="track">🔍 تتبّع طلب</button>
+        <button type="button" class="wa-menu-close">إغلاق ✕</button>
+      </div>
+    </div>
+
 
     <!-- زر طلب خدمة عائم -->
     <a href="#order" class="cta-float" aria-label="طلب خدمة">

@@ -72,7 +72,6 @@ select {
   margin-inline: auto;
 }
 
-/* progress */
 .scroll-progress {
   position: fixed;
   top: 0;
@@ -90,7 +89,6 @@ select {
   box-shadow: 0 0 18px rgba(37, 99, 235, 0.45);
 }
 
-/* header */
 .header {
   position: sticky;
   top: 0;
@@ -177,7 +175,6 @@ select {
   gap: 0.75rem;
 }
 
-/* buttons */
 .btn {
   display: inline-flex;
   justify-content: center;
@@ -226,7 +223,6 @@ select {
   display: inline-flex;
 }
 
-/* nav toggle */
 .nav-toggle {
   width: 46px;
   height: 46px;
@@ -248,7 +244,6 @@ select {
   border-radius: 999px;
 }
 
-/* mobile nav */
 .mobile-nav {
   position: fixed;
   top: 0;
@@ -336,7 +331,6 @@ select {
   visibility: visible;
 }
 
-/* hero */
 .hero {
   position: relative;
   padding: 4.5rem 0 4rem;
@@ -517,7 +511,6 @@ select {
   50% { transform: translateY(-8px); }
 }
 
-/* sections */
 .section {
   padding: 5rem 0;
 }
@@ -553,7 +546,6 @@ select {
   font-size: 0.98rem;
 }
 
-/* about */
 .about-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -596,10 +588,9 @@ select {
   margin: 0.5rem 0 0;
 }
 
-/* cards */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.25rem;
 }
 
@@ -659,7 +650,6 @@ select {
   border-radius: 999px;
 }
 
-/* features */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -695,7 +685,6 @@ select {
   line-height: 1.85;
 }
 
-/* filters */
 .catalog-filters {
   display: flex;
   flex-wrap: wrap;
@@ -710,7 +699,6 @@ select {
   border-color: transparent;
 }
 
-/* portfolio */
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -814,7 +802,6 @@ select {
   border-color: transparent;
 }
 
-/* testimonials */
 .testimonial-card p {
   font-size: 0.98rem;
   line-height: 1.95;
@@ -827,7 +814,6 @@ select {
   font-size: 0.9rem;
 }
 
-/* order/contact grid */
 .order-grid,
 .contact-grid {
   display: grid;
@@ -886,7 +872,6 @@ select {
   margin-bottom: 0.2rem;
 }
 
-/* forms */
 .form {
   display: flex;
   flex-direction: column;
@@ -932,7 +917,6 @@ select {
   font-weight: 700;
 }
 
-/* faq */
 .faq-list {
   max-width: 880px;
   margin: 0 auto;
@@ -964,7 +948,6 @@ select {
   line-height: 1.9;
 }
 
-/* social */
 .social-links {
   display: flex;
   flex-wrap: wrap;
@@ -986,7 +969,6 @@ select {
   background: rgba(255, 255, 255, 0.16);
 }
 
-/* modal */
 .modal {
   position: fixed;
   inset: 0;
@@ -1073,7 +1055,6 @@ select {
   text-decoration: none;
 }
 
-/* floating buttons */
 .wa-float,
 .cta-float,
 .back-to-top {
@@ -1123,7 +1104,6 @@ select {
   transform: translateY(0);
 }
 
-/* footer */
 .footer {
   margin-top: auto;
   padding: 1.1rem 0 1.4rem;
@@ -1143,7 +1123,6 @@ select {
   color: #94a3b8;
 }
 
-/* reveal */
 .reveal {
   opacity: 0;
   transform: translateY(18px);
@@ -1155,7 +1134,6 @@ select {
   transform: translateY(0);
 }
 
-/* responsive */
 @media (max-width: 1100px) {
   .cards-grid,
   .features-grid {

@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
 
+  /* =========================
+     القائمة الجانبية للجوال
+  ========================= */
   const navToggle = document.getElementById("navToggle");
   const mobileNav = document.getElementById("mobileNav");
   const mobileNavOverlay = document.getElementById("mobileNavOverlay");
@@ -46,6 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /* =========================
+     الهيدر عند التمرير
+  ========================= */
   const header = document.getElementById("header");
   const updateHeaderOnScroll = () => {
     if (!header) return;
@@ -55,6 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
   updateHeaderOnScroll();
   window.addEventListener("scroll", updateHeaderOnScroll);
 
+  /* =========================
+     زر العودة للأعلى
+  ========================= */
   const backToTop = document.getElementById("backToTop");
   if (backToTop) {
     backToTop.addEventListener("click", () => {
@@ -67,6 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /* =========================
+     شريط تقدم التمرير
+  ========================= */
   const scrollProgressBar = document.getElementById("scrollProgressBar");
   const updateScrollProgress = () => {
     if (!scrollProgressBar) return;
@@ -79,6 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", updateScrollProgress);
   window.addEventListener("resize", updateScrollProgress);
 
+  /* =========================
+     ظهور العناصر أثناء التمرير
+  ========================= */
   const revealItems = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window && revealItems.length) {
     const revealObserver = new IntersectionObserver(
@@ -97,6 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
     revealItems.forEach((item) => item.classList.add("visible"));
   }
 
+  /* =========================
+     نجاح نموذج التواصل
+  ========================= */
   const contactForm = document.getElementById("contactForm");
   const contactSuccess = document.getElementById("contactSuccess");
 
@@ -112,6 +130,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /* =========================
+     نجاح نموذج الطلب
+  ========================= */
   const orderForm = document.getElementById("orderForm");
   const orderSuccess = document.getElementById("orderSuccess");
 
@@ -127,6 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /* =========================
+     فلترة الأعمال
+  ========================= */
   const filterButtons = document.querySelectorAll(".catalog-filter");
   const portfolioItems = document.querySelectorAll(".portfolio-item");
 
@@ -147,6 +171,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /* =========================
+     نافذة تفاصيل العمل
+  ========================= */
   const modal = document.getElementById("portfolioModal");
   const modalBackdrop = document.getElementById("modalBackdrop");
   const modalClose = document.getElementById("modalClose");

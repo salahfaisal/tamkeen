@@ -3,224 +3,394 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>منصة تمكين للخدمات التعليمية الإلكترونية</title>
+  <meta name="description" content="منصة تمكين للخدمات التعليمية الإلكترونية - خدمات احترافية للطلاب والمعلمين والباحثين ورواد الأعمال." />
+  <title>منصة تمكين | خدمات تعليمية إلكترونية حديثة</title>
 
-  <!-- الخطوط -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <!-- ملف التنسيقات -->
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style_modern.css" />
 </head>
-
 <body>
-  <!-- شريط تقدم التمرير -->
-  <div class="scroll-progress">
+  <div class="scroll-progress" aria-hidden="true">
     <div class="scroll-progress-bar" id="scrollProgressBar"></div>
   </div>
 
   <div class="page">
-    <!-- الهيدر -->
-    <header class="header">
+    <header class="header" id="topHeader">
       <div class="container header-inner">
-        <div class="logo">
-          <img src="images2/logo.png" alt="شعار منصة تمكين" class="logo-img" />
-          <div class="logo-text">
+        <a href="#hero" class="logo" aria-label="الانتقال إلى الصفحة الرئيسية">
+          <span class="logo-mark">ت</span>
+          <span class="logo-text">
             <span class="logo-main">منصة تمكين</span>
             <span class="logo-sub">للخدمات التعليمية الإلكترونية</span>
-          </div>
-        </div>
+          </span>
+        </a>
 
-        <!-- زر القائمة الجانبية للجوال -->
-        <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة">☰</button>
+        <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mobileNav">
+          <span></span><span></span><span></span>
+        </button>
 
-        <nav class="nav" id="mainNav">
+        <nav class="nav" id="mainNav" aria-label="التنقل الرئيسي">
           <a href="#hero">الرئيسية</a>
           <a href="#about">من نحن</a>
-          <a href="#services">خدماتنا</a>
-          <a href="#catalog">كتالوج الأعمال</a>
+          <a href="#services">الخدمات</a>
+          <a href="#catalog">الأعمال</a>
           <a href="#order">طلب خدمة</a>
-          <a href="#contact">تواصل معنا</a>
+          <a href="#faq">الأسئلة</a>
+          <a href="#contact">التواصل</a>
         </nav>
       </div>
     </header>
 
-    <!-- قائمة الجوال -->
-    <div class="mobile-nav" id="mobileNav">
-      <nav class="mobile-nav-inner">
-        <a href="#hero">الرئيسية</a>
-        <a href="#about">من نحن</a>
-        <a href="#services">خدماتنا</a>
-        <a href="#catalog">كتالوج الأعمال</a>
-        <a href="#order">طلب خدمة</a>
-        <a href="#contact">تواصل معنا</a>
-      </nav>
-    </div>
-
-    <!-- قسم البداية -->
-    <section id="hero" class="hero">
-      <div class="container hero-inner">
-        <div class="hero-text">
-          <p class="hero-tag">منصة تعليمية – خدمات احترافية</p>
-          <h1>منصة تمكين للخدمات التعليمية الإلكترونية</h1>
-          <p class="hero-sub">
-            خدمات متكاملة للطلاب، المعلمين، الباحثين، وروّاد الأعمال:
-            أبحاث، عروض تقديمية، تصميم، مونتاج، ترجمة، وإنشاء مواقع.
-          </p>
-          <div class="hero-actions">
-            <a href="#services" class="btn btn-primary btn-lg">استعرض الخدمات</a>
-            <a href="#catalog" class="btn btn-ghost btn-lg">كتالوج الأعمال</a>
-          </div>
+    <aside class="mobile-nav" id="mobileNav" aria-label="القائمة الجانبية للجوال">
+      <div class="mobile-nav-panel">
+        <div class="mobile-nav-head">
+          <strong>القائمة</strong>
+          <button class="mobile-nav-close" id="mobileNavClose" aria-label="إغلاق القائمة">×</button>
         </div>
-        <div class="hero-media">
-          <img src="images2/hero.jpg" alt="خدمات منصة تمكين" class="hero-img" loading="lazy" />
-        </div>
+        <nav class="mobile-nav-inner">
+          <a href="#hero">الرئيسية</a>
+          <a href="#about">من نحن</a>
+          <a href="#services">الخدمات</a>
+          <a href="#catalog">الأعمال</a>
+          <a href="#order">طلب خدمة</a>
+          <a href="#faq">الأسئلة الشائعة</a>
+          <a href="#contact">تواصل معنا</a>
+        </nav>
       </div>
-    </section>
+    </aside>
 
-    <!-- من نحن -->
-    <section id="about" class="section">
-      <div class="container grid-2">
-        <div>
-          <h2>من نحن</h2>
-          <p>
-            منصة <strong>تمكين</strong> هي منصة تعليمية إلكترونية تقدّم حزمة من الخدمات
-            الرقمية المساندة للعملية التعليمية والبحثية، إضافة إلى خدمات لروّاد الأعمال.
-          </p>
-        </div>
-        <div class="about-highlight">
-          <h3>أهدافنا</h3>
-          <ul>
-            <li>توفير حلول تعليمية واحترافية عالية الجودة.</li>
-            <li>تسهيل التواصل عبر قنوات موثوقة.</li>
-            <li>تقديم نماذج أعمال منظمة لكل فئة.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- خدماتنا -->
-    <section id="services" class="section section-alt">
-      <div class="container">
-        <h2>خدماتنا</h2>
-        <p class="section-sub">
-          نخدم الطلاب والمعلمين والباحثين ورواد الأعمال عبر باقة متنوعة من الخدمات.
-        </p>
-        <div class="cards-grid">
-          <article class="card"><div class="card-icon">🎓</div><h3>خدمات الطلاب</h3><p>أبحاث – مشاريع تخرج – عروض.</p></article>
-          <article class="card"><div class="card-icon">🧑‍🏫</div><h3>خدمات المعلمين</h3><p>ملفات شرح – عروض تفاعلية.</p></article>
-          <article class="card"><div class="card-icon">📚</div><h3>خدمات الباحثين</h3><p>تنسيق رسائل علمية ومراجعة لغوية.</p></article>
-          <article class="card"><div class="card-icon">💼</div><h3>خدمات إضافية</h3><p>تصميم – مونتاج – ترجمة – مواقع.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <!-- آراء العملاء -->
-    <section id="testimonials" class="section section-alt fade-section">
-      <div class="container">
-        <h2>آراء العملاء</h2>
-        <p class="section-sub">انطباعات المستخدمين حول جودة خدمات منصة تمكين.</p>
-        <div class="cards-grid">
-          <article class="card"><p>“مستواهم في تنسيق الأبحاث أكثر من رائع.”</p><div class="testimonial-meta">باحثة – جامعة الملك سعود</div></article>
-          <article class="card"><p>“العروض التفاعلية للطلاب كانت مبهرة جدًا.”</p><div class="testimonial-meta">معلمة علوم</div></article>
-          <article class="card"><p>“أنجزوا مشروعي في وقت قياسي وجودة عالية.”</p><div class="testimonial-meta">طالب هندسة</div></article>
-        </div>
-      </div>
-    </section>
-
-    <!-- كتالوج الأعمال -->
-    <section id="catalog" class="section">
-      <div class="container">
-        <h2>كتالوج الأعمال</h2>
-        <p class="section-sub">نماذج من الأعمال المنفذة في مختلف المجالات.</p>
-        <div class="portfolio-grid">
-          <article class="portfolio-item">
-            <div class="portfolio-thumb">
-              <img src="images2/work-student1.jpg" alt="مشروع تخرج" loading="lazy" />
+    <main>
+      <section id="hero" class="hero">
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="container hero-inner">
+          <div class="hero-text">
+            <span class="hero-tag">حلول تعليمية رقمية بأسلوب حديث</span>
+            <h1>منصة احترافية تجمع <span>التعليم</span> و<span>الخدمة</span> و<span>الجودة</span></h1>
+            <p class="hero-sub">
+              نساعد الطلاب والمعلمين والباحثين ورواد الأعمال عبر خدمات أكاديمية وإبداعية رقمية تشمل الأبحاث، العروض، التصميم، الترجمة، والمواقع الإلكترونية ضمن تجربة منظمة وسهلة وسريعة.
+            </p>
+            <div class="hero-actions">
+              <a href="#services" class="btn btn-primary btn-lg">استكشف الخدمات</a>
+              <a href="#order" class="btn btn-secondary btn-lg">ابدأ طلبك الآن</a>
             </div>
-            <div class="portfolio-body">
-              <h3>مشروع تخرج – إدارة أعمال</h3>
-              <p>بحث وتحليل متكامل + عرض تقديمي.</p>
-              <div class="portfolio-meta">
-                <span class="portfolio-tag">طلاب</span>
-                <a href="pdfs/work-student1.pdf" target="_blank" class="portfolio-link">عرض PDF</a>
+            <div class="hero-badges" aria-label="مميزات المنصة">
+              <span>واجهة حديثة</span>
+              <span>تنظيم احترافي</span>
+              <span>استجابة للجوال</span>
+              <span>تجربة موثوقة</span>
+            </div>
+          </div>
+
+          <div class="hero-card-wrap">
+            <div class="hero-card glass-card">
+              <div class="hero-card-top">
+                <span class="status-dot"></span>
+                <span>لوحة خدمات تمكين</span>
+              </div>
+              <div class="hero-mini-grid">
+                <article>
+                  <strong>+120</strong>
+                  <span>طلبًا تم إنجازه</span>
+                </article>
+                <article>
+                  <strong>4</strong>
+                  <span>فئات رئيسية</span>
+                </article>
+                <article>
+                  <strong>24/7</strong>
+                  <span>استقبال للطلبات</span>
+                </article>
+                <article>
+                  <strong>100%</strong>
+                  <span>تصميم متجاوب</span>
+                </article>
+              </div>
+              <div class="hero-feature-list">
+                <div><span>✓</span> عرض الخدمات بشكل واضح</div>
+                <div><span>✓</span> نموذج طلب منظم</div>
+                <div><span>✓</span> معرض أعمال قابل للتطوير</div>
               </div>
             </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- الأسئلة الشائعة -->
-    <section id="faq" class="section fade-section">
-      <div class="container">
-        <h2>الأسئلة الشائعة</h2>
-        <div class="faq-list">
-          <details><summary>كيف أطلب خدمة؟</summary><p>من خلال نموذج “طلب خدمة”.</p></details>
-          <details><summary>كيف يتم التواصل بعد الإرسال؟</summary><p>نتواصل عبر واتساب أو البريد الإلكتروني.</p></details>
-          <details><summary>هل يمكن تعديل الطلب؟</summary><p>نعم قبل بدء التنفيذ.</p></details>
-        </div>
-      </div>
-    </section>
-
-    <!-- سياسة الخصوصية -->
-    <section id="policy" class="section section-alt fade-section">
-      <div class="container">
-        <h2>سياسة الخصوصية</h2>
-        <div class="policy-text">
-          <p>نحافظ على خصوصية بيانات العملاء، ولا نشاركها مع أي طرف خارجي دون إذن مسبق.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- تواصل معنا -->
-    <section id="contact" class="section">
-      <div class="container grid-2">
-        <div>
-          <h2>تواصل معنا</h2>
-          <form id="contactForm" class="form">
-            <label>الاسم<input type="text" required></label>
-            <label>البريد الإلكتروني<input type="email" required></label>
-            <label>الرسالة<textarea required></textarea></label>
-            <button class="btn btn-primary">إرسال</button>
-          </form>
-          <div id="contactSuccess" class="contact-success" style="display:none;">✅ تم إرسال الرسالة بنجاح!</div>
-        </div>
-        <div class="contact-box">
-          <h3>معلومات التواصل</h3>
-          <ul>
-            <li>البريد: tamkeenplatformed@gmail.com</li>
-            <li>واتساب: قناة رسمية</li>
-          </ul>
-          <div class="social-links">
-            <a href="#" class="social-wa">WhatsApp</a>
-            <a href="#" class="social-tg">Telegram</a>
-            <a href="#" class="social-ig">Instagram</a>
-            <a href="#" class="social-yt">YouTube</a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- زر العودة للأعلى -->
-    <button class="back-to-top" id="backToTop" aria-label="العودة للأعلى">↑</button>
+      <section class="stats-section">
+        <div class="container stats-grid">
+          <div class="stat-box"><strong data-count="98">0</strong><span>نسبة رضا العملاء</span></div>
+          <div class="stat-box"><strong data-count="35">0</strong><span>خدمة متخصصة</span></div>
+          <div class="stat-box"><strong data-count="12">0</strong><span>فئة أعمال قابلة للتوسع</span></div>
+          <div class="stat-box"><strong data-count="7">0</strong><span>أقسام رئيسية في المنصة</span></div>
+        </div>
+      </section>
 
-    <!-- زر واتساب -->
-    <a href="#" class="wa-float" id="waBtn">WA</a>
+      <section id="about" class="section">
+        <div class="container grid-2 about-grid">
+          <div>
+            <div class="section-heading">
+              <span class="section-kicker">من نحن</span>
+              <h2>هوية واضحة ورسالة مهنية</h2>
+            </div>
+            <p class="lead-text">
+              منصة <strong>تمكين</strong> مشروع رقمي يهدف إلى تقديم خدمات تعليمية وإبداعية إلكترونية ضمن تجربة عصرية، تجمع بين الجودة الأكاديمية، السرعة في التنظيم، والوضوح في عرض الخدمات والأعمال.
+            </p>
+            <div class="feature-points">
+              <div class="feature-point"><span>01</span><p>تنظيم الخدمات حسب الفئة المستهدفة لتسهيل الوصول.</p></div>
+              <div class="feature-point"><span>02</span><p>إبراز الأعمال السابقة لبناء الثقة وتحسين قرار العميل.</p></div>
+              <div class="feature-point"><span>03</span><p>تهيئة المنصة للتوسع لاحقًا بإضافة طلبات حقيقية وربط واتساب أو قاعدة بيانات.</p></div>
+            </div>
+          </div>
 
-    <!-- زر طلب خدمة -->
+          <div class="about-panel glass-card">
+            <h3>ما الذي يميز تمكين؟</h3>
+            <ul>
+              <li>تصميم عربي حديث ومريح بصريًا.</li>
+              <li>قابلية تطوير إلى منصة تجارية كاملة.</li>
+              <li>واجهة مناسبة للهواتف والشاشات الكبيرة.</li>
+              <li>مرونة لإضافة أعمال، خدمات، وتتبع طلبات.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="section section-soft">
+        <div class="container">
+          <div class="section-heading center">
+            <span class="section-kicker">الخدمات</span>
+            <h2>خدماتنا الأساسية</h2>
+            <p class="section-sub">تم تنظيم الخدمات في بطاقات واضحة لتسهيل التصفح وإبراز القيمة لكل فئة.</p>
+          </div>
+
+          <div class="cards-grid services-grid">
+            <article class="card service-card">
+              <div class="card-icon">🎓</div>
+              <h3>خدمات الطلاب</h3>
+              <p>أبحاث، مشاريع تخرج، عروض تقديمية، وتقارير أكاديمية احترافية.</p>
+              <ul class="tag-list"><li>بحوث</li><li>عروض</li><li>مشاريع</li></ul>
+            </article>
+            <article class="card service-card">
+              <div class="card-icon">🧑‍🏫</div>
+              <h3>خدمات المعلمين</h3>
+              <p>إعداد ملفات شرح، عروض دراسية، وأنشطة تعليمية منظمة.</p>
+              <ul class="tag-list"><li>شرح</li><li>أنشطة</li><li>عروض</li></ul>
+            </article>
+            <article class="card service-card">
+              <div class="card-icon">📚</div>
+              <h3>خدمات الباحثين</h3>
+              <p>تنسيق رسائل علمية، مراجعة لغوية، وتحسين الإخراج الأكاديمي.</p>
+              <ul class="tag-list"><li>تحرير</li><li>تنسيق</li><li>مراجعة</li></ul>
+            </article>
+            <article class="card service-card">
+              <div class="card-icon">💼</div>
+              <h3>خدمات إضافية</h3>
+              <p>تصميم، مونتاج، ترجمة، وصفحات هبوط ومواقع بسيطة.</p>
+              <ul class="tag-list"><li>تصميم</li><li>ترجمة</li><li>مواقع</li></ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="catalog" class="section">
+        <div class="container">
+          <div class="section-heading center">
+            <span class="section-kicker">الأعمال</span>
+            <h2>كتالوج الأعمال</h2>
+            <p class="section-sub">معرض أعمال قابل للتصفية يساعد على تقديم النماذج السابقة بصورة أوضح وأكثر احترافية.</p>
+          </div>
+
+          <div class="catalog-filters" role="tablist" aria-label="تصفية الأعمال">
+            <button class="btn btn-filter active" data-filter="all">الكل</button>
+            <button class="btn btn-filter" data-filter="students">طلاب</button>
+            <button class="btn btn-filter" data-filter="research">باحثون</button>
+            <button class="btn btn-filter" data-filter="design">تصميم</button>
+          </div>
+
+          <div class="portfolio-grid" id="portfolioGrid">
+            <article class="portfolio-item" data-category="students">
+              <div class="portfolio-thumb gradient-thumb"><span>مشروع تخرج</span></div>
+              <div class="portfolio-body">
+                <h3>مشروع تخرج – إدارة أعمال</h3>
+                <p>بحث وتحليل متكامل مع عرض تقديمي منظم بصياغة مهنية.</p>
+                <div class="portfolio-meta">
+                  <span class="portfolio-tag">طلاب</span>
+                  <a href="#order" class="portfolio-link">اطلب مشابه</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="portfolio-item" data-category="research">
+              <div class="portfolio-thumb gradient-thumb"><span>تنسيق رسالة</span></div>
+              <div class="portfolio-body">
+                <h3>تنسيق رسالة علمية</h3>
+                <p>تهيئة المحتوى الأكاديمي بصياغة منظمة ومظهر واضح للصفحات والجداول.</p>
+                <div class="portfolio-meta">
+                  <span class="portfolio-tag">باحثون</span>
+                  <a href="#order" class="portfolio-link">اطلب مشابه</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="portfolio-item" data-category="design">
+              <div class="portfolio-thumb gradient-thumb"><span>تصميم تعليمي</span></div>
+              <div class="portfolio-body">
+                <h3>عرض تعليمي تفاعلي</h3>
+                <p>تصميم عرض حديث بصريًا مناسب للتدريب أو التدريس أو العروض العامة.</p>
+                <div class="portfolio-meta">
+                  <span class="portfolio-tag">تصميم</span>
+                  <a href="#order" class="portfolio-link">اطلب مشابه</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="testimonials" class="section section-soft">
+        <div class="container">
+          <div class="section-heading center">
+            <span class="section-kicker">آراء العملاء</span>
+            <h2>ماذا يقول عملاؤنا؟</h2>
+          </div>
+          <div class="cards-grid testimonials-grid">
+            <article class="card testimonial-card">
+              <p>"التنظيم ممتاز، والتواصل واضح، والتسليم كان مرتبًا جدًا."</p>
+              <div class="testimonial-meta">طالبة دراسات عليا</div>
+            </article>
+            <article class="card testimonial-card">
+              <p>"العرض التقديمي كان حديثًا واحترافيًا وسهّل علي الشرح بشكل كبير."</p>
+              <div class="testimonial-meta">معلمة علوم</div>
+            </article>
+            <article class="card testimonial-card">
+              <p>"المنصة أصبحت أكثر وضوحًا بصريًا، وهذا يعكس ثقة أعلى للعملاء."</p>
+              <div class="testimonial-meta">رائد أعمال</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="order" class="section">
+        <div class="container grid-2 order-grid">
+          <div>
+            <div class="section-heading">
+              <span class="section-kicker">ابدأ الآن</span>
+              <h2>طلب خدمة</h2>
+              <p class="section-sub left">أضفت لك قسمًا فعليًا لطلب الخدمة بدل الرابط غير الموجود في النسخة السابقة.</p>
+            </div>
+            <form class="form order-form" id="orderForm">
+              <label>الاسم الكامل
+                <input type="text" name="name" placeholder="اكتب اسمك" required>
+              </label>
+              <label>البريد الإلكتروني
+                <input type="email" name="email" placeholder="name@example.com" required>
+              </label>
+              <label>نوع الخدمة
+                <select name="service" required>
+                  <option value="">اختر الخدمة</option>
+                  <option>خدمات الطلاب</option>
+                  <option>خدمات المعلمين</option>
+                  <option>خدمات الباحثين</option>
+                  <option>تصميم وترجمة ومواقع</option>
+                </select>
+              </label>
+              <label>تفاصيل الطلب
+                <textarea name="details" rows="5" placeholder="اكتب وصفًا مختصرًا لطلبك" required></textarea>
+              </label>
+              <button type="submit" class="btn btn-primary">إرسال الطلب</button>
+              <div id="orderSuccess" class="contact-success" hidden>✅ تم استلام طلبك بنجاح، وسيتم التواصل معك قريبًا.</div>
+            </form>
+          </div>
+
+          <div class="contact-box order-side-box">
+            <h3>كيف تعمل العملية؟</h3>
+            <ol class="steps-list">
+              <li>ترسل نوع الخدمة والتفاصيل.</li>
+              <li>يتم مراجعة الطلب وتحديد نطاق العمل.</li>
+              <li>يتم التواصل معك عبر القناة المناسبة.</li>
+              <li>يبدأ التنفيذ وفق اتفاق واضح.</li>
+            </ol>
+            <a href="#contact" class="btn btn-light">الانتقال إلى قسم التواصل</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="section section-soft">
+        <div class="container faq-wrap">
+          <div class="section-heading center">
+            <span class="section-kicker">الأسئلة الشائعة</span>
+            <h2>إجابات سريعة ومباشرة</h2>
+          </div>
+          <div class="faq-list">
+            <details>
+              <summary>كيف يمكنني طلب خدمة؟</summary>
+              <p>يمكنك تعبئة نموذج طلب الخدمة أو نموذج التواصل، ثم يتم الرد عليك بالقناة المناسبة.</p>
+            </details>
+            <details>
+              <summary>هل يمكن تعديل الخدمة قبل التنفيذ؟</summary>
+              <p>نعم، يمكن مراجعة التفاصيل وتعديلها قبل بدء التنفيذ النهائي.</p>
+            </details>
+            <details>
+              <summary>هل المنصة قابلة للتوسع لاحقًا؟</summary>
+              <p>نعم، بنيتها الحالية مناسبة لإضافة تسجيل مستخدمين، قاعدة بيانات، ولوحة تحكم مستقبلًا.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="container grid-2 contact-grid">
+          <div>
+            <div class="section-heading">
+              <span class="section-kicker">التواصل</span>
+              <h2>تواصل معنا</h2>
+            </div>
+            <form id="contactForm" class="form">
+              <label>الاسم
+                <input type="text" required placeholder="اكتب اسمك">
+              </label>
+              <label>البريد الإلكتروني
+                <input type="email" required placeholder="name@example.com">
+              </label>
+              <label>الرسالة
+                <textarea required rows="5" placeholder="كيف يمكننا مساعدتك؟"></textarea>
+              </label>
+              <button class="btn btn-primary" type="submit">إرسال الرسالة</button>
+            </form>
+            <div id="contactSuccess" class="contact-success" hidden>✅ تم إرسال الرسالة بنجاح.</div>
+          </div>
+
+          <div class="contact-box">
+            <h3>معلومات التواصل</h3>
+            <ul>
+              <li><strong>البريد:</strong> tamkeenplatformed@gmail.com</li>
+              <li><strong>الحالة:</strong> متاحون لاستقبال الطلبات</li>
+              <li><strong>القنوات:</strong> واتساب، تيليجرام، إنستغرام، يوتيوب</li>
+            </ul>
+            <div class="social-links">
+              <a href="#" aria-label="واتساب">WhatsApp</a>
+              <a href="#" aria-label="تيليجرام">Telegram</a>
+              <a href="#" aria-label="إنستغرام">Instagram</a>
+              <a href="#" aria-label="يوتيوب">YouTube</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <button class="back-to-top" id="backToTop" aria-label="العودة إلى الأعلى">↑</button>
+    <a href="#contact" class="wa-float" id="waBtn" aria-label="التواصل السريع">WA</a>
     <a href="#order" class="cta-float">طلب خدمة</a>
 
-    <!-- الفوتر -->
     <footer class="footer">
       <div class="container footer-inner">
-        <span>© 2025 منصة تمكين. جميع الحقوق محفوظة.</span>
-        <span class="footer-note">نسخة تجريبية – قابلة للتطوير.</span>
+        <span>© 2026 منصة تمكين. جميع الحقوق محفوظة.</span>
+        <span class="footer-note">واجهة مطورة بأسلوب حديث وقابلة للتوسع لاحقًا.</span>
       </div>
     </footer>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script_modern.js"></script>
 </body>
 </html>

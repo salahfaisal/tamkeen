@@ -118,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       contactSuccess.style.display = "block";
       contactForm.reset();
+
       setTimeout(() => {
         contactSuccess.style.display = "none";
       }, 4000);
@@ -132,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       orderSuccess.style.display = "block";
       orderForm.reset();
+
       setTimeout(() => {
         orderSuccess.style.display = "none";
       }, 4000);
@@ -162,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     المودال العارض
+     مودال أعمالنا فقط
   ========================= */
   const modal = document.getElementById("portfolioModal");
   const modalBackdrop = document.getElementById("modalBackdrop");
@@ -170,13 +172,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalTitle = document.getElementById("modalTitle");
   const modalDesc = document.getElementById("modalDesc");
   const modalViewer = document.getElementById("modalViewer");
-  const modalActionsRow = document.getElementById("modalActionsRow");
   const portfolioOpenButtons = document.querySelectorAll(".portfolio-open");
 
   const clearModalContent = () => {
-    if (!modalViewer || !modalActionsRow) return;
+    if (!modalViewer) return;
     modalViewer.innerHTML = "";
-    modalActionsRow.innerHTML = "";
   };
 
   const preventRightClick = (element) => {
@@ -185,8 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const openModalShell = (title, desc) => {
-    if (!modal || !modalTitle || !modalDesc) return false;
-
+    if (!modal || !modalTitle || !modalDesc || !modalViewer) return false;
     clearModalContent();
     modalTitle.textContent = title || "عرض المحتوى";
     modalDesc.textContent = desc || "";
@@ -194,13 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.setAttribute("aria-hidden", "false");
     body.style.overflow = "hidden";
     return true;
-  };
-
-  const addInlineNote = (text) => {
-    const note = document.createElement("div");
-    note.className = "modal-note";
-    note.textContent = text;
-    modalActionsRow.appendChild(note);
   };
 
   const openInlinePdf = (title, desc, pdfUrl) => {
@@ -211,29 +203,9 @@ document.addEventListener("DOMContentLoaded", () => {
     iframe.src = `${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`;
     iframe.setAttribute("title", title || "PDF Viewer");
     iframe.setAttribute("loading", "lazy");
-    iframe.setAttribute("referrerpolicy", "no-referrer");
 
     modalViewer.appendChild(iframe);
     preventRightClick(modalViewer);
-    addInlineNote("يتم عرض الملف مباشرة داخل المنصة بدون إظهار رابط تنزيل مباشر.");
-  };
-
-  const openInlineVideo = (title, desc, videoUrl) => {
-    if (!openModalShell(title, desc)) return;
-
-    const video = document.createElement("video");
-    video.className = "modal-video-player";
-    video.controls = true;
-    video.controlsList = "nodownload noplaybackrate noremoteplayback";
-    video.disablePictureInPicture = true;
-    video.setAttribute("playsinline", "true");
-    video.setAttribute("preload", "metadata");
-    video.src = videoUrl;
-
-    modalViewer.appendChild(video);
-    preventRightClick(video);
-    preventRightClick(modalViewer);
-    addInlineNote("يتم عرض الفيديو مباشرة داخل المنصة بدون إظهار زر تنزيل مباشر.");
   };
 
   const openInlineImage = (title, desc, imageUrl) => {
@@ -248,15 +220,6 @@ document.addEventListener("DOMContentLoaded", () => {
     modalViewer.appendChild(img);
     preventRightClick(img);
     preventRightClick(modalViewer);
-    addInlineNote("هذه معاينة مباشرة داخل المنصة.");
-  };
-
-  const closeModalFn = () => {
-    if (!modal) return;
-    modal.classList.remove("is-open");
-    modal.setAttribute("aria-hidden", "true");
-    body.style.overflow = "";
-    clearModalContent();
   };
 
   if (portfolioOpenButtons.length) {
@@ -270,14 +233,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (viewerType === "pdf" && link) {
           openInlinePdf(title, desc, link);
-        } else if (viewerType === "video" && link) {
-          openInlineVideo(title, desc, link);
         } else {
           openInlineImage(title, desc, img || "images2/hero.jpg");
         }
       });
     });
   }
+
+  const closeModalFn = () => {
+    if (!modal) return;
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    body.style.overflow = "";
+    clearModalContent();
+  };
 
   if (modalClose) modalClose.addEventListener("click", closeModalFn);
   if (modalBackdrop) modalBackdrop.addEventListener("click", closeModalFn);
@@ -369,6 +338,36 @@ document.addEventListener("DOMContentLoaded", () => {
     return "ملف PDF";
   };
 
+  const renderInlinePreview = (item) => {
+    if (item.type === "video") {
+      return `
+        <div class="teacher-service-preview">
+          <video
+            controls
+            controlsList="nodownload noplaybackrate noremoteplayback"
+            disablepictureinpicture
+            playsinline
+            preload="metadata"
+            oncontextmenu="return false;">
+            <source src="${item.link}" type="video/mp4">
+            المتصفح لا يدعم تشغيل الفيديو.
+          </video>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="teacher-service-preview" oncontextmenu="return false;">
+        <iframe
+          src="${item.link}#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          title="${item.title}">
+        </iframe>
+      </div>
+    `;
+  };
+
   const renderTeacherServices = (filter = "all") => {
     if (!teacherServicesGrid) return;
 
@@ -379,12 +378,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     teacherServicesGrid.innerHTML = filtered
       .map((item) => {
-        const openText =
-          item.type === "video" ? "مشاهدة داخل المنصة" : "عرض داخل المنصة";
-
         return `
           <article class="teacher-service-card reveal" data-teacher-type="${item.type}">
-            <div class="teacher-service-icon">${item.icon}</div>
+            ${renderInlinePreview(item)}
             <div class="teacher-service-body">
               <div class="teacher-service-meta">
                 <span class="teacher-service-type ${item.type}">${getTypeLabel(item.type)}</span>
@@ -392,15 +388,8 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
               <h3 class="teacher-service-title">${item.title}</h3>
               <p class="teacher-service-desc">${item.desc}</p>
-              <div class="teacher-service-actions">
-                <button
-                  class="btn btn-primary teacher-service-open"
-                  data-kind="${item.type}"
-                  data-title="${item.title}"
-                  data-desc="${item.desc}"
-                  data-link="${item.link}">
-                  ${openText}
-                </button>
+              <div class="teacher-inline-note">
+                يتم عرض المحتوى مباشرة داخل الصفحة.
               </div>
             </div>
           </article>
@@ -411,24 +400,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const newRevealItems = teacherServicesGrid.querySelectorAll(".reveal");
     newRevealItems.forEach((item) => item.classList.add("visible"));
 
-    bindTeacherServiceButtons();
-  };
-
-  const bindTeacherServiceButtons = () => {
-    const teacherOpenButtons = document.querySelectorAll(".teacher-service-open");
-    teacherOpenButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const kind = button.dataset.kind;
-        const title = button.dataset.title || "تفاصيل الخدمة";
-        const desc = button.dataset.desc || "";
-        const link = button.dataset.link || "";
-
-        if (kind === "video") {
-          openInlineVideo(title, desc, link);
-        } else {
-          openInlinePdf(title, desc, link);
-        }
-      });
+    teacherServicesGrid.querySelectorAll("video").forEach((video) => {
+      video.addEventListener("contextmenu", (e) => e.preventDefault());
     });
   };
 

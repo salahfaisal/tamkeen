@@ -35,35 +35,35 @@
         <div class="nav-item with-menu">
           <button type="button" class="nav-link nav-button">ملفات الإنجاز</button>
           <div class="dropdown-menu">
-            <a href="#teacher-library" data-group-link="portfolio">ملفات الإنجاز المهنية</a>
-            <a href="#teacher-library" data-group-link="nafis">ملفات نافس</a>
-            <a href="#teacher-library" data-group-link="discipline">ملف الانضباط</a>
+            <a href="#group-portfolio">ملفات الإنجاز المهنية</a>
+            <a href="#group-nafis">ملفات نافس</a>
+            <a href="#group-discipline">ملف الانضباط</a>
           </div>
         </div>
 
         <div class="nav-item with-menu">
           <button type="button" class="nav-link nav-button">ملفات شواهد الأداء الوظيفي</button>
           <div class="dropdown-menu">
-            <a href="#teacher-library" data-group-link="guides">الأدلة التنظيمية</a>
-            <a href="#teacher-library" data-group-link="partnership">الشراكة المجتمعية</a>
-            <a href="#teacher-library" data-group-link="design">الشهادات والبروشورات</a>
+            <a href="#group-guides">الأدلة التنظيمية</a>
+            <a href="#group-partnership">الشراكة المجتمعية</a>
+            <a href="#group-design">الشهادات والبروشورات</a>
           </div>
         </div>
 
         <div class="nav-item with-menu">
           <button type="button" class="nav-link nav-button">خدمات المعلمين والمعلمات</button>
           <div class="dropdown-menu">
-            <a href="#teacher-library" data-group-link="training">النماذج التدريبية</a>
-            <a href="#teacher-library" data-group-link="plans">الخطط والبرامج</a>
-            <a href="#teacher-library" data-group-link="worksheets">أوراق العمل</a>
-            <a href="#teacher-library" data-group-link="video">الفيديوهات والمونتاج</a>
+            <a href="#group-training">النماذج التدريبية</a>
+            <a href="#group-plans">الخطط والبرامج</a>
+            <a href="#group-worksheets">أوراق العمل</a>
+            <a href="#group-video">الفيديوهات والمونتاج</a>
           </div>
         </div>
 
         <div class="nav-item with-menu">
           <button type="button" class="nav-link nav-button">خدمات طلابية وتصاميم</button>
           <div class="dropdown-menu">
-            <a href="#services-cards">الخدمات الطلابية</a>
+            <a href="#services-cards">الخدمات الرئيسية</a>
             <a href="#catalog">نماذج الأعمال</a>
           </div>
         </div>
@@ -90,6 +90,7 @@
       <a href="#hero">الصفحة الرئيسية</a>
       <a href="#services-cards">الخدمات الرئيسية</a>
       <a href="#teacher-library">خدمات المعلمين</a>
+      <a href="#groups-index">مجموعات الخدمات</a>
       <a href="#catalog">أعمالنا</a>
       <a href="#contact">تواصل معنا</a>
     </nav>
@@ -111,12 +112,27 @@
 
           <div class="hero-actions">
             <a href="#teacher-library" class="main-btn">استعرض خدمات المعلمين</a>
-            <a href="#catalog" class="ghost-btn">شاهد الأعمال</a>
+            <a href="#groups-index" class="ghost-btn">تصفح المجموعات</a>
           </div>
 
           <div class="hero-contact-strip">
             <span>+966 53 323 4429</span>
             <span>@upg_sa_academic</span>
+          </div>
+
+          <div class="hero-stats">
+            <div class="hero-stat-box">
+              <strong id="heroStatFiles">0</strong>
+              <span>ملفات</span>
+            </div>
+            <div class="hero-stat-box">
+              <strong id="heroStatVideos">0</strong>
+              <span>فيديوهات</span>
+            </div>
+            <div class="hero-stat-box">
+              <strong id="heroStatGroups">0</strong>
+              <span>مجموعات</span>
+            </div>
           </div>
 
           <div class="hero-shape hero-shape-one"></div>
@@ -126,25 +142,14 @@
         <div class="hero-viewer reveal">
           <div class="viewer-topline">
             <span class="viewer-badge">عرض مميز</span>
+            <div class="viewer-dots" id="heroViewerDots"></div>
           </div>
 
-          <div class="viewer-frame" id="heroMainViewer">
-            <video
-              controls
-              controlsList="nodownload noplaybackrate noremoteplayback"
-              disablepictureinpicture
-              playsinline
-              preload="metadata"
-              poster="images2/hero.jpg"
-            >
-              <source src="videos/teachers/video-production.mp4" type="video/mp4" />
-              المتصفح لا يدعم تشغيل الفيديو.
-            </video>
-          </div>
+          <div class="viewer-frame" id="heroMainViewer"></div>
 
           <div class="viewer-caption">
-            <h3>عرض مرئي لخدمات المنصة</h3>
-            <p>واجهة عرض كبيرة وواضحة مشابهة لأسلوب المنصة المرجعية لكن بتصميم أحدث.</p>
+            <h3 id="heroViewerTitle">عرض مرئي لخدمات المنصة</h3>
+            <p id="heroViewerDesc">واجهة عرض كبيرة وواضحة مشابهة لأسلوب المنصة المرجعية لكن بتصميم أحدث.</p>
           </div>
         </div>
       </div>
@@ -180,7 +185,7 @@
       </div>
     </section>
 
-    <!-- خدمات المعلمين -->
+    <!-- خدمات المعلمين الرئيسية -->
     <section id="teacher-library" class="teacher-library-section">
       <div class="container">
         <div class="section-top reveal">
@@ -219,6 +224,25 @@
 
         <div class="teacher-cards-grid" id="teacherCardsGrid"></div>
       </div>
+    </section>
+
+    <!-- فهرس المجموعات -->
+    <section id="groups-index" class="groups-index-section">
+      <div class="container">
+        <div class="section-top reveal">
+          <span class="section-chip">الصفحات الفرعية</span>
+          <h2>مجموعات الخدمات بالتفصيل</h2>
+          <p class="section-lead">
+            كل مجموعة أدناه تمثل صفحة عرض فرعية داخل نفس المنصة، مع بانر خاص وعارض وبطاقات تخص المجموعة نفسها.
+          </p>
+        </div>
+        <div class="groups-index-grid" id="groupsIndexGrid"></div>
+      </div>
+    </section>
+
+    <!-- المجموعات الفرعية -->
+    <section class="group-pages-section">
+      <div class="container" id="groupSectionsContainer"></div>
     </section>
 
     <!-- أعمالنا -->
@@ -296,7 +320,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <span>© 2025 منصة تمكين. جميع الحقوق محفوظة.</span>
-      <span>واجهة مطورة بأسلوب عرض حديث مستوحى من المنصة المرجعية.</span>
+      <span>واجهة مطورة بأسلوب عرض حديث مستوحى من المنصة المرجعية، مع الحفاظ على بيانات المنصة الأصلية.</span>
     </div>
   </footer>
 

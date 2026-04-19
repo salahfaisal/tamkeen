@@ -19,20 +19,16 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- شريط تقدم التمرير -->
   <div class="scroll-progress">
     <div class="scroll-progress-bar" id="scrollProgressBar"></div>
   </div>
 
-  <!-- زر العودة للأعلى -->
   <button class="back-to-top" id="backToTop" aria-label="العودة إلى الأعلى">↑</button>
 
-  <!-- أزرار عائمة -->
   <a href="https://wa.me/000000000000" target="_blank" class="wa-float" aria-label="واتساب">WA</a>
   <a href="#order" class="cta-float" aria-label="طلب خدمة">طلب</a>
 
   <div class="page">
-    <!-- الهيدر -->
     <header class="header" id="header">
       <div class="container header-inner">
         <a href="#hero" class="logo" aria-label="الذهاب إلى الرئيسية">
@@ -65,7 +61,6 @@
       </div>
     </header>
 
-    <!-- قائمة الجوال -->
     <aside class="mobile-nav" id="mobileNav" aria-hidden="true">
       <div class="mobile-nav-inner">
         <div class="mobile-nav-top">
@@ -90,7 +85,6 @@
 
     <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
 
-    <!-- Hero -->
     <section id="hero" class="hero">
       <div class="container hero-inner">
         <div class="hero-text reveal">
@@ -147,7 +141,6 @@
       </div>
     </section>
 
-    <!-- من نحن -->
     <section id="about" class="section">
       <div class="container">
         <div class="section-heading reveal">
@@ -189,7 +182,6 @@
       </div>
     </section>
 
-    <!-- خدماتنا -->
     <section id="services" class="section section-alt">
       <div class="container">
         <div class="section-heading reveal">
@@ -249,7 +241,6 @@
           </article>
         </div>
 
-        <!-- مكتبة خدمات المعلمين -->
         <div class="teacher-services-hub reveal">
           <div class="teacher-services-head">
             <div>
@@ -289,7 +280,6 @@
       </div>
     </section>
 
-    <!-- مميزات إضافية -->
     <section class="section">
       <div class="container">
         <div class="section-heading reveal">
@@ -325,7 +315,6 @@
       </div>
     </section>
 
-    <!-- أعمالنا -->
     <section id="catalog" class="section section-alt">
       <div class="container">
         <div class="section-heading reveal">
@@ -355,14 +344,14 @@
                   <button
                     type="button"
                     class="portfolio-open"
+                    data-viewer-type="pdf"
                     data-title="مشروع تخرج – إدارة أعمال"
                     data-desc="نموذج لمشروع تخرج يتضمن تنسيقًا منظمًا، عرضًا واضحًا، وإخراجًا مناسبًا للعرض والتسليم."
                     data-img="images2/work-student1.jpg"
-                    data-pdf="pdfs/work-student1.pdf"
+                    data-link="pdfs/work-student1.pdf"
                   >
-                    تفاصيل
+                    عرض داخل المنصة
                   </button>
-                  <a href="pdfs/work-student1.pdf" target="_blank" class="portfolio-link">PDF</a>
                 </div>
               </div>
             </div>
@@ -381,12 +370,13 @@
                   <button
                     type="button"
                     class="portfolio-open"
+                    data-viewer-type="image"
                     data-title="تنسيق بحث علمي"
                     data-desc="مثال على خدمة تنسيق المحتوى الأكاديمي بصورة أنيقة وواضحة مع التركيز على الجودة والقراءة السلسة."
                     data-img="images2/hero.jpg"
-                    data-pdf=""
+                    data-link=""
                   >
-                    تفاصيل
+                    عرض داخل المنصة
                   </button>
                 </div>
               </div>
@@ -406,12 +396,13 @@
                   <button
                     type="button"
                     class="portfolio-open"
+                    data-viewer-type="image"
                     data-title="تصميم عرض تقديمي"
                     data-desc="نموذج لتصميم عرض تقديمي يعتمد على البساطة، التوازن البصري، والوضوح في تقديم المعلومات."
                     data-img="images2/hero.jpg"
-                    data-pdf=""
+                    data-link=""
                   >
-                    تفاصيل
+                    عرض داخل المنصة
                   </button>
                 </div>
               </div>
@@ -421,7 +412,6 @@
       </div>
     </section>
 
-    <!-- آراء العملاء -->
     <section id="testimonials" class="section">
       <div class="container">
         <div class="section-heading reveal">
@@ -449,7 +439,6 @@
       </div>
     </section>
 
-    <!-- طلب خدمة -->
     <section id="order" class="section section-alt">
       <div class="container">
         <div class="section-heading reveal">
@@ -523,7 +512,6 @@
       </div>
     </section>
 
-    <!-- الأسئلة الشائعة -->
     <section id="faq" class="section">
       <div class="container">
         <div class="section-heading reveal">
@@ -555,7 +543,6 @@
       </div>
     </section>
 
-    <!-- تواصل معنا -->
     <section id="contact" class="section section-alt">
       <div class="container">
         <div class="section-heading reveal">
@@ -609,7 +596,6 @@
       </div>
     </section>
 
-    <!-- الفوتر -->
     <footer class="footer">
       <div class="container footer-inner">
         <span>© 2025 منصة تمكين. جميع الحقوق محفوظة.</span>
@@ -621,17 +607,16 @@
   <!-- Modal -->
   <div class="modal" id="portfolioModal" aria-hidden="true">
     <div class="modal-backdrop" id="modalBackdrop"></div>
-    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog modal-dialog-wide" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" id="modalClose" aria-label="إغلاق">×</button>
 
-      <div class="modal-img-wrap">
-        <img src="" alt="" class="modal-img" id="modalImg" />
-      </div>
-
-      <div class="modal-body">
+      <div class="modal-body modal-body-full">
         <h3 class="modal-title" id="modalTitle"></h3>
         <p class="modal-desc" id="modalDesc"></p>
-        <div class="modal-actions-row" id="modalActionsRow"></div>
+
+        <div class="modal-viewer" id="modalViewer"></div>
+
+        <div class="modal-actions-row secure-actions" id="modalActionsRow"></div>
       </div>
     </div>
   </div>

@@ -6,7 +6,7 @@
   <title>منصة تمكين للخدمات التعليمية الإلكترونية</title>
   <meta
     name="description"
-    content="منصة تمكين للخدمات التعليمية الإلكترونية: خدمات للطلاب والمعلمين والباحثين ورواد الأعمال تشمل الأبحاث، العروض، التصميم، الترجمة، والمواقع."
+    content="منصة تمكين للخدمات التعليمية الإلكترونية: خدمات للطلاب والمعلمين والباحثين ورواد الأعمال تشمل الأبحاث والعروض والملفات التعليمية والتصميم."
   />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,69 +22,73 @@
   <button class="floating-theme" id="themeToggle" aria-label="تبديل المظهر">◐</button>
   <button class="back-to-top" id="backToTop" aria-label="العودة إلى الأعلى">↑</button>
 
-  <header class="topbar">
+  <!-- الهيدر -->
+  <header class="site-header" id="siteHeader">
     <div class="container topbar-inner">
       <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة">
         <span></span><span></span><span></span>
       </button>
 
       <nav class="desktop-nav">
-        <a href="#hero" class="active-link">الصفحة الرئيسية</a>
+        <a href="#hero" class="nav-link active-link">الصفحة الرئيسية</a>
+
         <div class="nav-item with-menu">
-          <button type="button">ملفات الإنجاز</button>
+          <button type="button" class="nav-link nav-button">ملفات الإنجاز</button>
           <div class="dropdown-menu">
-            <a href="#teacher-library" data-group="portfolio">ملفات الإنجاز المهنية</a>
-            <a href="#teacher-library" data-group="nafis">ملفات نافس</a>
-            <a href="#teacher-library" data-group="discipline">ملف الانضباط</a>
+            <a href="#teacher-library" data-group-link="portfolio">ملفات الإنجاز المهنية</a>
+            <a href="#teacher-library" data-group-link="nafis">ملفات نافس</a>
+            <a href="#teacher-library" data-group-link="discipline">ملف الانضباط</a>
           </div>
         </div>
 
         <div class="nav-item with-menu">
-          <button type="button">ملفات شواهد الأداء الوظيفي</button>
+          <button type="button" class="nav-link nav-button">ملفات شواهد الأداء الوظيفي</button>
           <div class="dropdown-menu">
-            <a href="#teacher-library" data-group="guides">أدلة تنظيمية</a>
-            <a href="#teacher-library" data-group="partnership">الشراكة المجتمعية</a>
-            <a href="#teacher-library" data-group="design">الشهادات والبروشورات</a>
+            <a href="#teacher-library" data-group-link="guides">الأدلة التنظيمية</a>
+            <a href="#teacher-library" data-group-link="partnership">الشراكة المجتمعية</a>
+            <a href="#teacher-library" data-group-link="design">الشهادات والبروشورات</a>
           </div>
         </div>
 
         <div class="nav-item with-menu">
-          <button type="button">خدمات المعلمين والمعلمات</button>
+          <button type="button" class="nav-link nav-button">خدمات المعلمين والمعلمات</button>
           <div class="dropdown-menu">
-            <a href="#teacher-library" data-group="training">النماذج التدريبية</a>
-            <a href="#teacher-library" data-group="plans">الخطط والبرامج</a>
-            <a href="#teacher-library" data-group="worksheets">أوراق العمل</a>
-            <a href="#teacher-library" data-group="video">الفيديوهات والمونتاج</a>
+            <a href="#teacher-library" data-group-link="training">النماذج التدريبية</a>
+            <a href="#teacher-library" data-group-link="plans">الخطط والبرامج</a>
+            <a href="#teacher-library" data-group-link="worksheets">أوراق العمل</a>
+            <a href="#teacher-library" data-group-link="video">الفيديوهات والمونتاج</a>
           </div>
         </div>
 
         <div class="nav-item with-menu">
-          <button type="button">خدمات طلابية وتصاميم</button>
+          <button type="button" class="nav-link nav-button">خدمات طلابية وتصاميم</button>
           <div class="dropdown-menu">
-            <a href="#services-cards">خدمات الطلاب</a>
-            <a href="#services-cards">التصميم والمونتاج</a>
+            <a href="#services-cards">الخدمات الطلابية</a>
+            <a href="#catalog">نماذج الأعمال</a>
           </div>
         </div>
       </nav>
 
       <a href="#hero" class="brand">
         <div class="brand-text">
-          <span class="brand-title">منصة الترقية الإلكترونية</span>
-          <span class="brand-sub">منصة تمكين للخدمات التعليمية</span>
+          <span class="brand-title">منصة تمكين</span>
+          <span class="brand-sub">للخدمات التعليمية الإلكترونية</span>
         </div>
         <img src="images2/logo.png" alt="شعار المنصة" class="brand-logo" />
       </a>
     </div>
   </header>
 
-  <aside class="mobile-drawer" id="mobileDrawer">
+  <!-- قائمة الجوال -->
+  <aside class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
     <div class="mobile-drawer-head">
       <span>القائمة</span>
-      <button id="closeDrawer" aria-label="إغلاق">×</button>
+      <button id="closeDrawer" aria-label="إغلاق القائمة">×</button>
     </div>
+
     <nav class="mobile-drawer-links">
       <a href="#hero">الصفحة الرئيسية</a>
-      <a href="#services-cards">الخدمات</a>
+      <a href="#services-cards">الخدمات الرئيسية</a>
       <a href="#teacher-library">خدمات المعلمين</a>
       <a href="#catalog">أعمالنا</a>
       <a href="#contact">تواصل معنا</a>
@@ -93,16 +97,16 @@
   <div class="drawer-overlay" id="drawerOverlay"></div>
 
   <main>
-    <!-- العرض الرئيسي -->
+    <!-- الواجهة الرئيسية -->
     <section id="hero" class="hero-section">
       <div class="container hero-grid">
         <div class="hero-poster reveal">
-          <div class="poster-badge">منصة تعليمية حديثة</div>
-          <h1>منصة الترقية<br />الإلكترونية</h1>
+          <div class="poster-chip">خدمات تعليمية إلكترونية</div>
+          <h1>منصة تمكين<br />للخدمات التعليمية الإلكترونية</h1>
           <p>
-            اكتشف معنا عالمًا جديدًا من الخدمات الإلكترونية المتخصصة للمعلمين والمعلمات
-            والطلاب، من ملفات الإنجاز إلى التصاميم، النماذج التدريبية، الشهادات،
-            الفيديوهات، والأدلة التنظيمية بأسلوب احترافي حديث.
+            اكتشف معنا أسلوبًا حديثًا في عرض الخدمات التعليمية والملفات المهنية
+            والفيديوهات التوعوية والنماذج التدريبية، مع واجهة جذابة ومنظمة
+            تسهّل الوصول إلى الخدمة بسرعة ووضوح.
           </p>
 
           <div class="hero-actions">
@@ -120,7 +124,10 @@
         </div>
 
         <div class="hero-viewer reveal">
-          <div class="viewer-label">عرض مميز</div>
+          <div class="viewer-topline">
+            <span class="viewer-badge">عرض مميز</span>
+          </div>
+
           <div class="viewer-frame" id="heroMainViewer">
             <video
               controls
@@ -134,20 +141,21 @@
               المتصفح لا يدعم تشغيل الفيديو.
             </video>
           </div>
+
           <div class="viewer-caption">
             <h3>عرض مرئي لخدمات المنصة</h3>
-            <p>واجهة عرض حديثة للمحتوى والخدمات التعليمية بصورة أنيقة وواضحة.</p>
+            <p>واجهة عرض كبيرة وواضحة مشابهة لأسلوب المنصة المرجعية لكن بتصميم أحدث.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- بطاقات رئيسية -->
+    <!-- بطاقات الأقسام -->
     <section id="services-cards" class="services-cards-section">
       <div class="container">
         <div class="section-top reveal">
           <span class="section-chip">الأقسام الرئيسية</span>
-          <h2>عرض خدمات المنصة بأسلوب بصري حديث</h2>
+          <h2>هيكل عرض واضح ومنظم للخدمات</h2>
         </div>
 
         <div class="service-panels">
@@ -156,7 +164,7 @@
             <div class="service-panel-body">
               <span class="panel-label">خدمات المعلمين والمعلمات</span>
               <h3>ملفات، نماذج، خطط، فيديوهات، وأدلة تنظيمية</h3>
-              <p>مكتبة خدمات متكاملة مخصصة للمعلمين والمعلمات بأسلوب عرض مرتب وسهل التصفح.</p>
+              <p>عرض بصري كبير ومريح يركز على الفئات أولًا ثم يُظهر التفاصيل بشكل منظم.</p>
             </div>
           </article>
 
@@ -164,37 +172,38 @@
             <div class="service-panel-art art-student"></div>
             <div class="service-panel-body">
               <span class="panel-label">خدمات طلابية وتصاميم</span>
-              <h3>محتوى أكاديمي، عروض، ومخرجات احترافية</h3>
-              <p>بطاقات عرض منظمة للخدمات الطلابية والتصاميم التعليمية والإبداعية.</p>
+              <h3>تنظيم أكاديمي ومخرجات احترافية</h3>
+              <p>واجهة مناسبة لعرض الأعمال والنماذج والخدمات المساندة بأسلوب حديث.</p>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- مكتبة المعلمين -->
+    <!-- خدمات المعلمين -->
     <section id="teacher-library" class="teacher-library-section">
       <div class="container">
         <div class="section-top reveal">
           <span class="section-chip">خدمات المعلمين</span>
           <h2>مكتبة خدمات المعلمين والمعلمات</h2>
-          <p>
-            تم إعادة بناء هذا القسم بأسلوب عرض مشابه للمنصة المرجعية: عارض رئيسي في الأعلى،
-            تبويبات منظمة، وبطاقات أنيقة للمحتوى.
+          <p class="section-lead">
+            تم بناء هذا القسم بأسلوب أقرب للمنصة المرجعية: عارض رئيسي كبير، تبويبات واضحة،
+            ومجموعات خدمات مرتبة بصريًا مع بطاقات حديثة.
           </p>
         </div>
 
         <div class="teacher-layout">
           <div class="teacher-showcase reveal">
             <div class="teacher-showcase-head">
-              <div>
+              <div class="teacher-showcase-copy">
                 <span class="mini-chip" id="teacherFeaturedType">ملف PDF</span>
                 <h3 id="teacherFeaturedTitle">ملف إنجاز إلكتروني</h3>
                 <p id="teacherFeaturedDesc">
                   ملف مهني منظم لتوثيق الإنجازات والخبرات التعليمية إلكترونيًا.
                 </p>
               </div>
-              <div class="teacher-showcase-tabs">
+
+              <div class="teacher-showcase-filters">
                 <button class="teacher-filter active" data-filter="all">الكل</button>
                 <button class="teacher-filter" data-filter="pdf">الملفات</button>
                 <button class="teacher-filter" data-filter="video">الفيديوهات</button>
@@ -205,7 +214,7 @@
             <div class="teacher-showcase-viewer" id="teacherFeaturedViewer"></div>
           </div>
 
-          <div class="teacher-groups reveal" id="teacherGroupsTabs"></div>
+          <aside class="teacher-groups reveal" id="teacherGroupsTabs"></aside>
         </div>
 
         <div class="teacher-cards-grid" id="teacherCardsGrid"></div>
@@ -217,7 +226,7 @@
       <div class="container">
         <div class="section-top reveal">
           <span class="section-chip">نماذج من الأعمال</span>
-          <h2>أسلوب عرض مرئي ومنظم للمحتوى</h2>
+          <h2>عرض بصري للمخرجات والخدمات</h2>
         </div>
 
         <div class="catalog-grid">
@@ -226,8 +235,8 @@
               <img src="images2/work-student1.jpg" alt="عمل طلابي" />
             </div>
             <div class="catalog-body">
-              <h3>عرض ملف تعليمي</h3>
-              <p>أسلوب عرض بصري أنيق للملفات والخدمات التعليمية داخل المنصة.</p>
+              <h3>ملف أكاديمي منسق</h3>
+              <p>واجهة عرض مرتبة للأعمال المشابهة للمنصة المرجعية مع طابع حديث.</p>
             </div>
           </article>
 
@@ -242,11 +251,12 @@
                 poster="images2/hero.jpg"
               >
                 <source src="videos/teachers/vision-2030.mp4" type="video/mp4" />
+                المتصفح لا يدعم تشغيل الفيديو.
               </video>
             </div>
             <div class="catalog-body">
-              <h3>عرض فيديو داخل البطاقة</h3>
-              <p>إظهار الفيديو داخل البطاقة نفسها بطريقة حديثة وقريبة من المنصة المرجعية.</p>
+              <h3>فيديو مرئي داخل البطاقة</h3>
+              <p>أسلوب عرض مرئي للمحتوى التعليمي والتوعوي داخل الصفحة مباشرة.</p>
             </div>
           </article>
         </div>
@@ -255,7 +265,7 @@
 
     <!-- تواصل -->
     <section id="contact" class="contact-section">
-      <div class="container contact-box">
+      <div class="container contact-shell">
         <div class="section-top reveal">
           <span class="section-chip">تواصل معنا</span>
           <h2>يسعدنا تنفيذ طلباتك باحترافية</h2>
@@ -263,7 +273,7 @@
 
         <div class="contact-grid">
           <div class="contact-info reveal">
-            <h3>وسائل التواصل</h3>
+            <h3>معلومات التواصل</h3>
             <ul>
               <li>واتساب: +966 53 323 4429</li>
               <li>تيليجرام: @upg_sa_academic</li>
@@ -283,10 +293,10 @@
     </section>
   </main>
 
-  <footer class="footer">
+  <footer class="site-footer">
     <div class="container footer-inner">
       <span>© 2025 منصة تمكين. جميع الحقوق محفوظة.</span>
-      <span>تصميم واجهة حديثة بأسلوب عرض مستوحى من المنصة المرجعية.</span>
+      <span>واجهة مطورة بأسلوب عرض حديث مستوحى من المنصة المرجعية.</span>
     </div>
   </footer>
 

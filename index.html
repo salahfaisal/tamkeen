@@ -212,14 +212,17 @@
             </ul>
           </article>
 
-          <article class="card reveal">
+          <article class="card reveal teacher-main-card">
             <div class="card-icon">🧑‍🏫</div>
             <h3>خدمات المعلمين</h3>
-            <p>ملفات شرح، عروض تعليمية، مواد بصرية، وتنظيم المحتوى الدراسي بأسلوب أنيق.</p>
+            <p>
+              مكتبة حديثة ومتكاملة للمعلمين تشمل ملفات مهنية وتعليمية، خطط وبرامج،
+              أوراق عمل، شراكة مجتمعية، أدلة تنظيمية، وفيديوهات ومونتاج تعليمي جذاب.
+            </p>
             <ul class="tag-list">
-              <li>شروحات</li>
-              <li>ملفات</li>
-              <li>عروض</li>
+              <li>ملفات PDF</li>
+              <li>فيديوهات</li>
+              <li>أدلة</li>
             </ul>
           </article>
 
@@ -244,6 +247,44 @@
               <li>مواقع</li>
             </ul>
           </article>
+        </div>
+
+        <!-- مكتبة خدمات المعلمين -->
+        <div class="teacher-services-hub reveal">
+          <div class="teacher-services-head">
+            <div>
+              <span class="section-kicker">خدمات المعلمين</span>
+              <h3 class="teacher-services-title">مكتبة خدمات المعلمين</h3>
+              <p class="teacher-services-sub">
+                جميع خدمات المعلمين في واجهة حديثة ومرتبة حسب نوع المحتوى، مع إمكانية عرض كل
+                خدمة باسمها المستقل سواء كانت ملف PDF أو فيديو أو دليل تنظيمي.
+              </p>
+            </div>
+
+            <div class="teacher-services-stats">
+              <div class="teacher-stat-box">
+                <strong>36+</strong>
+                <span>ملفات</span>
+              </div>
+              <div class="teacher-stat-box">
+                <strong>15+</strong>
+                <span>فيديوهات</span>
+              </div>
+              <div class="teacher-stat-box">
+                <strong>4</strong>
+                <span>أدلة</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="teacher-services-filters">
+            <button class="btn btn-ghost teacher-filter active" data-teacher-filter="all">الكل</button>
+            <button class="btn btn-ghost teacher-filter" data-teacher-filter="pdf">ملفات PDF</button>
+            <button class="btn btn-ghost teacher-filter" data-teacher-filter="video">فيديوهات</button>
+            <button class="btn btn-ghost teacher-filter" data-teacher-filter="guide">أدلة ومواثيق</button>
+          </div>
+
+          <div class="teacher-services-grid" id="teacherServicesGrid"></div>
         </div>
       </div>
     </section>
@@ -590,7 +631,6 @@
       <div class="modal-body">
         <h3 class="modal-title" id="modalTitle"></h3>
         <p class="modal-desc" id="modalDesc"></p>
-
         <div class="modal-actions-row" id="modalActionsRow"></div>
       </div>
     </div>

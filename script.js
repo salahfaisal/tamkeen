@@ -179,11 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
     modalViewer.innerHTML = "";
   };
 
-  const preventRightClick = (element) => {
-    if (!element) return;
-    element.addEventListener("contextmenu", (e) => e.preventDefault());
-  };
-
   const openModalShell = (title, desc) => {
     if (!modal || !modalTitle || !modalDesc || !modalViewer) return false;
     clearModalContent();
@@ -205,7 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
     iframe.setAttribute("loading", "lazy");
 
     modalViewer.appendChild(iframe);
-    preventRightClick(modalViewer);
   };
 
   const openInlineImage = (title, desc, imageUrl) => {
@@ -218,8 +212,6 @@ document.addEventListener("DOMContentLoaded", () => {
     img.draggable = false;
 
     modalViewer.appendChild(img);
-    preventRightClick(img);
-    preventRightClick(modalViewer);
   };
 
   if (portfolioOpenButtons.length) {
@@ -357,13 +349,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     return `
-      <div class="teacher-service-preview" oncontextmenu="return false;">
-        <iframe
-          src="${item.link}#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
-          loading="lazy"
-          referrerpolicy="no-referrer"
-          title="${item.title}">
-        </iframe>
+      <div class="teacher-service-preview">
+        <div style="
+          height:320px;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          flex-direction:column;
+          gap:12px;
+          background:linear-gradient(135deg, rgba(37,99,235,0.10), rgba(124,58,237,0.10));
+          color:#0f172a;
+          text-align:center;
+          padding:20px;
+        ">
+          <div style="font-size:56px;">📄</div>
+          <div style="font-weight:800; font-size:1rem;">${item.title}</div>
+          <div style="font-size:0.88rem; color:#475569;">معروض كملف داخل المنصة</div>
+        </div>
       </div>
     `;
   };
@@ -389,7 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <h3 class="teacher-service-title">${item.title}</h3>
               <p class="teacher-service-desc">${item.desc}</p>
               <div class="teacher-inline-note">
-                يتم عرض المحتوى مباشرة داخل الصفحة.
+                ${item.type === "video" ? "الفيديو ظاهر مباشرة داخل البطاقة." : "الملف ظاهر كبطاقة مرئية داخل الصفحة."}
               </div>
             </div>
           </article>

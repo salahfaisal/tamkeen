@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>منصة الترقية الإلكترونية</title>
+  <title>منصة تمكين للخدمات التعليمية الإلكترونية</title>
   <meta
     name="description"
-    content="منصة الترقية الإلكترونية - خدمات تعليمية، ملفات إنجاز، شواهد أداء وظيفي، وخدمات للمعلمين والمعلمات بأسلوب حديث."
+    content="منصة تمكين للخدمات التعليمية الإلكترونية: خدمات للطلاب والمعلمين والباحثين ورواد الأعمال تشمل الأبحاث، العروض، التصميم، الترجمة، والمواقع."
   />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,345 +19,276 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="scroll-progress">
-    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
-  </div>
-
+  <button class="floating-theme" id="themeToggle" aria-label="تبديل المظهر">◐</button>
   <button class="back-to-top" id="backToTop" aria-label="العودة إلى الأعلى">↑</button>
 
-  <a href="https://wa.me/000000000000" target="_blank" class="wa-float" aria-label="واتساب">WA</a>
-  <a href="#order" class="cta-float" aria-label="طلب خدمة">طلب</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة">
+        <span></span><span></span><span></span>
+      </button>
 
-  <div class="page">
-    <!-- الهيدر -->
-    <header class="header" id="header">
-      <div class="container header-inner">
-        <a href="#hero" class="logo" aria-label="الذهاب إلى الرئيسية">
-          <img src="images2/logo.png" alt="شعار منصة الترقية الإلكترونية" class="logo-img" />
-          <div class="logo-text">
-            <span class="logo-main">منصة الترقية الإلكترونية</span>
-            <span class="logo-sub">خدمات تعليمية وملفات احترافية</span>
+      <nav class="desktop-nav">
+        <a href="#hero" class="active-link">الصفحة الرئيسية</a>
+        <div class="nav-item with-menu">
+          <button type="button">ملفات الإنجاز</button>
+          <div class="dropdown-menu">
+            <a href="#teacher-library" data-group="portfolio">ملفات الإنجاز المهنية</a>
+            <a href="#teacher-library" data-group="nafis">ملفات نافس</a>
+            <a href="#teacher-library" data-group="discipline">ملف الانضباط</a>
           </div>
-        </a>
-
-        <nav class="nav desktop-nav" id="mainNav">
-          <a href="#hero">الصفحة الرئيسية</a>
-          <a href="#services">خدماتنا</a>
-          <a href="#catalog">ملفات الإنجاز</a>
-          <a href="#contact">تواصل معنا</a>
-        </nav>
-
-        <div class="header-actions">
-          <a href="#services" class="btn btn-primary desktop-cta">استعرض الخدمات</a>
-          <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mobileNav">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <!-- قائمة الجوال -->
-    <aside class="mobile-nav" id="mobileNav" aria-hidden="true">
-      <div class="mobile-nav-inner">
-        <div class="mobile-nav-top">
-          <div class="mobile-nav-brand">القائمة</div>
-          <button class="mobile-nav-close" id="mobileNavClose" aria-label="إغلاق القائمة">×</button>
         </div>
 
-        <nav class="mobile-links">
-          <a href="#hero">الصفحة الرئيسية</a>
-          <a href="#services">خدماتنا</a>
-          <a href="#catalog">ملفات الإنجاز</a>
-          <a href="#contact">تواصل معنا</a>
-        </nav>
+        <div class="nav-item with-menu">
+          <button type="button">ملفات شواهد الأداء الوظيفي</button>
+          <div class="dropdown-menu">
+            <a href="#teacher-library" data-group="guides">أدلة تنظيمية</a>
+            <a href="#teacher-library" data-group="partnership">الشراكة المجتمعية</a>
+            <a href="#teacher-library" data-group="design">الشهادات والبروشورات</a>
+          </div>
+        </div>
 
-        <a href="#order" class="btn btn-primary mobile-nav-btn">طلب خدمة الآن</a>
-      </div>
-    </aside>
+        <div class="nav-item with-menu">
+          <button type="button">خدمات المعلمين والمعلمات</button>
+          <div class="dropdown-menu">
+            <a href="#teacher-library" data-group="training">النماذج التدريبية</a>
+            <a href="#teacher-library" data-group="plans">الخطط والبرامج</a>
+            <a href="#teacher-library" data-group="worksheets">أوراق العمل</a>
+            <a href="#teacher-library" data-group="video">الفيديوهات والمونتاج</a>
+          </div>
+        </div>
 
-    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+        <div class="nav-item with-menu">
+          <button type="button">خدمات طلابية وتصاميم</button>
+          <div class="dropdown-menu">
+            <a href="#services-cards">خدمات الطلاب</a>
+            <a href="#services-cards">التصميم والمونتاج</a>
+          </div>
+        </div>
+      </nav>
 
-    <!-- الهيرو -->
-    <section id="hero" class="hero">
-      <div class="container hero-inner">
-        <div class="hero-text reveal">
-          <span class="hero-tag">خدمات إلكترونية تعليمية باحترافية عالية</span>
+      <a href="#hero" class="brand">
+        <div class="brand-text">
+          <span class="brand-title">منصة الترقية الإلكترونية</span>
+          <span class="brand-sub">منصة تمكين للخدمات التعليمية</span>
+        </div>
+        <img src="images2/logo.png" alt="شعار المنصة" class="brand-logo" />
+      </a>
+    </div>
+  </header>
+
+  <aside class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer-head">
+      <span>القائمة</span>
+      <button id="closeDrawer" aria-label="إغلاق">×</button>
+    </div>
+    <nav class="mobile-drawer-links">
+      <a href="#hero">الصفحة الرئيسية</a>
+      <a href="#services-cards">الخدمات</a>
+      <a href="#teacher-library">خدمات المعلمين</a>
+      <a href="#catalog">أعمالنا</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
+  </aside>
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+
+  <main>
+    <!-- العرض الرئيسي -->
+    <section id="hero" class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-poster reveal">
+          <div class="poster-badge">منصة تعليمية حديثة</div>
           <h1>منصة الترقية<br />الإلكترونية</h1>
-          <p class="hero-sub">
-            نقدم خدمات احترافية للمعلمين والمعلمات والطلبة، تشمل ملفات الإنجاز،
-            شواهد الأداء الوظيفي، الملفات المهنية، الأدلة التنظيمية، والفيديوهات
-            التعليمية والمونتاج بأسلوب حديث وجذاب.
+          <p>
+            اكتشف معنا عالمًا جديدًا من الخدمات الإلكترونية المتخصصة للمعلمين والمعلمات
+            والطلاب، من ملفات الإنجاز إلى التصاميم، النماذج التدريبية، الشهادات،
+            الفيديوهات، والأدلة التنظيمية بأسلوب احترافي حديث.
           </p>
 
           <div class="hero-actions">
-            <a href="#services" class="btn btn-primary btn-lg">استعرض الخدمات</a>
-            <a href="#contact" class="btn btn-ghost btn-lg">تواصل معنا</a>
+            <a href="#teacher-library" class="main-btn">استعرض خدمات المعلمين</a>
+            <a href="#catalog" class="ghost-btn">شاهد الأعمال</a>
           </div>
 
-          <div class="hero-badges">
-            <span>تصميم حديث</span>
-            <span>محتوى منظم</span>
-            <span>عرض مباشر</span>
-            <span>جودة عالية</span>
+          <div class="hero-contact-strip">
+            <span>+966 53 323 4429</span>
+            <span>@upg_sa_academic</span>
           </div>
+
+          <div class="hero-shape hero-shape-one"></div>
+          <div class="hero-shape hero-shape-two"></div>
         </div>
 
-        <div class="hero-media reveal">
-          <div class="hero-card hero-card-main">
-            <img src="images2/hero.jpg" alt="خدمات المنصة" class="hero-img" loading="lazy" />
+        <div class="hero-viewer reveal">
+          <div class="viewer-label">عرض مميز</div>
+          <div class="viewer-frame" id="heroMainViewer">
+            <video
+              controls
+              controlsList="nodownload noplaybackrate noremoteplayback"
+              disablepictureinpicture
+              playsinline
+              preload="metadata"
+              poster="images2/hero.jpg"
+            >
+              <source src="videos/teachers/video-production.mp4" type="video/mp4" />
+              المتصفح لا يدعم تشغيل الفيديو.
+            </video>
           </div>
-
-          <div class="hero-floating-card floating-card-1">
-            <span class="floating-label">ملفات إنجاز</span>
-            <strong>تنسيق احترافي</strong>
+          <div class="viewer-caption">
+            <h3>عرض مرئي لخدمات المنصة</h3>
+            <p>واجهة عرض حديثة للمحتوى والخدمات التعليمية بصورة أنيقة وواضحة.</p>
           </div>
-
-          <div class="hero-floating-card floating-card-2">
-            <span class="floating-label">فيديوهات تعليمية</span>
-            <strong>عرض جذاب</strong>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- خدماتنا -->
-    <section id="services" class="section section-alt">
-      <div class="container">
-        <div class="section-heading reveal">
-          <span class="section-kicker">خدماتنا</span>
-          <h2>حلول متنوعة لفئات مختلفة</h2>
-          <p class="section-sub">
-            نخدم الطلاب، والمعلمين، والمعلمات، والباحثين، عبر خدمات منظمة وحديثة
-            في واجهة سهلة وواضحة.
-          </p>
-        </div>
-
-        <div class="cards-grid">
-          <article class="card reveal">
-            <div class="card-icon">🎓</div>
-            <h3>خدمات الطلاب</h3>
-            <p>أبحاث، مشاريع تخرج، عروض تقديمية، ومساعدات أكاديمية متنوعة.</p>
-            <ul class="tag-list">
-              <li>أبحاث</li>
-              <li>مشاريع</li>
-              <li>عروض</li>
-            </ul>
-          </article>
-
-          <article class="card reveal teacher-main-card">
-            <div class="card-icon">🧑‍🏫</div>
-            <h3>خدمات المعلمين والمعلمات</h3>
-            <p>
-              ملفات إنجاز، ملفات مهنية، نماذج تدريبية، خطط وبرامج، أوراق عمل،
-              شواهد وأدلة تنظيمية، وفيديوهات تعليمية ومونتاج.
-            </p>
-            <ul class="tag-list">
-              <li>PDF</li>
-              <li>فيديو</li>
-              <li>أدلة</li>
-            </ul>
-          </article>
-
-          <article class="card reveal">
-            <div class="card-icon">📚</div>
-            <h3>خدمات الباحثين</h3>
-            <p>تنسيق رسائل علمية، تنظيم مراجع، ومراجعة لغوية وإخراج أكاديمي.</p>
-            <ul class="tag-list">
-              <li>تنسيق</li>
-              <li>مراجعة</li>
-              <li>مراجع</li>
-            </ul>
-          </article>
-
-          <article class="card reveal">
-            <div class="card-icon">💼</div>
-            <h3>خدمات إضافية</h3>
-            <p>تصميم، مونتاج، ترجمة، إنشاء مواقع إلكترونية، وواجهات رقمية جذابة.</p>
-            <ul class="tag-list">
-              <li>تصميم</li>
-              <li>مونتاج</li>
-              <li>مواقع</li>
-            </ul>
-          </article>
-        </div>
-
-        <!-- قسم خدمات المعلمين بأسلوب الصور -->
-        <div class="teacher-services-hub reveal">
-          <div class="teacher-services-topbar">
-            <button class="teacher-tab active" data-teacher-filter="all">جميع خدمات المعلمين</button>
-            <button class="teacher-tab" data-teacher-filter="pdf">الملفات المهنية والتعليمية</button>
-            <button class="teacher-tab" data-teacher-filter="video">الفيديوهات والمونتاج</button>
-            <button class="teacher-tab" data-teacher-filter="guide">الأدلة والمواثيق</button>
-          </div>
-
-          <div class="teacher-services-grid screenshot-style-grid" id="teacherServicesGrid"></div>
         </div>
       </div>
     </section>
 
-    <!-- ملفات الإنجاز -->
-    <section id="catalog" class="section">
+    <!-- بطاقات رئيسية -->
+    <section id="services-cards" class="services-cards-section">
       <div class="container">
-        <div class="section-heading reveal">
-          <span class="section-kicker">نماذج من المنصة</span>
-          <h2>نماذج من الأعمال والخدمات</h2>
-          <p class="section-sub">
-            عرض مرئي لأمثلة من الأعمال المنفذة داخل المنصة.
-          </p>
+        <div class="section-top reveal">
+          <span class="section-chip">الأقسام الرئيسية</span>
+          <h2>عرض خدمات المنصة بأسلوب بصري حديث</h2>
         </div>
 
-        <div class="portfolio-grid">
-          <article class="portfolio-item reveal">
-            <div class="portfolio-thumb">
-              <img src="images2/work-student1.jpg" alt="نموذج عمل" loading="lazy" />
-            </div>
-            <div class="portfolio-body">
-              <h3>نموذج ملف احترافي</h3>
-              <p>تنسيق بصري منظم للمحتوى بأسلوب أنيق وجذاب.</p>
-            </div>
-          </article>
-
-          <article class="portfolio-item reveal">
-            <div class="portfolio-thumb">
-              <img src="images2/hero.jpg" alt="نموذج تصميم" loading="lazy" />
-            </div>
-            <div class="portfolio-body">
-              <h3>تصميم تعليمي حديث</h3>
-              <p>واجهة وخدمة مرئية بأسلوب سهل وواضح للمستخدم.</p>
+        <div class="service-panels">
+          <article class="service-panel reveal">
+            <div class="service-panel-art art-teacher"></div>
+            <div class="service-panel-body">
+              <span class="panel-label">خدمات المعلمين والمعلمات</span>
+              <h3>ملفات، نماذج، خطط، فيديوهات، وأدلة تنظيمية</h3>
+              <p>مكتبة خدمات متكاملة مخصصة للمعلمين والمعلمات بأسلوب عرض مرتب وسهل التصفح.</p>
             </div>
           </article>
 
-          <article class="portfolio-item reveal">
-            <div class="portfolio-thumb">
-              <img src="images2/hero.jpg" alt="نموذج فيديو" loading="lazy" />
-            </div>
-            <div class="portfolio-body">
-              <h3>محتوى فيديو تعليمي</h3>
-              <p>إخراج مرئي حديث للفيديوهات التعليمية والتوعوية.</p>
+          <article class="service-panel reveal">
+            <div class="service-panel-art art-student"></div>
+            <div class="service-panel-body">
+              <span class="panel-label">خدمات طلابية وتصاميم</span>
+              <h3>محتوى أكاديمي، عروض، ومخرجات احترافية</h3>
+              <p>بطاقات عرض منظمة للخدمات الطلابية والتصاميم التعليمية والإبداعية.</p>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- طلب خدمة -->
-    <section id="order" class="section section-alt">
+    <!-- مكتبة المعلمين -->
+    <section id="teacher-library" class="teacher-library-section">
       <div class="container">
-        <div class="section-heading reveal">
-          <span class="section-kicker">طلب خدمة</span>
-          <h2>أرسل طلبك بسهولة</h2>
-          <p class="section-sub">
-            املأ النموذج التالي وسنقوم بالتواصل معك لتأكيد تفاصيل الخدمة المناسبة.
+        <div class="section-top reveal">
+          <span class="section-chip">خدمات المعلمين</span>
+          <h2>مكتبة خدمات المعلمين والمعلمات</h2>
+          <p>
+            تم إعادة بناء هذا القسم بأسلوب عرض مشابه للمنصة المرجعية: عارض رئيسي في الأعلى،
+            تبويبات منظمة، وبطاقات أنيقة للمحتوى.
           </p>
         </div>
 
-        <div class="order-grid">
-          <div class="order-box reveal">
-            <h3>نموذج الطلب</h3>
-            <form id="orderForm" class="form">
-              <label>
-                الاسم الكامل
-                <input type="text" name="name" placeholder="اكتب اسمك" required />
-              </label>
-
-              <label>
-                البريد الإلكتروني
-                <input type="email" name="email" placeholder="example@email.com" required />
-              </label>
-
-              <label>
-                نوع الخدمة
-                <select name="service" required>
-                  <option value="">اختر الخدمة</option>
-                  <option>خدمات الطلاب</option>
-                  <option>خدمات المعلمين والمعلمات</option>
-                  <option>خدمات الباحثين</option>
-                  <option>تصميم ومونتاج</option>
-                  <option>إنشاء موقع</option>
-                </select>
-              </label>
-
-              <label>
-                تفاصيل الطلب
-                <textarea name="details" rows="5" placeholder="اكتب تفاصيل الخدمة المطلوبة" required></textarea>
-              </label>
-
-              <button type="submit" class="btn btn-primary">إرسال الطلب</button>
-            </form>
-
-            <div id="orderSuccess" class="contact-success" style="display: none;">
-              ✅ تم إرسال طلبك بنجاح.
+        <div class="teacher-layout">
+          <div class="teacher-showcase reveal">
+            <div class="teacher-showcase-head">
+              <div>
+                <span class="mini-chip" id="teacherFeaturedType">ملف PDF</span>
+                <h3 id="teacherFeaturedTitle">ملف إنجاز إلكتروني</h3>
+                <p id="teacherFeaturedDesc">
+                  ملف مهني منظم لتوثيق الإنجازات والخبرات التعليمية إلكترونيًا.
+                </p>
+              </div>
+              <div class="teacher-showcase-tabs">
+                <button class="teacher-filter active" data-filter="all">الكل</button>
+                <button class="teacher-filter" data-filter="pdf">الملفات</button>
+                <button class="teacher-filter" data-filter="video">الفيديوهات</button>
+                <button class="teacher-filter" data-filter="guide">الأدلة</button>
+              </div>
             </div>
+
+            <div class="teacher-showcase-viewer" id="teacherFeaturedViewer"></div>
           </div>
 
-          <div class="contact-box reveal">
-            <h3>ماذا يحدث بعد الإرسال؟</h3>
-            <ul>
-              <li>مراجعة الطلب وتحديد نوع الخدمة المناسبة.</li>
-              <li>التواصل معك لتأكيد التفاصيل النهائية.</li>
-              <li>بدء التنفيذ وفق المتطلبات المتفق عليها.</li>
-            </ul>
-          </div>
+          <div class="teacher-groups reveal" id="teacherGroupsTabs"></div>
+        </div>
+
+        <div class="teacher-cards-grid" id="teacherCardsGrid"></div>
+      </div>
+    </section>
+
+    <!-- أعمالنا -->
+    <section id="catalog" class="catalog-section">
+      <div class="container">
+        <div class="section-top reveal">
+          <span class="section-chip">نماذج من الأعمال</span>
+          <h2>أسلوب عرض مرئي ومنظم للمحتوى</h2>
+        </div>
+
+        <div class="catalog-grid">
+          <article class="catalog-card reveal">
+            <div class="catalog-preview">
+              <img src="images2/work-student1.jpg" alt="عمل طلابي" />
+            </div>
+            <div class="catalog-body">
+              <h3>عرض ملف تعليمي</h3>
+              <p>أسلوب عرض بصري أنيق للملفات والخدمات التعليمية داخل المنصة.</p>
+            </div>
+          </article>
+
+          <article class="catalog-card reveal">
+            <div class="catalog-preview dark-preview">
+              <video
+                controls
+                controlsList="nodownload noplaybackrate noremoteplayback"
+                disablepictureinpicture
+                playsinline
+                preload="metadata"
+                poster="images2/hero.jpg"
+              >
+                <source src="videos/teachers/vision-2030.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="catalog-body">
+              <h3>عرض فيديو داخل البطاقة</h3>
+              <p>إظهار الفيديو داخل البطاقة نفسها بطريقة حديثة وقريبة من المنصة المرجعية.</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- تواصل -->
-    <section id="contact" class="section">
-      <div class="container">
-        <div class="section-heading reveal">
-          <span class="section-kicker">تواصل معنا</span>
-          <h2>يسعدنا استقبال رسائلك</h2>
-          <p class="section-sub">يمكنك إرسال استفسارك مباشرة عبر النموذج التالي.</p>
+    <section id="contact" class="contact-section">
+      <div class="container contact-box">
+        <div class="section-top reveal">
+          <span class="section-chip">تواصل معنا</span>
+          <h2>يسعدنا تنفيذ طلباتك باحترافية</h2>
         </div>
 
         <div class="contact-grid">
-          <div class="contact-form-box reveal">
-            <form id="contactForm" class="form">
-              <label>
-                الاسم
-                <input type="text" required placeholder="اكتب اسمك" />
-              </label>
-
-              <label>
-                البريد الإلكتروني
-                <input type="email" required placeholder="example@email.com" />
-              </label>
-
-              <label>
-                الرسالة
-                <textarea required rows="5" placeholder="اكتب رسالتك هنا"></textarea>
-              </label>
-
-              <button type="submit" class="btn btn-primary">إرسال الرسالة</button>
-            </form>
-
-            <div id="contactSuccess" class="contact-success" style="display: none;">
-              ✅ تم إرسال الرسالة بنجاح!
-            </div>
-          </div>
-
-          <div class="contact-box reveal">
-            <h3>معلومات التواصل</h3>
+          <div class="contact-info reveal">
+            <h3>وسائل التواصل</h3>
             <ul>
+              <li>واتساب: +966 53 323 4429</li>
+              <li>تيليجرام: @upg_sa_academic</li>
               <li>البريد: tamkeenplatformed@gmail.com</li>
-              <li>واتساب: أضف رابطك الرسمي هنا</li>
-              <li>تيليجرام: أضف الرابط هنا</li>
             </ul>
           </div>
+
+          <form class="contact-form reveal" id="contactForm">
+            <input type="text" placeholder="الاسم" required />
+            <input type="email" placeholder="البريد الإلكتروني" required />
+            <textarea rows="5" placeholder="اكتب رسالتك هنا" required></textarea>
+            <button type="submit" class="main-btn">إرسال</button>
+            <div id="contactSuccess" class="success-note" style="display:none;">✅ تم الإرسال بنجاح</div>
+          </form>
         </div>
       </div>
     </section>
+  </main>
 
-    <footer class="footer">
-      <div class="container footer-inner">
-        <span>© 2025 منصة الترقية الإلكترونية. جميع الحقوق محفوظة.</span>
-        <span class="footer-note">واجهة مطورة بأسلوب حديث وجذاب.</span>
-      </div>
-    </footer>
-  </div>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© 2025 منصة تمكين. جميع الحقوق محفوظة.</span>
+      <span>تصميم واجهة حديثة بأسلوب عرض مستوحى من المنصة المرجعية.</span>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>

@@ -16,6 +16,13 @@
     rel="stylesheet"
   />
 
+  <!-- Font Awesome للأيقونات -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    referrerpolicy="no-referrer"
+  />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -23,7 +30,9 @@
     <div class="top-progress-bar" id="scrollProgressBar"></div>
   </div>
 
-  <button class="back-to-top" id="backToTop" aria-label="العودة إلى الأعلى">↑</button>
+  <button class="back-to-top" id="backToTop" aria-label="العودة إلى الأعلى">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
 
   <header class="header" id="header">
     <div class="container header-inner">
@@ -35,15 +44,98 @@
         </div>
       </a>
 
-      <nav class="desktop-nav">
-        <a href="#hero">الرئيسية</a>
-        <a href="#about">من نحن</a>
-        <a href="#services">خدماتنا</a>
-        <a href="#catalog">أعمالنا</a>
-        <a href="#testimonials">الآراء</a>
-        <a href="#faq">الأسئلة</a>
-        <a href="#order">طلب خدمة</a>
-        <a href="#contact">تواصل معنا</a>
+      <nav class="desktop-nav mega-nav">
+        <a href="#hero" class="nav-link-simple">الرئيسية</a>
+        <a href="#about" class="nav-link-simple">من نحن</a>
+
+        <div class="nav-item has-mega" data-menu="services">
+          <a href="#services" class="mega-trigger">خدماتنا <i class="fa-solid fa-angle-down"></i></a>
+          <div class="mega-menu">
+            <div class="mega-menu-inner">
+              <div class="mega-menu-intro">
+                <span class="mini-badge">خدماتنا</span>
+                <h4>استكشف أقسام منصة تمكين</h4>
+                <p>وصول سريع إلى الفئات الرئيسية والخدمات الأكثر طلبًا داخل المنصة.</p>
+              </div>
+
+              <div class="mega-grid">
+                <a href="#students-engineering" class="mega-card">
+                  <span class="mega-icon">🎓</span>
+                  <div>
+                    <strong>خدمات الطلاب</strong>
+                    <small>الهندسة، الطب، الإدارة، والكليات الأخرى</small>
+                  </div>
+                </a>
+
+                <a href="#teachers-portfolio" class="mega-card">
+                  <span class="mega-icon">🧑‍🏫</span>
+                  <div>
+                    <strong>خدمات المعلمين</strong>
+                    <small>ملفات، خطط، نماذج، فيديوهات، وأدلة</small>
+                  </div>
+                </a>
+
+                <a href="#researchers-services" class="mega-card">
+                  <span class="mega-icon">📚</span>
+                  <div>
+                    <strong>خدمات الباحثين</strong>
+                    <small>تنسيق الرسائل والمراجعة وتنظيم المراجع</small>
+                  </div>
+                </a>
+
+                <a href="#extras-services" class="mega-card">
+                  <span class="mega-icon">💼</span>
+                  <div>
+                    <strong>خدمات إضافية</strong>
+                    <small>تصميم، مونتاج، ترجمة، وإنشاء مواقع</small>
+                  </div>
+                </a>
+              </div>
+
+              <div class="mega-links-row">
+                <a href="#teachers-videos">فيديوهات المعلمين</a>
+                <a href="#teachers-guides">الأدلة التنظيمية</a>
+                <a href="#students-medical">خدمات كلية الطب</a>
+                <a href="#students-business">خدمات الإدارة والاقتصاد</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item has-mega" data-menu="catalog">
+          <a href="#catalog" class="mega-trigger">أعمالنا <i class="fa-solid fa-angle-down"></i></a>
+          <div class="mega-menu small-menu">
+            <div class="mega-menu-inner">
+              <div class="mega-list">
+                <a href="#catalog">نماذج مشاريع الطلاب</a>
+                <a href="#catalog">تنسيق الأبحاث</a>
+                <a href="#catalog">تصميم العروض التقديمية</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="#testimonials" class="nav-link-simple">الآراء</a>
+        <a href="#faq" class="nav-link-simple">الأسئلة</a>
+        <a href="#order" class="nav-link-simple">طلب خدمة</a>
+
+        <div class="nav-item has-mega" data-menu="contact">
+          <a href="#contact" class="mega-trigger">تواصل معنا <i class="fa-solid fa-angle-down"></i></a>
+          <div class="mega-menu small-menu">
+            <div class="mega-menu-inner">
+              <div class="mega-contact-box">
+                <p>تواصل معنا مباشرة عبر القنوات التالية:</p>
+                <div class="mega-socials">
+                  <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i> YouTube</a>
+                  <a href="https://wa.me/000000000000" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                  <a href="https://snapchat.com" target="_blank"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+                  <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                  <a href="https://tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </nav>
 
       <div class="header-actions">
@@ -60,78 +152,112 @@
       <strong>القائمة</strong>
       <button id="mobileNavClose" aria-label="إغلاق القائمة">×</button>
     </div>
+
     <nav class="mobile-links">
       <a href="#hero">الرئيسية</a>
       <a href="#about">من نحن</a>
-      <a href="#services">خدماتنا</a>
-      <a href="#catalog">أعمالنا</a>
+
+      <details class="mobile-dropdown">
+        <summary>خدماتنا</summary>
+        <div class="mobile-sub-links">
+          <a href="#students-engineering">خدمات الطلاب</a>
+          <a href="#teachers-portfolio">خدمات المعلمين</a>
+          <a href="#researchers-services">خدمات الباحثين</a>
+          <a href="#extras-services">خدمات إضافية</a>
+        </div>
+      </details>
+
+      <details class="mobile-dropdown">
+        <summary>أعمالنا</summary>
+        <div class="mobile-sub-links">
+          <a href="#catalog">نماذج الأعمال</a>
+          <a href="#catalog">مشاريع الطلاب</a>
+          <a href="#catalog">تصميم العروض</a>
+        </div>
+      </details>
+
       <a href="#testimonials">الآراء</a>
       <a href="#faq">الأسئلة</a>
       <a href="#order">طلب خدمة</a>
-      <a href="#contact">تواصل معنا</a>
+
+      <details class="mobile-dropdown">
+        <summary>تواصل معنا</summary>
+        <div class="mobile-sub-links">
+          <a href="#contact">نموذج التواصل</a>
+          <a href="https://youtube.com" target="_blank">YouTube</a>
+          <a href="https://wa.me/000000000000" target="_blank">WhatsApp</a>
+          <a href="https://snapchat.com" target="_blank">Snapchat</a>
+          <a href="https://instagram.com" target="_blank">Instagram</a>
+          <a href="https://tiktok.com" target="_blank">TikTok</a>
+        </div>
+      </details>
     </nav>
   </aside>
   <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
 
   <main>
-    <section id="hero" class="hero">
-      <div class="container hero-shell">
+    <section id="hero" class="hero hero-enhanced">
+      <div class="container hero-shell hero-shell-enhanced">
         <div class="hero-copy reveal">
-          <span class="section-kicker">منصة تعليمية منظمة وحديثة</span>
-          <h1>منصة تمكين للخدمات التعليمية الإلكترونية</h1>
+          <span class="section-kicker">مرحبًا بك في منصة تمكين</span>
+          <h1>منصة تعليمية حديثة<br />بأسلوب أنيق ومنظم</h1>
           <p>
-            نعرض خدماتنا بأسلوب واضح ومنظم يجعل كل قسم يبدو كأنه صفحة مستقلة داخل الموقع،
-            لتصل بسرعة إلى الخدمة المناسبة سواء كنت طالبًا أو معلمًا أو باحثًا.
+            نوفر لك تجربة عرض أكثر احترافية ووضوحًا، مع تنظيم ذكي للخدمات، ووصول سريع إلى كل قسم،
+            ومعاينة حديثة للمحتوى الذي تقدمه المنصة للطلاب والمعلمين والباحثين.
           </p>
 
           <div class="hero-actions">
             <a href="#services" class="btn btn-primary">استعراض الخدمات</a>
-            <a href="#order" class="btn btn-soft">طلب خدمة</a>
+            <a href="#order" class="btn btn-soft">طلب خدمة الآن</a>
           </div>
 
           <div class="hero-pills">
-            <span>خدمات طلابية</span>
-            <span>خدمات المعلمين</span>
-            <span>خدمات الباحثين</span>
-            <span>تصميم وترجمة</span>
+            <span>تنظيم حديث</span>
+            <span>عرض أنيق</span>
+            <span>أقسام واضحة</span>
+            <span>وصول أسرع</span>
           </div>
         </div>
 
-        <div class="hero-panel reveal">
-          <div class="hero-panel-head">
-            <span class="mini-badge">دليل الخدمات</span>
-            <strong>تصنيف هرمي حديث</strong>
+        <div class="hero-visual reveal">
+          <div class="hero-image-card">
+            <div class="hero-card-head">
+              <span class="mini-badge">واجهة المنصة</span>
+              <strong>عرض بصري حديث</strong>
+            </div>
+            <img src="images2/interfac.png" alt="واجهة منصة تمكين" class="hero-showcase-image" />
           </div>
-          <div class="hero-panel-grid">
-            <div class="hero-mini-card">
-              <span>🎓</span>
-              <div>
-                <strong>خدمات الطلاب</strong>
-                <small>كليات وأقسام متخصصة</small>
-              </div>
+
+          <div class="hero-video-card">
+            <div class="hero-card-head">
+              <span class="mini-badge">فيديو تعريفي</span>
+              <strong>تعرف على خدمات المنصة</strong>
             </div>
-            <div class="hero-mini-card">
-              <span>🧑‍🏫</span>
-              <div>
-                <strong>خدمات المعلمين</strong>
-                <small>ملفات وخطط وأدلة</small>
-              </div>
-            </div>
-            <div class="hero-mini-card">
-              <span>📚</span>
-              <div>
-                <strong>الباحثون</strong>
-                <small>تنسيق ومراجعة</small>
-              </div>
-            </div>
-            <div class="hero-mini-card">
-              <span>💼</span>
-              <div>
-                <strong>خدمات إضافية</strong>
-                <small>تصميم ومونتاج ومواقع</small>
-              </div>
-            </div>
+            <video class="hero-showcase-video" controls preload="metadata">
+              <source src="videos/interfac.mp4" type="video/mp4" />
+              المتصفح لديك لا يدعم تشغيل الفيديو.
+            </video>
           </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="hero-social-strip reveal">
+          <a href="https://youtube.com" target="_blank" class="hero-social youtube" aria-label="YouTube">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+          <a href="https://wa.me/000000000000" target="_blank" class="hero-social whatsapp" aria-label="WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+          <a href="https://snapchat.com" target="_blank" class="hero-social snapchat" aria-label="Snapchat">
+            <i class="fa-brands fa-snapchat"></i>
+          </a>
+          <a href="https://instagram.com" target="_blank" class="hero-social instagram" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://tiktok.com" target="_blank" class="hero-social tiktok" aria-label="TikTok">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
         </div>
       </div>
     </section>
@@ -449,6 +575,14 @@
               <li>واتساب: أضف رابطك الرسمي هنا</li>
               <li>تيليجرام: أضف الرابط هنا</li>
             </ul>
+
+            <div class="footer-socials contact-socials">
+              <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+              <a href="https://wa.me/000000000000" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+              <a href="https://snapchat.com" target="_blank" aria-label="Snapchat"><i class="fa-brands fa-snapchat"></i></a>
+              <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+              <a href="https://tiktok.com" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
           </div>
         </div>
       </div>
@@ -457,6 +591,13 @@
 
   <footer class="footer">
     <div class="container footer-inner">
+      <div class="footer-socials">
+        <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://wa.me/000000000000" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://snapchat.com" target="_blank" aria-label="Snapchat"><i class="fa-brands fa-snapchat"></i></a>
+        <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://tiktok.com" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      </div>
       <span>© 2025 منصة تمكين. جميع الحقوق محفوظة.</span>
       <span>تم تطوير العرض بأسلوب تنظيمي حديث مع الحفاظ على بيانات المنصة الأصلية.</span>
     </div>

@@ -75,8 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      reveal
   ========================= */
-  const revealItems = document.querySelectorAll(".reveal");
-  if ("IntersectionObserver" in window && revealItems.length) {
+  const activateReveal = (elements = document.querySelectorAll(".reveal")) => {
+    if (!("IntersectionObserver" in window)) {
+      elements.forEach((item) => item.classList.add("visible"));
+      return;
+    }
+
     const revealObserver = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
@@ -88,10 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
       { threshold: 0.12 }
     );
 
-    revealItems.forEach((item) => revealObserver.observe(item));
-  } else {
-    revealItems.forEach((item) => item.classList.add("visible"));
-  }
+    elements.forEach((item) => revealObserver.observe(item));
+  };
+
+  activateReveal();
 
   /* =========================
      forms
@@ -256,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "بحوث ومشاريع تخرج هندسية",
       type: "pdf",
       group: "engineering",
-      college: "كلية الهندسة",
+      sectionLabel: "كلية الهندسة",
       desc: "إعداد وتنظيم بحوث ومشاريع التخرج الهندسية بأسلوب أكاديمي احترافي.",
       link: "pdfs/students/engineering/engineering-research-and-graduation-projects.pdf",
       icon: "⚙️"
@@ -265,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "مشاريع هندسية في جميع التخصصات",
       type: "pdf",
       group: "engineering",
-      college: "كلية الهندسة",
+      sectionLabel: "كلية الهندسة",
       desc: "تنفيذ وتنظيم مشاريع هندسية متخصصة لمختلف الأقسام والتخصصات.",
       link: "pdfs/students/engineering/specialized-engineering-projects.pdf",
       icon: "🛠️"
@@ -274,7 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "تقارير وتجارب معملية مع المحاكاة",
       type: "pdf",
       group: "engineering",
-      college: "كلية الهندسة",
+      sectionLabel: "كلية الهندسة",
       desc: "إعداد لابات وتقارير عملية مع المحاكاة باستخدام البرامج المناسبة.",
       link: "pdfs/students/engineering/lab-reports-and-simulation.pdf",
       icon: "🧪"
@@ -283,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "رسم هندسي يدوي وبالبرامج",
       type: "pdf",
       group: "engineering",
-      college: "كلية الهندسة",
+      sectionLabel: "كلية الهندسة",
       desc: "رسم هندسي يدوي ورقمي باستخدام البرامج المتخصصة بصورة دقيقة ومنظمة.",
       link: "pdfs/students/engineering/manual-and-software-engineering-drawing.pdf",
       icon: "📐"
@@ -292,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "عروض تقديمية هندسية",
       type: "pdf",
       group: "engineering",
-      college: "كلية الهندسة",
+      sectionLabel: "كلية الهندسة",
       desc: "تصميم عروض تقديمية هندسية حديثة وجذابة لعرض الأفكار والمشاريع.",
       link: "pdfs/students/engineering/engineering-presentations.pdf",
       icon: "📊"
@@ -301,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "ترجمة وتلخيص وشرح المقررات الهندسية",
       type: "pdf",
       group: "engineering",
-      college: "كلية الهندسة",
+      sectionLabel: "كلية الهندسة",
       desc: "خدمة مساندة للمقررات الهندسية تشمل الترجمة والتلخيص والشرح الأكاديمي.",
       link: "pdfs/students/engineering/engineering-courses-translation-summary-explanation.pdf",
       icon: "📘"
@@ -311,7 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "بحوث ومشاريع تخرج",
       type: "pdf",
       group: "business",
-      college: "كلية العلوم الإدارية والاقتصادية",
+      sectionLabel: "كلية العلوم الإدارية والاقتصادية",
       desc: "إعداد بحوث ومشاريع أكاديمية منظمة لطلبة التخصصات الإدارية والاقتصادية.",
       link: "pdfs/students/business/research-and-graduation-projects.pdf",
       icon: "📚"
@@ -320,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "دراسات جدوى",
       type: "pdf",
       group: "business",
-      college: "كلية العلوم الإدارية والاقتصادية",
+      sectionLabel: "كلية العلوم الإدارية والاقتصادية",
       desc: "إعداد دراسات جدوى عملية وأكاديمية بصياغة واضحة واحترافية.",
       link: "pdfs/students/business/feasibility-studies.pdf",
       icon: "💹"
@@ -329,7 +333,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "دراسات حالة",
       type: "pdf",
       group: "business",
-      college: "كلية العلوم الإدارية والاقتصادية",
+      sectionLabel: "كلية العلوم الإدارية والاقتصادية",
       desc: "إعداد وتحليل دراسات الحالة وفق متطلبات المقررات الجامعية.",
       link: "pdfs/students/business/case-studies.pdf",
       icon: "📑"
@@ -338,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "عروض تقديمية احترافية",
       type: "pdf",
       group: "business",
-      college: "كلية العلوم الإدارية والاقتصادية",
+      sectionLabel: "كلية العلوم الإدارية والاقتصادية",
       desc: "تصميم عروض تقديمية احترافية للمشاريع والأفكار الإدارية والاقتصادية.",
       link: "pdfs/students/business/professional-presentations.pdf",
       icon: "🖥️"
@@ -347,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "إعداد التكاليف والتقارير",
       type: "pdf",
       group: "business",
-      college: "كلية العلوم الإدارية والاقتصادية",
+      sectionLabel: "كلية العلوم الإدارية والاقتصادية",
       desc: "تنظيم وإعداد التكاليف والتقارير الأكاديمية بأسلوب مهني واضح.",
       link: "pdfs/students/business/costing-and-reports.pdf",
       icon: "🧾"
@@ -356,7 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "ترجمة وتلخيص وشرح المقررات",
       type: "pdf",
       group: "business",
-      college: "كلية العلوم الإدارية والاقتصادية",
+      sectionLabel: "كلية العلوم الإدارية والاقتصادية",
       desc: "مساندة أكاديمية للمقررات عبر الترجمة والتلخيص والشرح المبسط.",
       link: "pdfs/students/business/courses-translation-summary-explanation.pdf",
       icon: "📖"
@@ -366,7 +370,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "بحوث وتقارير طبية",
       type: "pdf",
       group: "medical",
-      college: "كلية الطب",
+      sectionLabel: "كلية الطب",
       desc: "إعداد بحوث وتقارير طبية منظمة بأسلوب أكاديمي مناسب لطلبة الطب.",
       link: "pdfs/students/medical/medical-research-and-reports.pdf",
       icon: "🩺"
@@ -375,7 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "مشاريع وتقارير أكاديمية",
       type: "pdf",
       group: "medical",
-      college: "كلية الطب",
+      sectionLabel: "كلية الطب",
       desc: "تنسيق مشاريع وتقارير أكاديمية لطلبة التخصصات الطبية والصحية.",
       link: "pdfs/students/medical/academic-projects-and-reports.pdf",
       icon: "📋"
@@ -384,7 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "دراسة حالات",
       type: "pdf",
       group: "medical",
-      college: "كلية الطب",
+      sectionLabel: "كلية الطب",
       desc: "إعداد دراسات الحالات الطبية والأكاديمية بصياغة منظمة وواضحة.",
       link: "pdfs/students/medical/case-studies.pdf",
       icon: "🧬"
@@ -393,7 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "عروض تقديمية طبية",
       type: "pdf",
       group: "medical",
-      college: "كلية الطب",
+      sectionLabel: "كلية الطب",
       desc: "تصميم عروض تقديمية طبية حديثة ومناسبة للشرح والعرض العلمي.",
       link: "pdfs/students/medical/medical-presentations.pdf",
       icon: "🖼️"
@@ -402,7 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "ترجمة وتلخيص طبي",
       type: "pdf",
       group: "medical",
-      college: "كلية الطب",
+      sectionLabel: "كلية الطب",
       desc: "خدمة ترجمة وتلخيص للمحتوى الطبي والمقررات والمواد العلمية.",
       link: "pdfs/students/medical/medical-translation-and-summary.pdf",
       icon: "💊"
@@ -411,7 +415,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "شرح المقررات الطبية",
       type: "pdf",
       group: "medical",
-      college: "كلية الطب",
+      sectionLabel: "كلية الطب",
       desc: "شرح أكاديمي منظم ومبسط للمقررات الطبية المختلفة.",
       link: "pdfs/students/medical/medical-courses-explanation.pdf",
       icon: "📕"
@@ -421,7 +425,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "بحوثات تخرج",
       type: "pdf",
       group: "other",
-      college: "الكليات الأخرى",
+      sectionLabel: "الكليات الأخرى",
       desc: "إعداد بحوثات تخرج لمختلف التخصصات الجامعية الأخرى.",
       link: "pdfs/students/other-colleges/graduation-research.pdf",
       icon: "🎓"
@@ -430,7 +434,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "مشاريع تخرج مع الدوكمنت",
       type: "pdf",
       group: "other",
-      college: "الكليات الأخرى",
+      sectionLabel: "الكليات الأخرى",
       desc: "تنسيق مشاريع التخرج مع التوثيق والدوكمنت الكامل.",
       link: "pdfs/students/other-colleges/graduation-projects-with-documentation.pdf",
       icon: "📁"
@@ -439,7 +443,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "حل الواجبات والأنشطة",
       type: "pdf",
       group: "other",
-      college: "الكليات الأخرى",
+      sectionLabel: "الكليات الأخرى",
       desc: "مساندة أكاديمية في حل الواجبات والأنشطة بأسلوب مرتب وواضح.",
       link: "pdfs/students/other-colleges/homework-and-activities.pdf",
       icon: "✍️"
@@ -448,7 +452,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "إعداد التكاليف والتقارير",
       type: "pdf",
       group: "other",
-      college: "الكليات الأخرى",
+      sectionLabel: "الكليات الأخرى",
       desc: "إعداد وتنظيم التكاليف والتقارير الأكاديمية لعدة تخصصات.",
       link: "pdfs/students/other-colleges/costing-and-reports.pdf",
       icon: "📄"
@@ -457,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "عروض تقديمية",
       type: "pdf",
       group: "other",
-      college: "الكليات الأخرى",
+      sectionLabel: "الكليات الأخرى",
       desc: "تصميم عروض تقديمية أكاديمية حديثة تناسب مختلف التخصصات.",
       link: "pdfs/students/other-colleges/presentations.pdf",
       icon: "📽️"
@@ -466,7 +470,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "تفريغ فيديوهات",
       type: "pdf",
       group: "other",
-      college: "الكليات الأخرى",
+      sectionLabel: "الكليات الأخرى",
       desc: "تفريغ محتوى الفيديوهات والمحاضرات إلى نصوص أو ملفات مرتبة.",
       link: "pdfs/students/other-colleges/video-transcription.pdf",
       icon: "🎥"
@@ -475,7 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "ترجمة وتلخيص وشرح المقررات",
       type: "pdf",
       group: "other",
-      college: "الكليات الأخرى",
+      sectionLabel: "الكليات الأخرى",
       desc: "خدمة شاملة لترجمة وتلخيص وشرح المقررات لمختلف الكليات الأخرى.",
       link: "pdfs/students/other-colleges/courses-translation-summary-explanation.pdf",
       icon: "📚"
@@ -486,7 +490,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "ملف إنجاز إلكتروني",
       type: "pdf",
-      category: "ملفات الإنجاز والملفات المهنية",
+      category: "portfolio",
+      sectionLabel: "ملفات الإنجاز والملفات المهنية",
       desc: "ملف مهني منظم لتوثيق الإنجازات والخبرات التعليمية إلكترونيًا.",
       link: "pdfs/teachers/e-portfolio-file.pdf",
       icon: "📄"
@@ -494,7 +499,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "ملف إنجاز ورقي",
       type: "pdf",
-      category: "ملفات الإنجاز والملفات المهنية",
+      category: "portfolio",
+      sectionLabel: "ملفات الإنجاز والملفات المهنية",
       desc: "نسخة منظمة للطباعة والتوثيق الورقي للإنجازات المهنية.",
       link: "pdfs/teachers/print-portfolio-file.pdf",
       icon: "📄"
@@ -502,7 +508,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "ملف نافس",
       type: "pdf",
-      category: "ملفات الإنجاز والملفات المهنية",
+      category: "portfolio",
+      sectionLabel: "ملفات الإنجاز والملفات المهنية",
       desc: "ملف خاص بأعمال الاختبارات الوطنية ومتابعة متطلباتها.",
       link: "pdfs/teachers/nafis-file.pdf",
       icon: "📄"
@@ -510,7 +517,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "ملفات نافس",
       type: "pdf",
-      category: "ملفات الإنجاز والملفات المهنية",
+      category: "portfolio",
+      sectionLabel: "ملفات الإنجاز والملفات المهنية",
       desc: "مجموعة ملفات تدريبية وتنظيمية مرتبطة ببرامج نافس.",
       link: "pdfs/teachers/nafis-files.pdf",
       icon: "📄"
@@ -518,7 +526,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "ملف الموهوبات",
       type: "pdf",
-      category: "ملفات الإنجاز والملفات المهنية",
+      category: "portfolio",
+      sectionLabel: "ملفات الإنجاز والملفات المهنية",
       desc: "ملف توثيقي وتنظيمي خاص ببرامج الطالبات الموهوبات.",
       link: "pdfs/teachers/gifted-students-file.pdf",
       icon: "📄"
@@ -526,7 +535,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "ملف تحدي القراءة",
       type: "pdf",
-      category: "ملفات الإنجاز والملفات المهنية",
+      category: "portfolio",
+      sectionLabel: "ملفات الإنجاز والملفات المهنية",
       desc: "ملف مخصص لتنظيم وتوثيق أعمال وبرامج تحدي القراءة.",
       link: "pdfs/teachers/reading-challenge-file.pdf",
       icon: "📄"
@@ -534,7 +544,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "ملف الانضباط",
       type: "pdf",
-      category: "ملفات الإنجاز والملفات المهنية",
+      category: "portfolio",
+      sectionLabel: "ملفات الإنجاز والملفات المهنية",
       desc: "ملف متابعة وتوثيق الانضباط المدرسي بأسلوب واضح ومنظم.",
       link: "pdfs/teachers/discipline-file.pdf",
       icon: "📄"
@@ -543,7 +554,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "نماذج تدريب نافس",
       type: "pdf",
-      category: "النماذج التدريبية والتعليمية",
+      category: "training",
+      sectionLabel: "النماذج التدريبية والتعليمية",
       desc: "نماذج تدريبية تساعد على قياس الاستعداد ومتابعة الأداء.",
       link: "pdfs/teachers/nafis-training-models.pdf",
       icon: "📄"
@@ -551,7 +563,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "أسئلة محاكية",
       type: "pdf",
-      category: "النماذج التدريبية والتعليمية",
+      category: "training",
+      sectionLabel: "النماذج التدريبية والتعليمية",
       desc: "أسئلة تدريبية محاكية تساعد في التهيئة ورفع مستوى الجاهزية.",
       link: "pdfs/teachers/mock-questions.pdf",
       icon: "📄"
@@ -559,7 +572,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "نماذج تدريب إلكترونية عبر Microsoft Forms",
       type: "pdf",
-      category: "النماذج التدريبية والتعليمية",
+      category: "training",
+      sectionLabel: "النماذج التدريبية والتعليمية",
       desc: "نماذج إلكترونية حديثة للتدريب والمتابعة والقياس التفاعلي.",
       link: "pdfs/teachers/microsoft-forms-training-models.pdf",
       icon: "📄"
@@ -568,7 +582,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "خطة برنامج أهلاً رمضان",
       type: "pdf",
-      category: "الخطط والبرامج والمبادرات",
+      category: "plans",
+      sectionLabel: "الخطط والبرامج والمبادرات",
       desc: "خطة تنفيذية منظمة لبرنامج أهلاً رمضان بصياغة جاهزة للاستخدام.",
       link: "pdfs/teachers/ahlan-ramadan-plan.pdf",
       icon: "📄"
@@ -576,7 +591,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "خطة تنفيذ تطوير الذات",
       type: "pdf",
-      category: "الخطط والبرامج والمبادرات",
+      category: "plans",
+      sectionLabel: "الخطط والبرامج والمبادرات",
       desc: "خطة عملية مهنية تدعم تنمية الذات ورفع كفاءة الأداء.",
       link: "pdfs/teachers/self-development-plan.pdf",
       icon: "📄"
@@ -584,7 +600,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "برنامج غرسة",
       type: "pdf",
-      category: "الخطط والبرامج والمبادرات",
+      category: "plans",
+      sectionLabel: "الخطط والبرامج والمبادرات",
       desc: "برنامج تربوي منظم قابل للتطبيق داخل البيئة المدرسية.",
       link: "pdfs/teachers/gharsa-program.pdf",
       icon: "📄"
@@ -592,7 +609,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "دورة البيئة",
       type: "pdf",
-      category: "الخطط والبرامج والمبادرات",
+      category: "plans",
+      sectionLabel: "الخطط والبرامج والمبادرات",
       desc: "محتوى منظم لدورة البيئة ضمن البرامج والأنشطة التعليمية.",
       link: "pdfs/teachers/environment-course.pdf",
       icon: "📄"
@@ -600,7 +618,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "دورة العمل التطوعي",
       type: "pdf",
-      category: "الخطط والبرامج والمبادرات",
+      category: "plans",
+      sectionLabel: "الخطط والبرامج والمبادرات",
       desc: "ملف منظم لدعم برامج التوعية والتدريب على العمل التطوعي.",
       link: "pdfs/teachers/volunteer-work-course.pdf",
       icon: "📄"
@@ -608,7 +627,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "سلوكي مسؤوليتي",
       type: "pdf",
-      category: "الخطط والبرامج والمبادرات",
+      category: "plans",
+      sectionLabel: "الخطط والبرامج والمبادرات",
       desc: "برنامج مدرسي يدعم الانضباط والسلوك الإيجابي داخل المدرسة.",
       link: "pdfs/teachers/my-behavior-my-responsibility.pdf",
       icon: "📄"
@@ -616,7 +636,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "مسابقة تحدي القراءة",
       type: "pdf",
-      category: "الخطط والبرامج والمبادرات",
+      category: "plans",
+      sectionLabel: "الخطط والبرامج والمبادرات",
       desc: "ملف جاهز لتنظيم وتنفيذ مسابقة تحدي القراءة.",
       link: "pdfs/teachers/reading-challenge-competition.pdf",
       icon: "📄"
@@ -625,7 +646,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "أوراق عمل مادة الرياضيات",
       type: "pdf",
-      category: "أوراق العمل والأنشطة التعليمية",
+      category: "worksheets",
+      sectionLabel: "أوراق العمل والأنشطة التعليمية",
       desc: "أوراق عمل تعليمية منظمة وقابلة للاستخدام داخل الصف مباشرة.",
       link: "pdfs/teachers/math-worksheets.pdf",
       icon: "📄"
@@ -633,7 +655,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "أوراق عمل درس الأشكال الهندسية",
       type: "pdf",
-      category: "أوراق العمل والأنشطة التعليمية",
+      category: "worksheets",
+      sectionLabel: "أوراق العمل والأنشطة التعليمية",
       desc: "ورقة عمل تعليمية منظمة لدرس الأشكال الهندسية.",
       link: "pdfs/teachers/geometric-shapes-worksheet.pdf",
       icon: "📄"
@@ -641,7 +664,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "مطويات تعليمية",
       type: "pdf",
-      category: "أوراق العمل والأنشطة التعليمية",
+      category: "worksheets",
+      sectionLabel: "أوراق العمل والأنشطة التعليمية",
       desc: "مطويات جاهزة بتنسيق حديث ومناسب للاستخدام التعليمي والتوعوي.",
       link: "pdfs/teachers/educational-brochures.pdf",
       icon: "📄"
@@ -650,7 +674,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "خطط علاجية",
       type: "pdf",
-      category: "الخطط العلاجية والإثرائية والبحوث",
+      category: "research-support",
+      sectionLabel: "الخطط العلاجية والإثرائية والبحوث",
       desc: "خطط علاجية منظمة لمعالجة جوانب الضعف ودعم التحسن التدريجي.",
       link: "pdfs/teachers/remedial-plans.pdf",
       icon: "📄"
@@ -658,7 +683,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "خطط إثرائية",
       type: "pdf",
-      category: "الخطط العلاجية والإثرائية والبحوث",
+      category: "research-support",
+      sectionLabel: "الخطط العلاجية والإثرائية والبحوث",
       desc: "خطط إثرائية لدعم التميز وتوسيع الخبرات التعليمية.",
       link: "pdfs/teachers/enrichment-plans.pdf",
       icon: "📄"
@@ -666,7 +692,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "بحوث إجرائية",
       type: "pdf",
-      category: "الخطط العلاجية والإثرائية والبحوث",
+      category: "research-support",
+      sectionLabel: "الخطط العلاجية والإثرائية والبحوث",
       desc: "ملفات بحوث إجرائية بصياغة عملية ومهنية.",
       link: "pdfs/teachers/action-research.pdf",
       icon: "📄"
@@ -674,7 +701,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "مشاريع تخرج",
       type: "pdf",
-      category: "الخطط العلاجية والإثرائية والبحوث",
+      category: "research-support",
+      sectionLabel: "الخطط العلاجية والإثرائية والبحوث",
       desc: "ملفات مشاريع تخرج مرتبة وجاهزة للعرض أو التوثيق.",
       link: "pdfs/teachers/graduation-projects.pdf",
       icon: "📄"
@@ -683,7 +711,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "سجل الشراكة المجتمعية",
       type: "pdf",
-      category: "الشراكة المجتمعية والعمل التطوعي",
+      category: "partnership",
+      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
       desc: "سجل توثيقي منظم لأنشطة ومشاركات الشراكة المجتمعية.",
       link: "pdfs/teachers/community-partnership-record.pdf",
       icon: "📄"
@@ -691,7 +720,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "سجل العمل التطوعي",
       type: "pdf",
-      category: "الشراكة المجتمعية والعمل التطوعي",
+      category: "partnership",
+      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
       desc: "سجل مرتب لتوثيق أعمال ومشاركات العمل التطوعي.",
       link: "pdfs/teachers/volunteer-work-record.pdf",
       icon: "📄"
@@ -699,7 +729,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "خطة الشراكة",
       type: "pdf",
-      category: "الشراكة المجتمعية والعمل التطوعي",
+      category: "partnership",
+      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
       desc: "خطة عمل منظمة لتفعيل الشراكة المجتمعية داخل المدرسة.",
       link: "pdfs/teachers/partnership-plan.pdf",
       icon: "📄"
@@ -707,7 +738,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "ميثاق الشراكة والتطوع",
       type: "pdf",
-      category: "الشراكة المجتمعية والعمل التطوعي",
+      category: "partnership",
+      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
       desc: "ميثاق واضح ومرتب لتنظيم الشراكة والتطوع.",
       link: "pdfs/teachers/partnership-volunteering-charter.pdf",
       icon: "📄"
@@ -715,7 +747,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "كتابة التقارير وإضافة الشواهد",
       type: "pdf",
-      category: "الشراكة المجتمعية والعمل التطوعي",
+      category: "partnership",
+      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
       desc: "ملف منظم للتقارير وإضافة الشواهد الداعمة للتوثيق.",
       link: "pdfs/teachers/reports-and-evidence.pdf",
       icon: "📄"
@@ -723,7 +756,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "عمل باركودات وروابط للميثاق وحصر الخبرات",
       type: "pdf",
-      category: "الشراكة المجتمعية والعمل التطوعي",
+      category: "partnership",
+      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
       desc: "ملف منظم لإنشاء الباركودات والروابط وتوثيق الخبرات.",
       link: "pdfs/teachers/barcodes-links-experience-record.pdf",
       icon: "📄"
@@ -731,7 +765,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "استبيان رضا المستفيد",
       type: "pdf",
-      category: "الشراكة المجتمعية والعمل التطوعي",
+      category: "partnership",
+      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
       desc: "استبيان جاهز لقياس رضا المستفيدين وتحسين جودة التنفيذ.",
       link: "pdfs/teachers/beneficiary-satisfaction-survey.pdf",
       icon: "📄"
@@ -739,7 +774,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "تحليل النتائج",
       type: "pdf",
-      category: "الشراكة المجتمعية والعمل التطوعي",
+      category: "partnership",
+      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
       desc: "ملف يدعم عرض وقراءة وتحليل النتائج بصورة واضحة.",
       link: "pdfs/teachers/results-analysis.pdf",
       icon: "📄"
@@ -748,7 +784,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "بروشورات",
       type: "pdf",
-      category: "التصميمات والمخرجات الرسمية",
+      category: "designs",
+      sectionLabel: "التصميمات والمخرجات الرسمية",
       desc: "نماذج بروشورات بتصميم رسمي وحديث قابلة للعرض والطباعة.",
       link: "pdfs/teachers/brochures.pdf",
       icon: "📄"
@@ -756,7 +793,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "شهادات تقدير",
       type: "pdf",
-      category: "التصميمات والمخرجات الرسمية",
+      category: "designs",
+      sectionLabel: "التصميمات والمخرجات الرسمية",
       desc: "نماذج شهادات تقدير جاهزة للتخصيص والطباعة.",
       link: "pdfs/teachers/certificates-of-appreciation.pdf",
       icon: "📄"
@@ -764,7 +802,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "شهادات تطوع",
       type: "pdf",
-      category: "التصميمات والمخرجات الرسمية",
+      category: "designs",
+      sectionLabel: "التصميمات والمخرجات الرسمية",
       desc: "شهادات تطوع بتنسيق أنيق ومناسب للتوثيق والتحفيز.",
       link: "pdfs/teachers/volunteering-certificates.pdf",
       icon: "📄"
@@ -773,7 +812,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "عمل فيديوهات",
       type: "video",
-      category: "الفيديوهات والمونتاج",
+      category: "videos",
+      sectionLabel: "الفيديوهات والمونتاج",
       desc: "إنتاج فيديوهات تعليمية ومدرسية بمظهر حديث ومناسب للعرض والنشر.",
       link: "videos/teachers/video-production.mp4",
       icon: "🎬"
@@ -781,7 +821,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "فيديوهات بالذكاء الاصطناعي",
       type: "video",
-      category: "الفيديوهات والمونتاج",
+      category: "videos",
+      sectionLabel: "الفيديوهات والمونتاج",
       desc: "محتوى مرئي حديث يوظف أدوات الذكاء الاصطناعي بأسلوب جذاب.",
       link: "videos/teachers/ai-videos.mp4",
       icon: "🤖"
@@ -789,7 +830,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "مونتاج فيديوهات تعليمية واحتفالية وتوعوية",
       type: "video",
-      category: "الفيديوهات والمونتاج",
+      category: "videos",
+      sectionLabel: "الفيديوهات والمونتاج",
       desc: "مونتاج احترافي لمحتوى تعليمي واحتفالي وتوعوي بجودة عالية.",
       link: "videos/teachers/educational-event-awareness-editing.mp4",
       icon: "🎞️"
@@ -797,7 +839,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "اليوم الوطني",
       type: "video",
-      category: "الفيديوهات والمونتاج",
+      category: "videos",
+      sectionLabel: "الفيديوهات والمونتاج",
       desc: "فيديو احتفالي مدرسي بتصميم حديث ومونتاج أنيق للمناسبات الوطنية.",
       link: "videos/teachers/national-day.mp4",
       icon: "🎉"
@@ -805,7 +848,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "رؤية 2030",
       type: "video",
-      category: "الفيديوهات والمونتاج",
+      category: "videos",
+      sectionLabel: "الفيديوهات والمونتاج",
       desc: "فيديو توعوي واحتفالي يعرض مفاهيم رؤية 2030 بأسلوب بصري جذاب.",
       link: "videos/teachers/vision-2030.mp4",
       icon: "🎯"
@@ -813,7 +857,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "يوم المدير العالمي",
       type: "video",
-      category: "الفيديوهات والمونتاج",
+      category: "videos",
+      sectionLabel: "الفيديوهات والمونتاج",
       desc: "فيديو احتفالي مخصص للمناسبات التقديرية داخل المدرسة.",
       link: "videos/teachers/world-principals-day.mp4",
       icon: "🏆"
@@ -821,7 +866,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "العودة إلى المدرسة",
       type: "video",
-      category: "الفيديوهات والمونتاج",
+      category: "videos",
+      sectionLabel: "الفيديوهات والمونتاج",
       desc: "فيديو ترحيبي وتحفيزي مناسب لبداية العام الدراسي.",
       link: "videos/teachers/back-to-school.mp4",
       icon: "🏫"
@@ -829,72 +875,18 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "الموهبة",
       type: "video",
-      category: "الفيديوهات والمونتاج",
+      category: "videos",
+      sectionLabel: "الفيديوهات والمونتاج",
       desc: "فيديو مدرسي يبرز الموهبة والتميز بأسلوب بصري حديث.",
       link: "videos/teachers/talent.mp4",
       icon: "⭐"
-    },
-    {
-      title: "الأمن والسلامة",
-      type: "video",
-      category: "الفيديوهات والمونتاج",
-      desc: "إذاعة مدرسية أو فيديو توعوي بالذكاء الاصطناعي عن الأمن والسلامة.",
-      link: "videos/teachers/safety-and-security-broadcast.mp4",
-      icon: "🛡️"
-    },
-    {
-      title: "اليوم العالمي للغة العربية",
-      type: "video",
-      category: "الفيديوهات والمونتاج",
-      desc: "إذاعة مدرسية مرئية أو مسموعة عن اليوم العالمي للغة العربية.",
-      link: "videos/teachers/arabic-language-day-broadcast.mp4",
-      icon: "📝"
-    },
-    {
-      title: "حماة العزة والفخر",
-      type: "video",
-      category: "الفيديوهات والمونتاج",
-      desc: "استعراض مدرسي مرئي بأسلوب حماسي وجذاب.",
-      link: "videos/teachers/guardians-of-pride-and-honor.mp4",
-      icon: "🎖️"
-    },
-    {
-      title: "الكوارث الطبيعية",
-      type: "video",
-      category: "الفيديوهات والمونتاج",
-      desc: "عرض مرئي توعوي عن الكوارث الطبيعية بأسلوب مشوق.",
-      link: "videos/teachers/natural-disasters-showcase.mp4",
-      icon: "🌪️"
-    },
-    {
-      title: "أهمية القراءة",
-      type: "video",
-      category: "الفيديوهات والمونتاج",
-      desc: "إعلان مدرسي بصياغة مرئية جذابة لتعزيز ثقافة القراءة.",
-      link: "videos/teachers/importance-of-reading-ad.mp4",
-      icon: "📚"
-    },
-    {
-      title: "فارسة الانضباط",
-      type: "video",
-      category: "الفيديوهات والمونتاج",
-      desc: "إعلان أو فيديو تحفيزي مدرسي يبرز قيمة الانضباط بأسلوب جذاب.",
-      link: "videos/teachers/discipline-champion-ad.mp4",
-      icon: "🌟"
-    },
-    {
-      title: "الاختبارات الوطنية – نافس",
-      type: "video",
-      category: "الفيديوهات والمونتاج",
-      desc: "إعلان مدرسي مرئي خاص بالاختبارات الوطنية ونافس.",
-      link: "videos/teachers/nafis-national-exams-ad.mp4",
-      icon: "📢"
     },
 
     {
       title: "صلاحيات قادة المدارس",
       type: "guide",
-      category: "الأدلة والمواثيق والمحتوى التنظيمي",
+      category: "guides",
+      sectionLabel: "الأدلة والمواثيق والمحتوى التنظيمي",
       desc: "دليل تنظيمي يوضح المهام والصلاحيات داخل البيئة المدرسية.",
       link: "pdfs/teachers/school-leaders-authorities.pdf",
       icon: "📘"
@@ -902,7 +894,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "دليل مكافحة الفساد لدى الموظف",
       type: "guide",
-      category: "الأدلة والمواثيق والمحتوى التنظيمي",
+      category: "guides",
+      sectionLabel: "الأدلة والمواثيق والمحتوى التنظيمي",
       desc: "دليل توعوي وتنظيمي يوضح الجوانب الأخلاقية والإجرائية المهمة.",
       link: "pdfs/teachers/anti-corruption-guide.pdf",
       icon: "📘"
@@ -910,7 +903,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "ميثاق أخلاقيات الموظف",
       type: "guide",
-      category: "الأدلة والمواثيق والمحتوى التنظيمي",
+      category: "guides",
+      sectionLabel: "الأدلة والمواثيق والمحتوى التنظيمي",
       desc: "ميثاق أخلاقي منظم ومناسب للعرض والاستخدام المؤسسي.",
       link: "pdfs/teachers/employee-code-of-ethics.pdf",
       icon: "📘"
@@ -918,7 +912,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "الدليل التنظيمي للمدارس",
       type: "guide",
-      category: "الأدلة والمواثيق والمحتوى التنظيمي",
+      category: "guides",
+      sectionLabel: "الأدلة والمواثيق والمحتوى التنظيمي",
       desc: "دليل مؤسسي شامل لتنظيم الجوانب الإدارية والتعليمية داخل المدرسة.",
       link: "pdfs/teachers/schools-organizational-guide.pdf",
       icon: "📘"
@@ -929,7 +924,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "تنسيق الرسائل العلمية",
       type: "pdf",
-      category: "خدمات الباحثين",
+      category: "researchers-all",
+      sectionLabel: "خدمات الباحثين",
       desc: "تنسيق الرسائل والأبحاث بأسلوب أكاديمي احترافي ومنظم.",
       link: "#",
       icon: "📚"
@@ -937,7 +933,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "مراجعة لغوية",
       type: "pdf",
-      category: "خدمات الباحثين",
+      category: "researchers-all",
+      sectionLabel: "خدمات الباحثين",
       desc: "مراجعة لغوية وصياغية للمحتوى الأكاديمي والبحثي.",
       link: "#",
       icon: "📝"
@@ -945,7 +942,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "تنظيم المراجع",
       type: "pdf",
-      category: "خدمات الباحثين",
+      category: "researchers-all",
+      sectionLabel: "خدمات الباحثين",
       desc: "إعادة ترتيب وتنسيق المراجع والمصادر بطريقة أكاديمية سليمة.",
       link: "#",
       icon: "🔖"
@@ -956,7 +954,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "تصميم عروض وبروشورات",
       type: "pdf",
-      category: "خدمات إضافية",
+      category: "extras-all",
+      sectionLabel: "خدمات إضافية",
       desc: "تصميم مخرجات بصرية احترافية للعرض والطباعة.",
       link: "#",
       icon: "🎨"
@@ -964,7 +963,8 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "مونتاج الفيديو",
       type: "video",
-      category: "خدمات إضافية",
+      category: "extras-all",
+      sectionLabel: "خدمات إضافية",
       desc: "تحرير ومونتاج الفيديوهات التعليمية والتوعوية والاحتفالية.",
       link: "#",
       icon: "🎬"
@@ -972,70 +972,88 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "إنشاء مواقع إلكترونية",
       type: "pdf",
-      category: "خدمات إضافية",
+      category: "extras-all",
+      sectionLabel: "خدمات إضافية",
       desc: "بناء واجهات ومواقع إلكترونية حديثة ومنظمة.",
       link: "#",
       icon: "💻"
     }
   ];
 
-  const studentsGroups = [
-    { key: "engineering", label: "كلية الهندسة", desc: "خدمات أكاديمية متخصصة لطلبة التخصصات الهندسية." },
-    { key: "business", label: "كلية العلوم الإدارية والاقتصادية", desc: "خدمات لطلبة التخصصات الإدارية والاقتصادية." },
-    { key: "medical", label: "كلية الطب", desc: "خدمات أكاديمية وتقارير وعروض لطلبة التخصصات الطبية." },
-    { key: "other", label: "الكليات الأخرى", desc: "خدمات عامة لبقية التخصصات والكليات." }
+  const studentsSections = [
+    { key: "engineering", label: "كلية الهندسة", hash: "students-engineering", desc: "خدمات أكاديمية متخصصة لطلبة التخصصات الهندسية." },
+    { key: "business", label: "كلية العلوم الإدارية والاقتصادية", hash: "students-business", desc: "خدمات لطلبة التخصصات الإدارية والاقتصادية." },
+    { key: "medical", label: "كلية الطب", hash: "students-medical", desc: "خدمات أكاديمية وتقارير وعروض لطلبة التخصصات الطبية." },
+    { key: "other", label: "الكليات الأخرى", hash: "students-other", desc: "خدمات عامة لبقية التخصصات والكليات." }
   ];
 
-  const teacherGroups = [
-    { key: "ملفات الإنجاز والملفات المهنية", label: "ملفات الإنجاز والملفات المهنية", desc: "ملفات مهنية وتنظيمية يحتاجها المعلم أو المعلمة." },
-    { key: "النماذج التدريبية والتعليمية", label: "النماذج التدريبية والتعليمية", desc: "نماذج تدريب وأسئلة محاكية وتدريب إلكتروني." },
-    { key: "الخطط والبرامج والمبادرات", label: "الخطط والبرامج والمبادرات", desc: "خطط تنفيذية وبرامج ومبادرات مدرسية." },
-    { key: "أوراق العمل والأنشطة التعليمية", label: "أوراق العمل والأنشطة التعليمية", desc: "أوراق عمل ومطويات وأنشطة صفية." },
-    { key: "الخطط العلاجية والإثرائية والبحوث", label: "الخطط العلاجية والإثرائية والبحوث", desc: "خطط علاجية وإثرائية وبحوث ومشاريع." },
-    { key: "الشراكة المجتمعية والعمل التطوعي", label: "الشراكة المجتمعية والعمل التطوعي", desc: "سجلات وخطط وتقارير الشراكة والتطوع." },
-    { key: "التصميمات والمخرجات الرسمية", label: "التصميمات والمخرجات الرسمية", desc: "بروشورات وشهادات ومخرجات رسمية." },
-    { key: "الفيديوهات والمونتاج", label: "الفيديوهات والمونتاج", desc: "فيديوهات ومونتاج وإعلانات وإذاعات مدرسية." },
-    { key: "الأدلة والمواثيق والمحتوى التنظيمي", label: "الأدلة والمواثيق والمحتوى التنظيمي", desc: "أدلة تنظيمية ومواثيق ومحتوى مؤسسي." }
+  const teachersSections = [
+    { key: "portfolio", label: "ملفات الإنجاز والملفات المهنية", hash: "teachers-portfolio", desc: "ملفات مهنية وتنظيمية يحتاجها المعلم أو المعلمة." },
+    { key: "training", label: "النماذج التدريبية والتعليمية", hash: "teachers-training", desc: "نماذج تدريب وأسئلة محاكية وتدريب إلكتروني." },
+    { key: "plans", label: "الخطط والبرامج والمبادرات", hash: "teachers-plans", desc: "خطط تنفيذية وبرامج ومبادرات مدرسية." },
+    { key: "worksheets", label: "أوراق العمل والأنشطة التعليمية", hash: "teachers-worksheets", desc: "أوراق عمل ومطويات وأنشطة صفية." },
+    { key: "research-support", label: "الخطط العلاجية والإثرائية والبحوث", hash: "teachers-research", desc: "خطط علاجية وإثرائية وبحوث ومشاريع." },
+    { key: "partnership", label: "الشراكة المجتمعية والعمل التطوعي", hash: "teachers-partnership", desc: "سجلات وخطط وتقارير الشراكة والتطوع." },
+    { key: "designs", label: "التصميمات والمخرجات الرسمية", hash: "teachers-designs", desc: "بروشورات وشهادات ومخرجات رسمية." },
+    { key: "videos", label: "الفيديوهات والمونتاج", hash: "teachers-videos", desc: "فيديوهات ومونتاج وإعلانات وإذاعات مدرسية." },
+    { key: "guides", label: "الأدلة والمواثيق والمحتوى التنظيمي", hash: "teachers-guides", desc: "أدلة تنظيمية ومواثيق ومحتوى مؤسسي." }
   ];
 
-  const mainTabsConfig = {
+  const researchersSections = [
+    { key: "researchers-all", label: "خدمات الباحثين", hash: "researchers-services", desc: "تنسيق ومراجعة وتنظيم المراجع." }
+  ];
+
+  const extrasSections = [
+    { key: "extras-all", label: "الخدمات الإضافية", hash: "extras-services", desc: "تصميم، مونتاج، وإنشاء مواقع إلكترونية." }
+  ];
+
+  const libraryMainBadge = document.getElementById("libraryMainBadge");
+  const libraryMainTitle = document.getElementById("libraryMainTitle");
+  const libraryMainDesc = document.getElementById("libraryMainDesc");
+  const libraryCount = document.getElementById("libraryCount");
+  const librarySectionsCount = document.getElementById("librarySectionsCount");
+  const librarySidebarTitle = document.getElementById("librarySidebarTitle");
+  const librarySidebarLinks = document.getElementById("librarySidebarLinks");
+  const servicesLandingGrid = document.getElementById("servicesLandingGrid");
+  const servicePagesContainer = document.getElementById("servicePagesContainer");
+  const libraryMainTabs = document.querySelectorAll(".library-main-tab");
+
+  const libraryConfig = {
     students: {
       badge: "خدمات الطلاب",
-      subTitle: "أقسام خدمات الطلاب",
-      groups: studentsGroups,
+      title: "الخدمات الطلابية",
+      desc: "خدمات أكاديمية وجامعية متنوعة مرتبة حسب الكليات والتخصصات.",
+      sidebarTitle: "أقسام خدمات الطلاب",
+      sections: studentsSections,
       getItems: (key) => studentServices.filter((item) => item.group === key)
     },
     teachers: {
       badge: "خدمات المعلمين",
-      subTitle: "أقسام خدمات المعلمين",
-      groups: teacherGroups,
+      title: "الخدمات الخاصة بالمعلمين",
+      desc: "مكتبة منظمة لفئات المعلمين تشمل الملفات المهنية، الخطط، النماذج، الفيديوهات، والأدلة التنظيمية.",
+      sidebarTitle: "أقسام خدمات المعلمين",
+      sections: teachersSections,
       getItems: (key) => teacherServices.filter((item) => item.category === key)
     },
     researchers: {
       badge: "خدمات الباحثين",
-      subTitle: "خدمات الباحثين",
-      groups: [{ key: "researchers-all", label: "الخدمات المتاحة", desc: "الخدمات الأساسية الخاصة بالباحثين." }],
-      getItems: () => researcherServices
+      title: "خدمات الباحثين",
+      desc: "خدمات مساندة للباحثين تشمل التنسيق والمراجعة وتنظيم المراجع.",
+      sidebarTitle: "أقسام خدمات الباحثين",
+      sections: researchersSections,
+      getItems: (key) => researcherServices.filter((item) => item.category === key)
     },
     extras: {
       badge: "خدمات إضافية",
-      subTitle: "خدمات إضافية",
-      groups: [{ key: "extras-all", label: "الخدمات المتاحة", desc: "التصميم، المونتاج، وإنشاء المواقع." }],
-      getItems: () => extraServices
+      title: "الخدمات الإضافية",
+      desc: "تصميم، مونتاج، وترجمة وإنشاء مواقع إلكترونية بأسلوب منظم وحديث.",
+      sidebarTitle: "الأقسام الإضافية",
+      sections: extrasSections,
+      getItems: (key) => extraServices.filter((item) => item.category === key)
     }
   };
 
-  const subMenuTitle = document.getElementById("subMenuTitle");
-  const subMenuContainer = document.getElementById("subMenuContainer");
-  const servicesCardsGrid = document.getElementById("servicesCardsGrid");
-  const servicesViewTitle = document.getElementById("servicesViewTitle");
-  const servicesViewDesc = document.getElementById("servicesViewDesc");
-  const servicesBadge = document.getElementById("servicesBadge");
-  const servicesCount = document.getElementById("servicesCount");
-  const mainTabButtons = document.querySelectorAll(".service-main-tab");
-
-  let currentMainTab = "students";
-  let currentSubKey = studentsGroups[0].key;
+  let currentLibraryTab = "students";
 
   const getTypeLabel = (type) => {
     if (type === "video") return "فيديو";
@@ -1044,22 +1062,21 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const buildLibraryCard = (item) => {
-    const openText =
-      item.type === "video" ? "مشاهدة" : item.type === "guide" ? "عرض الدليل" : "عرض الملف";
+    const openText = item.type === "video" ? "مشاهدة" : item.type === "guide" ? "عرض الدليل" : "عرض الملف";
 
     return `
-      <article class="library-card">
+      <article class="library-card reveal">
         <div class="library-card-icon">${item.icon}</div>
-        <div class="library-card-body">
+        <div class="library-card-content">
           <div class="library-card-meta">
-            <span class="type-badge ${item.type}">${getTypeLabel(item.type)}</span>
-            <span class="category-badge">${item.category || item.college || ""}</span>
+            <span class="library-type ${item.type}">${getTypeLabel(item.type)}</span>
+            <span class="library-category">${item.sectionLabel || ""}</span>
           </div>
-          <h3>${item.title}</h3>
+          <h4>${item.title}</h4>
           <p>${item.desc}</p>
           <div class="library-card-actions">
             <button
-              class="btn btn-primary resource-open"
+              class="btn btn-primary library-resource-open"
               data-kind="${item.type}"
               data-title="${item.title}"
               data-desc="${item.desc}"
@@ -1073,8 +1090,8 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   };
 
-  const bindResourceButtons = () => {
-    document.querySelectorAll(".resource-open").forEach((button) => {
+  const bindLibraryResourceButtons = () => {
+    document.querySelectorAll(".library-resource-open").forEach((button) => {
       button.addEventListener("click", () => {
         openResourceModal({
           title: button.dataset.title,
@@ -1086,62 +1103,127 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  const renderSubMenu = () => {
-    const config = mainTabsConfig[currentMainTab];
-    subMenuTitle.textContent = config.subTitle;
+  const scrollToHashSection = () => {
+    if (!location.hash) return;
+    const target = document.querySelector(location.hash);
+    if (!target) return;
 
-    subMenuContainer.innerHTML = config.groups
-      .map((group) => {
-        const isActive = currentSubKey === group.key;
+    setTimeout(() => {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
+  };
+
+  const renderLandingGrid = (config) => {
+    servicesLandingGrid.innerHTML = config.sections
+      .map((section) => {
+        const items = config.getItems(section.key);
         return `
-          <button class="sub-menu-btn ${isActive ? "active" : ""}" data-sub-key="${group.key}">
-            <strong>${group.label}</strong>
-            <span>${group.desc}</span>
-          </button>
+          <a class="landing-card reveal" href="#${section.hash}">
+            <div class="landing-card-badge">${items.length} خدمة</div>
+            <h4>${section.label}</h4>
+            <p>${section.desc}</p>
+          </a>
         `;
       })
       .join("");
 
-    subMenuContainer.querySelectorAll(".sub-menu-btn").forEach((button) => {
-      button.addEventListener("click", () => {
-        currentSubKey = button.dataset.subKey;
-        renderSubMenu();
-        renderServicesView();
-      });
+    activateReveal(servicesLandingGrid.querySelectorAll(".reveal"));
+  };
+
+  const renderPages = (config) => {
+    let total = 0;
+
+    servicePagesContainer.innerHTML = config.sections
+      .map((section) => {
+        const items = config.getItems(section.key);
+        total += items.length;
+
+        return `
+          <section class="service-page reveal" id="${section.hash}">
+            <div class="service-page-head">
+              <div>
+                <span class="mini-badge">${config.badge}</span>
+                <h3>${section.label}</h3>
+                <p>${section.desc}</p>
+              </div>
+              <div class="service-page-count">
+                <strong>${items.length}</strong>
+                <span>خدمة</span>
+              </div>
+            </div>
+
+            <div class="service-page-grid">
+              ${items.map(buildLibraryCard).join("")}
+            </div>
+          </section>
+        `;
+      })
+      .join("");
+
+    libraryCount.textContent = total;
+    bindLibraryResourceButtons();
+    activateReveal(servicePagesContainer.querySelectorAll(".reveal"));
+  };
+
+  const renderSidebar = (config) => {
+    librarySidebarLinks.innerHTML = config.sections
+      .map((section) => {
+        return `
+          <a class="library-sidebar-link" href="#${section.hash}" data-hash="${section.hash}">
+            ${section.label}
+          </a>
+        `;
+      })
+      .join("");
+  };
+
+  const renderLibrary = (tabKey) => {
+    const config = libraryConfig[tabKey];
+    if (!config) return;
+
+    currentLibraryTab = tabKey;
+
+    libraryMainTabs.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.libraryTab === tabKey);
     });
+
+    libraryMainBadge.textContent = config.badge;
+    libraryMainTitle.textContent = config.title;
+    libraryMainDesc.textContent = config.desc;
+    librarySidebarTitle.textContent = config.sidebarTitle;
+    librarySectionsCount.textContent = config.sections.length;
+
+    renderSidebar(config);
+    renderLandingGrid(config);
+    renderPages(config);
+    scrollToHashSection();
   };
 
-  const renderServicesView = () => {
-    const config = mainTabsConfig[currentMainTab];
-    const groupInfo = config.groups.find((group) => group.key === currentSubKey) || config.groups[0];
-    const items = config.getItems(currentSubKey);
-
-    servicesBadge.textContent = config.badge;
-    servicesViewTitle.textContent = groupInfo.label;
-    servicesViewDesc.textContent = groupInfo.desc;
-    servicesCount.textContent = items.length;
-
-    servicesCardsGrid.innerHTML = items.map(buildLibraryCard).join("");
-    bindResourceButtons();
-  };
-
-  const renderMainTab = (tabKey) => {
-    currentMainTab = tabKey;
-    currentSubKey = mainTabsConfig[tabKey].groups[0].key;
-
-    mainTabButtons.forEach((button) => {
-      button.classList.toggle("active", button.dataset.mainTab === tabKey);
-    });
-
-    renderSubMenu();
-    renderServicesView();
-  };
-
-  mainTabButtons.forEach((button) => {
+  libraryMainTabs.forEach((button) => {
     button.addEventListener("click", () => {
-      renderMainTab(button.dataset.mainTab);
+      renderLibrary(button.dataset.libraryTab);
     });
   });
 
-  renderMainTab("students");
+  const handleHashDrivenTab = () => {
+    const hash = location.hash.replace("#", "");
+    if (!hash) return;
+
+    if (hash.startsWith("students-")) {
+      renderLibrary("students");
+    } else if (hash.startsWith("teachers-")) {
+      renderLibrary("teachers");
+    } else if (hash.startsWith("researchers-")) {
+      renderLibrary("researchers");
+    } else if (hash.startsWith("extras-")) {
+      renderLibrary("extras");
+    }
+  };
+
+  window.addEventListener("hashchange", handleHashDrivenTab);
+
+  handleHashDrivenTab();
+  if (!location.hash || location.hash === "#services") {
+    renderLibrary("students");
+  }
 });

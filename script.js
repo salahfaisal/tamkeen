@@ -1227,3 +1227,48 @@ document.addEventListener("DOMContentLoaded", () => {
     renderLibrary("students");
   }
 });
+
+/* =========================
+   Mega Menu interactions
+========================= */
+const megaItems = document.querySelectorAll(".has-mega");
+
+const closeAllMegaMenus = () => {
+  megaItems.forEach((item) => item.classList.remove("open"));
+};
+
+megaItems.forEach((item) => {
+  const trigger = item.querySelector(".mega-trigger");
+
+  trigger?.addEventListener("click", (e) => {
+    if (window.innerWidth <= 920) return;
+
+    e.preventDefault();
+    const isOpen = item.classList.contains("open");
+    closeAllMegaMenus();
+    if (!isOpen) item.classList.add("open");
+  });
+
+  item.addEventListener("mouseenter", () => {
+    if (window.innerWidth <= 920) return;
+    closeAllMegaMenus();
+    item.classList.add("open");
+  });
+
+  item.addEventListener("mouseleave", () => {
+    if (window.innerWidth <= 920) return;
+    item.classList.remove("open");
+  });
+});
+
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".has-mega")) {
+    closeAllMegaMenus();
+  }
+});
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth <= 920) {
+    closeAllMegaMenus();
+  }
+});

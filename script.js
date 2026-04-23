@@ -253,6 +253,72 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================
+     announcement bar
+  ========================= */
+  const announcementBar = document.getElementById("announcementBar");
+  const messages = Array.from(document.querySelectorAll(".announcement-message"));
+  const dots = Array.from(document.querySelectorAll(".announcement-dot"));
+  const closeButton = document.getElementById("announcementClose");
+
+  if (announcementBar && messages.length) {
+    const storageKey = "tamkeenAnnouncementClosed";
+    let currentIndex = 0;
+    let rotationTimer = null;
+
+    if (localStorage.getItem(storageKey) === "true") {
+      body.classList.add("announcement-hidden");
+    } else {
+      const showMessage = (index) => {
+        messages.forEach((message, i) => {
+          message.classList.toggle("is-active", i === index);
+        });
+
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("is-active", i === index);
+        });
+
+        currentIndex = index;
+      };
+
+      const stopRotation = () => {
+        if (rotationTimer) {
+          clearInterval(rotationTimer);
+          rotationTimer = null;
+        }
+      };
+
+      const startRotation = () => {
+        stopRotation();
+        if (messages.length <= 1) return;
+
+        rotationTimer = setInterval(() => {
+          const nextIndex = (currentIndex + 1) % messages.length;
+          showMessage(nextIndex);
+        }, 4000);
+      };
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          showMessage(index);
+          startRotation();
+        });
+      });
+
+      announcementBar.addEventListener("mouseenter", stopRotation);
+      announcementBar.addEventListener("mouseleave", startRotation);
+
+      closeButton?.addEventListener("click", () => {
+        body.classList.add("announcement-hidden");
+        localStorage.setItem(storageKey, "true");
+        stopRotation();
+      });
+
+      showMessage(0);
+      startRotation();
+    }
+  }
+
+  /* =========================
      data
   ========================= */
   const studentServices = [
@@ -1053,8 +1119,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  let currentLibraryTab = "students";
-
   const getTypeLabel = (type) => {
     if (type === "video") return "فيديو";
     if (type === "guide") return "دليل";
@@ -1181,8 +1245,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const config = libraryConfig[tabKey];
     if (!config) return;
 
-    currentLibraryTab = tabKey;
-
     libraryMainTabs.forEach((btn) => {
       btn.classList.toggle("active", btn.dataset.libraryTab === tabKey);
     });
@@ -1228,9 +1290,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* =========================
-   Mega Menu interactions
-========================= */
+/* Mega Menu interactions */
 const megaItems = document.querySelectorAll(".has-mega");
 
 const closeAllMegaMenus = () => {

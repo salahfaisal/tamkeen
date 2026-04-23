@@ -1600,6 +1600,7 @@ select {
 
 
 
+
 /* =========================
    الشريط الإعلاني المتحرك
 ========================= */
@@ -1647,7 +1648,7 @@ select {
   gap: 1rem;
   min-width: max-content;
   padding-inline: 1.5rem;
-  animation: announcementMarquee 28s linear infinite;
+  animation: announcementMarqueeRTL 26s linear infinite;
   will-change: transform;
 }
 
@@ -1672,12 +1673,12 @@ select {
   font-weight: 700;
 }
 
-@keyframes announcementMarquee {
+@keyframes announcementMarqueeRTL {
   0% {
-    transform: translateX(0);
+    transform: translateX(-50%);
   }
   100% {
-    transform: translateX(50%);
+    transform: translateX(0);
   }
 }
 

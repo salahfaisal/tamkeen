@@ -147,49 +147,48 @@
     </div>
   </header>
 
-  <!-- الشريط الإعلاني المتحرك -->
-  <div class="announcement-bar" aria-label="الشريط الإعلاني">
-    <div class="announcement-bar-inner">
-      <div class="announcement-track">
-        <span class="announcement-item">
-          🎓 منصة تمكين ترحب بكم — خدمات أكاديمية وتعليمية احترافية للطلاب والمعلمين والباحثين
+  <!-- الشريط الإعلاني المطور -->
+  <div class="announcement-bar" id="announcementBar" role="region" aria-label="إعلانات منصة تمكين">
+    <div class="container announcement-bar-inner">
+      <div class="announcement-badge">
+        <span class="announcement-bell">
+          <i class="fa-solid fa-bell"></i>
         </span>
-        <span class="announcement-separator">•</span>
+        <div class="announcement-badge-text">
+          <strong>إعلانات المنصة</strong>
+          <small>آخر الخدمات والتنبيهات</small>
+        </div>
+      </div>
 
-        <span class="announcement-item">
-          📚 نقدم: بحوث، مشاريع تخرج، عروض تقديمية، ملفات إنجاز، مونتاج، وتصميمات تعليمية
-        </span>
-        <span class="announcement-separator">•</span>
+      <div class="announcement-slider" aria-live="polite">
+        <p class="announcement-message is-active">
+          منصة تمكين ترحب بكم — خدمات أكاديمية وتعليمية احترافية للطلاب والمعلمين والباحثين.
+        </p>
 
-        <span class="announcement-item">
-          🚀 اطلب خدمتك الآن واستعرض أقسام المنصة بسهولة عبر التصنيف الحديث والمنظم
-        </span>
-        <span class="announcement-separator">•</span>
+        <p class="announcement-message">
+          نقدم خدمات متنوعة تشمل البحوث، مشاريع التخرج، العروض التقديمية، الترجمة، والتصميمات التعليمية.
+        </p>
 
-        <span class="announcement-item">
-          ✨ عرض حديث وأنيق يساعدك على الوصول السريع إلى خدمات الطلاب والمعلمين والباحثين
-        </span>
-        <span class="announcement-separator">•</span>
+        <p class="announcement-message">
+          استعرض أقسام المنصة بسهولة للوصول السريع إلى خدمات الطلاب، المعلمين، والباحثين.
+        </p>
 
-        <!-- تكرار النص لضمان الاستمرارية -->
-        <span class="announcement-item">
-          🎓 منصة تمكين ترحب بكم — خدمات أكاديمية وتعليمية احترافية للطلاب والمعلمين والباحثين
-        </span>
-        <span class="announcement-separator">•</span>
+        <p class="announcement-message">
+          تواصل معنا واطلب خدمتك الآن عبر المنصة أو من خلال قنوات التواصل المتاحة.
+        </p>
+      </div>
 
-        <span class="announcement-item">
-          📚 نقدم: بحوث، مشاريع تخرج، عروض تقديمية، ملفات إنجاز، مونتاج، وتصميمات تعليمية
-        </span>
-        <span class="announcement-separator">•</span>
+      <div class="announcement-actions">
+        <div class="announcement-dots" id="announcementDots">
+          <button class="announcement-dot is-active" type="button" aria-label="الرسالة الأولى"></button>
+          <button class="announcement-dot" type="button" aria-label="الرسالة الثانية"></button>
+          <button class="announcement-dot" type="button" aria-label="الرسالة الثالثة"></button>
+          <button class="announcement-dot" type="button" aria-label="الرسالة الرابعة"></button>
+        </div>
 
-        <span class="announcement-item">
-          🚀 اطلب خدمتك الآن واستعرض أقسام المنصة بسهولة عبر التصنيف الحديث والمنظم
-        </span>
-        <span class="announcement-separator">•</span>
-
-        <span class="announcement-item">
-          ✨ عرض حديث وأنيق يساعدك على الوصول السريع إلى خدمات الطلاب والمعلمين والباحثين
-        </span>
+        <button class="announcement-close" id="announcementClose" type="button" aria-label="إغلاق الشريط الإعلاني">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
     </div>
   </div>

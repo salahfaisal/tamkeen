@@ -319,731 +319,208 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
+     ads slider
+  ========================= */
+  const adsSlider = document.getElementById("adsSlider");
+  const adSlides = Array.from(document.querySelectorAll(".ad-slide"));
+  const adDots = Array.from(document.querySelectorAll(".ads-dot"));
+  const adsPrev = document.getElementById("adsPrev");
+  const adsNext = document.getElementById("adsNext");
+  const adsCurrentIndex = document.getElementById("adsCurrentIndex");
+  const adsTotalCount = document.getElementById("adsTotalCount");
+
+  if (adsSlider && adSlides.length) {
+    let currentAdIndex = 0;
+    let adsTimer = null;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    if (adsTotalCount) {
+      adsTotalCount.textContent = String(adSlides.length).padStart(2, "0");
+    }
+
+    const updateAdsCounter = (index) => {
+      if (adsCurrentIndex) {
+        adsCurrentIndex.textContent = String(index + 1).padStart(2, "0");
+      }
+    };
+
+    const showAdSlide = (index) => {
+      adSlides.forEach((slide, i) => {
+        slide.classList.toggle("is-active", i === index);
+      });
+
+      adDots.forEach((dot, i) => {
+        dot.classList.toggle("is-active", i === index);
+      });
+
+      currentAdIndex = index;
+      updateAdsCounter(index);
+    };
+
+    const nextAdSlide = () => {
+      const nextIndex = (currentAdIndex + 1) % adSlides.length;
+      showAdSlide(nextIndex);
+    };
+
+    const prevAdSlide = () => {
+      const prevIndex = (currentAdIndex - 1 + adSlides.length) % adSlides.length;
+      showAdSlide(prevIndex);
+    };
+
+    const stopAdsAutoplay = () => {
+      if (adsTimer) {
+        clearInterval(adsTimer);
+        adsTimer = null;
+      }
+    };
+
+    const startAdsAutoplay = () => {
+      stopAdsAutoplay();
+      adsTimer = setInterval(nextAdSlide, 4500);
+    };
+
+    adsNext?.addEventListener("click", () => {
+      nextAdSlide();
+      startAdsAutoplay();
+    });
+
+    adsPrev?.addEventListener("click", () => {
+      prevAdSlide();
+      startAdsAutoplay();
+    });
+
+    adDots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        showAdSlide(index);
+        startAdsAutoplay();
+      });
+    });
+
+    adsSlider.addEventListener("mouseenter", stopAdsAutoplay);
+    adsSlider.addEventListener("mouseleave", startAdsAutoplay);
+
+    adsSlider.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    adsSlider.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].clientX;
+      const diff = touchStartX - touchEndX;
+
+      if (Math.abs(diff) > 40) {
+        if (diff > 0) nextAdSlide();
+        else prevAdSlide();
+        startAdsAutoplay();
+      }
+    }, { passive: true });
+
+    showAdSlide(0);
+    startAdsAutoplay();
+  }
+
+  /* =========================
      data
   ========================= */
   const studentServices = [
-    {
-      title: "بحوث ومشاريع تخرج هندسية",
-      type: "pdf",
-      group: "engineering",
-      sectionLabel: "كلية الهندسة",
-      desc: "إعداد وتنظيم بحوث ومشاريع التخرج الهندسية بأسلوب أكاديمي احترافي.",
-      link: "pdfs/students/engineering/engineering-research-and-graduation-projects.pdf",
-      icon: "⚙️"
-    },
-    {
-      title: "مشاريع هندسية في جميع التخصصات",
-      type: "pdf",
-      group: "engineering",
-      sectionLabel: "كلية الهندسة",
-      desc: "تنفيذ وتنظيم مشاريع هندسية متخصصة لمختلف الأقسام والتخصصات.",
-      link: "pdfs/students/engineering/specialized-engineering-projects.pdf",
-      icon: "🛠️"
-    },
-    {
-      title: "تقارير وتجارب معملية مع المحاكاة",
-      type: "pdf",
-      group: "engineering",
-      sectionLabel: "كلية الهندسة",
-      desc: "إعداد لابات وتقارير عملية مع المحاكاة باستخدام البرامج المناسبة.",
-      link: "pdfs/students/engineering/lab-reports-and-simulation.pdf",
-      icon: "🧪"
-    },
-    {
-      title: "رسم هندسي يدوي وبالبرامج",
-      type: "pdf",
-      group: "engineering",
-      sectionLabel: "كلية الهندسة",
-      desc: "رسم هندسي يدوي ورقمي باستخدام البرامج المتخصصة بصورة دقيقة ومنظمة.",
-      link: "pdfs/students/engineering/manual-and-software-engineering-drawing.pdf",
-      icon: "📐"
-    },
-    {
-      title: "عروض تقديمية هندسية",
-      type: "pdf",
-      group: "engineering",
-      sectionLabel: "كلية الهندسة",
-      desc: "تصميم عروض تقديمية هندسية حديثة وجذابة لعرض الأفكار والمشاريع.",
-      link: "pdfs/students/engineering/engineering-presentations.pdf",
-      icon: "📊"
-    },
-    {
-      title: "ترجمة وتلخيص وشرح المقررات الهندسية",
-      type: "pdf",
-      group: "engineering",
-      sectionLabel: "كلية الهندسة",
-      desc: "خدمة مساندة للمقررات الهندسية تشمل الترجمة والتلخيص والشرح الأكاديمي.",
-      link: "pdfs/students/engineering/engineering-courses-translation-summary-explanation.pdf",
-      icon: "📘"
-    },
+    { title: "بحوث ومشاريع تخرج هندسية", type: "pdf", group: "engineering", sectionLabel: "كلية الهندسة", desc: "إعداد وتنظيم بحوث ومشاريع التخرج الهندسية بأسلوب أكاديمي احترافي.", link: "pdfs/students/engineering/engineering-research-and-graduation-projects.pdf", icon: "⚙️" },
+    { title: "مشاريع هندسية في جميع التخصصات", type: "pdf", group: "engineering", sectionLabel: "كلية الهندسة", desc: "تنفيذ وتنظيم مشاريع هندسية متخصصة لمختلف الأقسام والتخصصات.", link: "pdfs/students/engineering/specialized-engineering-projects.pdf", icon: "🛠️" },
+    { title: "تقارير وتجارب معملية مع المحاكاة", type: "pdf", group: "engineering", sectionLabel: "كلية الهندسة", desc: "إعداد لابات وتقارير عملية مع المحاكاة باستخدام البرامج المناسبة.", link: "pdfs/students/engineering/lab-reports-and-simulation.pdf", icon: "🧪" },
+    { title: "رسم هندسي يدوي وبالبرامج", type: "pdf", group: "engineering", sectionLabel: "كلية الهندسة", desc: "رسم هندسي يدوي ورقمي باستخدام البرامج المتخصصة بصورة دقيقة ومنظمة.", link: "pdfs/students/engineering/manual-and-software-engineering-drawing.pdf", icon: "📐" },
+    { title: "عروض تقديمية هندسية", type: "pdf", group: "engineering", sectionLabel: "كلية الهندسة", desc: "تصميم عروض تقديمية هندسية حديثة وجذابة لعرض الأفكار والمشاريع.", link: "pdfs/students/engineering/engineering-presentations.pdf", icon: "📊" },
+    { title: "ترجمة وتلخيص وشرح المقررات الهندسية", type: "pdf", group: "engineering", sectionLabel: "كلية الهندسة", desc: "خدمة مساندة للمقررات الهندسية تشمل الترجمة والتلخيص والشرح الأكاديمي.", link: "pdfs/students/engineering/engineering-courses-translation-summary-explanation.pdf", icon: "📘" },
 
-    {
-      title: "بحوث ومشاريع تخرج",
-      type: "pdf",
-      group: "business",
-      sectionLabel: "كلية العلوم الإدارية والاقتصادية",
-      desc: "إعداد بحوث ومشاريع أكاديمية منظمة لطلبة التخصصات الإدارية والاقتصادية.",
-      link: "pdfs/students/business/research-and-graduation-projects.pdf",
-      icon: "📚"
-    },
-    {
-      title: "دراسات جدوى",
-      type: "pdf",
-      group: "business",
-      sectionLabel: "كلية العلوم الإدارية والاقتصادية",
-      desc: "إعداد دراسات جدوى عملية وأكاديمية بصياغة واضحة واحترافية.",
-      link: "pdfs/students/business/feasibility-studies.pdf",
-      icon: "💹"
-    },
-    {
-      title: "دراسات حالة",
-      type: "pdf",
-      group: "business",
-      sectionLabel: "كلية العلوم الإدارية والاقتصادية",
-      desc: "إعداد وتحليل دراسات الحالة وفق متطلبات المقررات الجامعية.",
-      link: "pdfs/students/business/case-studies.pdf",
-      icon: "📑"
-    },
-    {
-      title: "عروض تقديمية احترافية",
-      type: "pdf",
-      group: "business",
-      sectionLabel: "كلية العلوم الإدارية والاقتصادية",
-      desc: "تصميم عروض تقديمية احترافية للمشاريع والأفكار الإدارية والاقتصادية.",
-      link: "pdfs/students/business/professional-presentations.pdf",
-      icon: "🖥️"
-    },
-    {
-      title: "إعداد التكاليف والتقارير",
-      type: "pdf",
-      group: "business",
-      sectionLabel: "كلية العلوم الإدارية والاقتصادية",
-      desc: "تنظيم وإعداد التكاليف والتقارير الأكاديمية بأسلوب مهني واضح.",
-      link: "pdfs/students/business/costing-and-reports.pdf",
-      icon: "🧾"
-    },
-    {
-      title: "ترجمة وتلخيص وشرح المقررات",
-      type: "pdf",
-      group: "business",
-      sectionLabel: "كلية العلوم الإدارية والاقتصادية",
-      desc: "مساندة أكاديمية للمقررات عبر الترجمة والتلخيص والشرح المبسط.",
-      link: "pdfs/students/business/courses-translation-summary-explanation.pdf",
-      icon: "📖"
-    },
+    { title: "بحوث ومشاريع تخرج", type: "pdf", group: "business", sectionLabel: "كلية العلوم الإدارية والاقتصادية", desc: "إعداد بحوث ومشاريع أكاديمية منظمة لطلبة التخصصات الإدارية والاقتصادية.", link: "pdfs/students/business/research-and-graduation-projects.pdf", icon: "📚" },
+    { title: "دراسات جدوى", type: "pdf", group: "business", sectionLabel: "كلية العلوم الإدارية والاقتصادية", desc: "إعداد دراسات جدوى عملية وأكاديمية بصياغة واضحة واحترافية.", link: "pdfs/students/business/feasibility-studies.pdf", icon: "💹" },
+    { title: "دراسات حالة", type: "pdf", group: "business", sectionLabel: "كلية العلوم الإدارية والاقتصادية", desc: "إعداد وتحليل دراسات الحالة وفق متطلبات المقررات الجامعية.", link: "pdfs/students/business/case-studies.pdf", icon: "📑" },
+    { title: "عروض تقديمية احترافية", type: "pdf", group: "business", sectionLabel: "كلية العلوم الإدارية والاقتصادية", desc: "تصميم عروض تقديمية احترافية للمشاريع والأفكار الإدارية والاقتصادية.", link: "pdfs/students/business/professional-presentations.pdf", icon: "🖥️" },
+    { title: "إعداد التكاليف والتقارير", type: "pdf", group: "business", sectionLabel: "كلية العلوم الإدارية والاقتصادية", desc: "تنظيم وإعداد التكاليف والتقارير الأكاديمية بأسلوب مهني واضح.", link: "pdfs/students/business/costing-and-reports.pdf", icon: "🧾" },
+    { title: "ترجمة وتلخيص وشرح المقررات", type: "pdf", group: "business", sectionLabel: "كلية العلوم الإدارية والاقتصادية", desc: "مساندة أكاديمية للمقررات عبر الترجمة والتلخيص والشرح المبسط.", link: "pdfs/students/business/courses-translation-summary-explanation.pdf", icon: "📖" },
 
-    {
-      title: "بحوث وتقارير طبية",
-      type: "pdf",
-      group: "medical",
-      sectionLabel: "كلية الطب",
-      desc: "إعداد بحوث وتقارير طبية منظمة بأسلوب أكاديمي مناسب لطلبة الطب.",
-      link: "pdfs/students/medical/medical-research-and-reports.pdf",
-      icon: "🩺"
-    },
-    {
-      title: "مشاريع وتقارير أكاديمية",
-      type: "pdf",
-      group: "medical",
-      sectionLabel: "كلية الطب",
-      desc: "تنسيق مشاريع وتقارير أكاديمية لطلبة التخصصات الطبية والصحية.",
-      link: "pdfs/students/medical/academic-projects-and-reports.pdf",
-      icon: "📋"
-    },
-    {
-      title: "دراسة حالات",
-      type: "pdf",
-      group: "medical",
-      sectionLabel: "كلية الطب",
-      desc: "إعداد دراسات الحالات الطبية والأكاديمية بصياغة منظمة وواضحة.",
-      link: "pdfs/students/medical/case-studies.pdf",
-      icon: "🧬"
-    },
-    {
-      title: "عروض تقديمية طبية",
-      type: "pdf",
-      group: "medical",
-      sectionLabel: "كلية الطب",
-      desc: "تصميم عروض تقديمية طبية حديثة ومناسبة للشرح والعرض العلمي.",
-      link: "pdfs/students/medical/medical-presentations.pdf",
-      icon: "🖼️"
-    },
-    {
-      title: "ترجمة وتلخيص طبي",
-      type: "pdf",
-      group: "medical",
-      sectionLabel: "كلية الطب",
-      desc: "خدمة ترجمة وتلخيص للمحتوى الطبي والمقررات والمواد العلمية.",
-      link: "pdfs/students/medical/medical-translation-and-summary.pdf",
-      icon: "💊"
-    },
-    {
-      title: "شرح المقررات الطبية",
-      type: "pdf",
-      group: "medical",
-      sectionLabel: "كلية الطب",
-      desc: "شرح أكاديمي منظم ومبسط للمقررات الطبية المختلفة.",
-      link: "pdfs/students/medical/medical-courses-explanation.pdf",
-      icon: "📕"
-    },
+    { title: "بحوث وتقارير طبية", type: "pdf", group: "medical", sectionLabel: "كلية الطب", desc: "إعداد بحوث وتقارير طبية منظمة بأسلوب أكاديمي مناسب لطلبة الطب.", link: "pdfs/students/medical/medical-research-and-reports.pdf", icon: "🩺" },
+    { title: "مشاريع وتقارير أكاديمية", type: "pdf", group: "medical", sectionLabel: "كلية الطب", desc: "تنسيق مشاريع وتقارير أكاديمية لطلبة التخصصات الطبية والصحية.", link: "pdfs/students/medical/academic-projects-and-reports.pdf", icon: "📋" },
+    { title: "دراسة حالات", type: "pdf", group: "medical", sectionLabel: "كلية الطب", desc: "إعداد دراسات الحالات الطبية والأكاديمية بصياغة منظمة وواضحة.", link: "pdfs/students/medical/case-studies.pdf", icon: "🧬" },
+    { title: "عروض تقديمية طبية", type: "pdf", group: "medical", sectionLabel: "كلية الطب", desc: "تصميم عروض تقديمية طبية حديثة ومناسبة للشرح والعرض العلمي.", link: "pdfs/students/medical/medical-presentations.pdf", icon: "🖼️" },
+    { title: "ترجمة وتلخيص طبي", type: "pdf", group: "medical", sectionLabel: "كلية الطب", desc: "خدمة ترجمة وتلخيص للمحتوى الطبي والمقررات والمواد العلمية.", link: "pdfs/students/medical/medical-translation-and-summary.pdf", icon: "💊" },
+    { title: "شرح المقررات الطبية", type: "pdf", group: "medical", sectionLabel: "كلية الطب", desc: "شرح أكاديمي منظم ومبسط للمقررات الطبية المختلفة.", link: "pdfs/students/medical/medical-courses-explanation.pdf", icon: "📕" },
 
-    {
-      title: "بحوثات تخرج",
-      type: "pdf",
-      group: "other",
-      sectionLabel: "الكليات الأخرى",
-      desc: "إعداد بحوثات تخرج لمختلف التخصصات الجامعية الأخرى.",
-      link: "pdfs/students/other-colleges/graduation-research.pdf",
-      icon: "🎓"
-    },
-    {
-      title: "مشاريع تخرج مع الدوكمنت",
-      type: "pdf",
-      group: "other",
-      sectionLabel: "الكليات الأخرى",
-      desc: "تنسيق مشاريع التخرج مع التوثيق والدوكمنت الكامل.",
-      link: "pdfs/students/other-colleges/graduation-projects-with-documentation.pdf",
-      icon: "📁"
-    },
-    {
-      title: "حل الواجبات والأنشطة",
-      type: "pdf",
-      group: "other",
-      sectionLabel: "الكليات الأخرى",
-      desc: "مساندة أكاديمية في حل الواجبات والأنشطة بأسلوب مرتب وواضح.",
-      link: "pdfs/students/other-colleges/homework-and-activities.pdf",
-      icon: "✍️"
-    },
-    {
-      title: "إعداد التكاليف والتقارير",
-      type: "pdf",
-      group: "other",
-      sectionLabel: "الكليات الأخرى",
-      desc: "إعداد وتنظيم التكاليف والتقارير الأكاديمية لعدة تخصصات.",
-      link: "pdfs/students/other-colleges/costing-and-reports.pdf",
-      icon: "📄"
-    },
-    {
-      title: "عروض تقديمية",
-      type: "pdf",
-      group: "other",
-      sectionLabel: "الكليات الأخرى",
-      desc: "تصميم عروض تقديمية أكاديمية حديثة تناسب مختلف التخصصات.",
-      link: "pdfs/students/other-colleges/presentations.pdf",
-      icon: "📽️"
-    },
-    {
-      title: "تفريغ فيديوهات",
-      type: "pdf",
-      group: "other",
-      sectionLabel: "الكليات الأخرى",
-      desc: "تفريغ محتوى الفيديوهات والمحاضرات إلى نصوص أو ملفات مرتبة.",
-      link: "pdfs/students/other-colleges/video-transcription.pdf",
-      icon: "🎥"
-    },
-    {
-      title: "ترجمة وتلخيص وشرح المقررات",
-      type: "pdf",
-      group: "other",
-      sectionLabel: "الكليات الأخرى",
-      desc: "خدمة شاملة لترجمة وتلخيص وشرح المقررات لمختلف الكليات الأخرى.",
-      link: "pdfs/students/other-colleges/courses-translation-summary-explanation.pdf",
-      icon: "📚"
-    }
+    { title: "بحوثات تخرج", type: "pdf", group: "other", sectionLabel: "الكليات الأخرى", desc: "إعداد بحوثات تخرج لمختلف التخصصات الجامعية الأخرى.", link: "pdfs/students/other-colleges/graduation-research.pdf", icon: "🎓" },
+    { title: "مشاريع تخرج مع الدوكمنت", type: "pdf", group: "other", sectionLabel: "الكليات الأخرى", desc: "تنسيق مشاريع التخرج مع التوثيق والدوكمنت الكامل.", link: "pdfs/students/other-colleges/graduation-projects-with-documentation.pdf", icon: "📁" },
+    { title: "حل الواجبات والأنشطة", type: "pdf", group: "other", sectionLabel: "الكليات الأخرى", desc: "مساندة أكاديمية في حل الواجبات والأنشطة بأسلوب مرتب وواضح.", link: "pdfs/students/other-colleges/homework-and-activities.pdf", icon: "✍️" },
+    { title: "إعداد التكاليف والتقارير", type: "pdf", group: "other", sectionLabel: "الكليات الأخرى", desc: "إعداد وتنظيم التكاليف والتقارير الأكاديمية لعدة تخصصات.", link: "pdfs/students/other-colleges/costing-and-reports.pdf", icon: "📄" },
+    { title: "عروض تقديمية", type: "pdf", group: "other", sectionLabel: "الكليات الأخرى", desc: "تصميم عروض تقديمية أكاديمية حديثة تناسب مختلف التخصصات.", link: "pdfs/students/other-colleges/presentations.pdf", icon: "📽️" },
+    { title: "تفريغ فيديوهات", type: "pdf", group: "other", sectionLabel: "الكليات الأخرى", desc: "تفريغ محتوى الفيديوهات والمحاضرات إلى نصوص أو ملفات مرتبة.", link: "pdfs/students/other-colleges/video-transcription.pdf", icon: "🎥" },
+    { title: "ترجمة وتلخيص وشرح المقررات", type: "pdf", group: "other", sectionLabel: "الكليات الأخرى", desc: "خدمة شاملة لترجمة وتلخيص وشرح المقررات لمختلف الكليات الأخرى.", link: "pdfs/students/other-colleges/courses-translation-summary-explanation.pdf", icon: "📚" }
   ];
 
   const teacherServices = [
-    {
-      title: "ملف إنجاز إلكتروني",
-      type: "pdf",
-      category: "portfolio",
-      sectionLabel: "ملفات الإنجاز والملفات المهنية",
-      desc: "ملف مهني منظم لتوثيق الإنجازات والخبرات التعليمية إلكترونيًا.",
-      link: "pdfs/teachers/e-portfolio-file.pdf",
-      icon: "📄"
-    },
-    {
-      title: "ملف إنجاز ورقي",
-      type: "pdf",
-      category: "portfolio",
-      sectionLabel: "ملفات الإنجاز والملفات المهنية",
-      desc: "نسخة منظمة للطباعة والتوثيق الورقي للإنجازات المهنية.",
-      link: "pdfs/teachers/print-portfolio-file.pdf",
-      icon: "📄"
-    },
-    {
-      title: "ملف نافس",
-      type: "pdf",
-      category: "portfolio",
-      sectionLabel: "ملفات الإنجاز والملفات المهنية",
-      desc: "ملف خاص بأعمال الاختبارات الوطنية ومتابعة متطلباتها.",
-      link: "pdfs/teachers/nafis-file.pdf",
-      icon: "📄"
-    },
-    {
-      title: "ملفات نافس",
-      type: "pdf",
-      category: "portfolio",
-      sectionLabel: "ملفات الإنجاز والملفات المهنية",
-      desc: "مجموعة ملفات تدريبية وتنظيمية مرتبطة ببرامج نافس.",
-      link: "pdfs/teachers/nafis-files.pdf",
-      icon: "📄"
-    },
-    {
-      title: "ملف الموهوبات",
-      type: "pdf",
-      category: "portfolio",
-      sectionLabel: "ملفات الإنجاز والملفات المهنية",
-      desc: "ملف توثيقي وتنظيمي خاص ببرامج الطالبات الموهوبات.",
-      link: "pdfs/teachers/gifted-students-file.pdf",
-      icon: "📄"
-    },
-    {
-      title: "ملف تحدي القراءة",
-      type: "pdf",
-      category: "portfolio",
-      sectionLabel: "ملفات الإنجاز والملفات المهنية",
-      desc: "ملف مخصص لتنظيم وتوثيق أعمال وبرامج تحدي القراءة.",
-      link: "pdfs/teachers/reading-challenge-file.pdf",
-      icon: "📄"
-    },
-    {
-      title: "ملف الانضباط",
-      type: "pdf",
-      category: "portfolio",
-      sectionLabel: "ملفات الإنجاز والملفات المهنية",
-      desc: "ملف متابعة وتوثيق الانضباط المدرسي بأسلوب واضح ومنظم.",
-      link: "pdfs/teachers/discipline-file.pdf",
-      icon: "📄"
-    },
+    { title: "ملف إنجاز إلكتروني", type: "pdf", category: "portfolio", sectionLabel: "ملفات الإنجاز والملفات المهنية", desc: "ملف مهني منظم لتوثيق الإنجازات والخبرات التعليمية إلكترونيًا.", link: "pdfs/teachers/e-portfolio-file.pdf", icon: "📄" },
+    { title: "ملف إنجاز ورقي", type: "pdf", category: "portfolio", sectionLabel: "ملفات الإنجاز والملفات المهنية", desc: "نسخة منظمة للطباعة والتوثيق الورقي للإنجازات المهنية.", link: "pdfs/teachers/print-portfolio-file.pdf", icon: "📄" },
+    { title: "ملف نافس", type: "pdf", category: "portfolio", sectionLabel: "ملفات الإنجاز والملفات المهنية", desc: "ملف خاص بأعمال الاختبارات الوطنية ومتابعة متطلباتها.", link: "pdfs/teachers/nafis-file.pdf", icon: "📄" },
+    { title: "ملفات نافس", type: "pdf", category: "portfolio", sectionLabel: "ملفات الإنجاز والملفات المهنية", desc: "مجموعة ملفات تدريبية وتنظيمية مرتبطة ببرامج نافس.", link: "pdfs/teachers/nafis-files.pdf", icon: "📄" },
+    { title: "ملف الموهوبات", type: "pdf", category: "portfolio", sectionLabel: "ملفات الإنجاز والملفات المهنية", desc: "ملف توثيقي وتنظيمي خاص ببرامج الطالبات الموهوبات.", link: "pdfs/teachers/gifted-students-file.pdf", icon: "📄" },
+    { title: "ملف تحدي القراءة", type: "pdf", category: "portfolio", sectionLabel: "ملفات الإنجاز والملفات المهنية", desc: "ملف مخصص لتنظيم وتوثيق أعمال وبرامج تحدي القراءة.", link: "pdfs/teachers/reading-challenge-file.pdf", icon: "📄" },
+    { title: "ملف الانضباط", type: "pdf", category: "portfolio", sectionLabel: "ملفات الإنجاز والملفات المهنية", desc: "ملف متابعة وتوثيق الانضباط المدرسي بأسلوب واضح ومنظم.", link: "pdfs/teachers/discipline-file.pdf", icon: "📄" },
 
-    {
-      title: "نماذج تدريب نافس",
-      type: "pdf",
-      category: "training",
-      sectionLabel: "النماذج التدريبية والتعليمية",
-      desc: "نماذج تدريبية تساعد على قياس الاستعداد ومتابعة الأداء.",
-      link: "pdfs/teachers/nafis-training-models.pdf",
-      icon: "📄"
-    },
-    {
-      title: "أسئلة محاكية",
-      type: "pdf",
-      category: "training",
-      sectionLabel: "النماذج التدريبية والتعليمية",
-      desc: "أسئلة تدريبية محاكية تساعد في التهيئة ورفع مستوى الجاهزية.",
-      link: "pdfs/teachers/mock-questions.pdf",
-      icon: "📄"
-    },
-    {
-      title: "نماذج تدريب إلكترونية عبر Microsoft Forms",
-      type: "pdf",
-      category: "training",
-      sectionLabel: "النماذج التدريبية والتعليمية",
-      desc: "نماذج إلكترونية حديثة للتدريب والمتابعة والقياس التفاعلي.",
-      link: "pdfs/teachers/microsoft-forms-training-models.pdf",
-      icon: "📄"
-    },
+    { title: "نماذج تدريب نافس", type: "pdf", category: "training", sectionLabel: "النماذج التدريبية والتعليمية", desc: "نماذج تدريبية تساعد على قياس الاستعداد ومتابعة الأداء.", link: "pdfs/teachers/nafis-training-models.pdf", icon: "📄" },
+    { title: "أسئلة محاكية", type: "pdf", category: "training", sectionLabel: "النماذج التدريبية والتعليمية", desc: "أسئلة تدريبية محاكية تساعد في التهيئة ورفع مستوى الجاهزية.", link: "pdfs/teachers/mock-questions.pdf", icon: "📄" },
+    { title: "نماذج تدريب إلكترونية عبر Microsoft Forms", type: "pdf", category: "training", sectionLabel: "النماذج التدريبية والتعليمية", desc: "نماذج إلكترونية حديثة للتدريب والمتابعة والقياس التفاعلي.", link: "pdfs/teachers/microsoft-forms-training-models.pdf", icon: "📄" },
 
-    {
-      title: "خطة برنامج أهلاً رمضان",
-      type: "pdf",
-      category: "plans",
-      sectionLabel: "الخطط والبرامج والمبادرات",
-      desc: "خطة تنفيذية منظمة لبرنامج أهلاً رمضان بصياغة جاهزة للاستخدام.",
-      link: "pdfs/teachers/ahlan-ramadan-plan.pdf",
-      icon: "📄"
-    },
-    {
-      title: "خطة تنفيذ تطوير الذات",
-      type: "pdf",
-      category: "plans",
-      sectionLabel: "الخطط والبرامج والمبادرات",
-      desc: "خطة عملية مهنية تدعم تنمية الذات ورفع كفاءة الأداء.",
-      link: "pdfs/teachers/self-development-plan.pdf",
-      icon: "📄"
-    },
-    {
-      title: "برنامج غرسة",
-      type: "pdf",
-      category: "plans",
-      sectionLabel: "الخطط والبرامج والمبادرات",
-      desc: "برنامج تربوي منظم قابل للتطبيق داخل البيئة المدرسية.",
-      link: "pdfs/teachers/gharsa-program.pdf",
-      icon: "📄"
-    },
-    {
-      title: "دورة البيئة",
-      type: "pdf",
-      category: "plans",
-      sectionLabel: "الخطط والبرامج والمبادرات",
-      desc: "محتوى منظم لدورة البيئة ضمن البرامج والأنشطة التعليمية.",
-      link: "pdfs/teachers/environment-course.pdf",
-      icon: "📄"
-    },
-    {
-      title: "دورة العمل التطوعي",
-      type: "pdf",
-      category: "plans",
-      sectionLabel: "الخطط والبرامج والمبادرات",
-      desc: "ملف منظم لدعم برامج التوعية والتدريب على العمل التطوعي.",
-      link: "pdfs/teachers/volunteer-work-course.pdf",
-      icon: "📄"
-    },
-    {
-      title: "سلوكي مسؤوليتي",
-      type: "pdf",
-      category: "plans",
-      sectionLabel: "الخطط والبرامج والمبادرات",
-      desc: "برنامج مدرسي يدعم الانضباط والسلوك الإيجابي داخل المدرسة.",
-      link: "pdfs/teachers/my-behavior-my-responsibility.pdf",
-      icon: "📄"
-    },
-    {
-      title: "مسابقة تحدي القراءة",
-      type: "pdf",
-      category: "plans",
-      sectionLabel: "الخطط والبرامج والمبادرات",
-      desc: "ملف جاهز لتنظيم وتنفيذ مسابقة تحدي القراءة.",
-      link: "pdfs/teachers/reading-challenge-competition.pdf",
-      icon: "📄"
-    },
+    { title: "خطة برنامج أهلاً رمضان", type: "pdf", category: "plans", sectionLabel: "الخطط والبرامج والمبادرات", desc: "خطة تنفيذية منظمة لبرنامج أهلاً رمضان بصياغة جاهزة للاستخدام.", link: "pdfs/teachers/ahlan-ramadan-plan.pdf", icon: "📄" },
+    { title: "خطة تنفيذ تطوير الذات", type: "pdf", category: "plans", sectionLabel: "الخطط والبرامج والمبادرات", desc: "خطة عملية مهنية تدعم تنمية الذات ورفع كفاءة الأداء.", link: "pdfs/teachers/self-development-plan.pdf", icon: "📄" },
+    { title: "برنامج غرسة", type: "pdf", category: "plans", sectionLabel: "الخطط والبرامج والمبادرات", desc: "برنامج تربوي منظم قابل للتطبيق داخل البيئة المدرسية.", link: "pdfs/teachers/gharsa-program.pdf", icon: "📄" },
+    { title: "دورة البيئة", type: "pdf", category: "plans", sectionLabel: "الخطط والبرامج والمبادرات", desc: "محتوى منظم لدورة البيئة ضمن البرامج والأنشطة التعليمية.", link: "pdfs/teachers/environment-course.pdf", icon: "📄" },
+    { title: "دورة العمل التطوعي", type: "pdf", category: "plans", sectionLabel: "الخطط والبرامج والمبادرات", desc: "ملف منظم لدعم برامج التوعية والتدريب على العمل التطوعي.", link: "pdfs/teachers/volunteer-work-course.pdf", icon: "📄" },
+    { title: "سلوكي مسؤوليتي", type: "pdf", category: "plans", sectionLabel: "الخطط والبرامج والمبادرات", desc: "برنامج مدرسي يدعم الانضباط والسلوك الإيجابي داخل المدرسة.", link: "pdfs/teachers/my-behavior-my-responsibility.pdf", icon: "📄" },
+    { title: "مسابقة تحدي القراءة", type: "pdf", category: "plans", sectionLabel: "الخطط والبرامج والمبادرات", desc: "ملف جاهز لتنظيم وتنفيذ مسابقة تحدي القراءة.", link: "pdfs/teachers/reading-challenge-competition.pdf", icon: "📄" },
 
-    {
-      title: "أوراق عمل مادة الرياضيات",
-      type: "pdf",
-      category: "worksheets",
-      sectionLabel: "أوراق العمل والأنشطة التعليمية",
-      desc: "أوراق عمل تعليمية منظمة وقابلة للاستخدام داخل الصف مباشرة.",
-      link: "pdfs/teachers/math-worksheets.pdf",
-      icon: "📄"
-    },
-    {
-      title: "أوراق عمل درس الأشكال الهندسية",
-      type: "pdf",
-      category: "worksheets",
-      sectionLabel: "أوراق العمل والأنشطة التعليمية",
-      desc: "ورقة عمل تعليمية منظمة لدرس الأشكال الهندسية.",
-      link: "pdfs/teachers/geometric-shapes-worksheet.pdf",
-      icon: "📄"
-    },
-    {
-      title: "مطويات تعليمية",
-      type: "pdf",
-      category: "worksheets",
-      sectionLabel: "أوراق العمل والأنشطة التعليمية",
-      desc: "مطويات جاهزة بتنسيق حديث ومناسب للاستخدام التعليمي والتوعوي.",
-      link: "pdfs/teachers/educational-brochures.pdf",
-      icon: "📄"
-    },
+    { title: "أوراق عمل مادة الرياضيات", type: "pdf", category: "worksheets", sectionLabel: "أوراق العمل والأنشطة التعليمية", desc: "أوراق عمل تعليمية منظمة وقابلة للاستخدام داخل الصف مباشرة.", link: "pdfs/teachers/math-worksheets.pdf", icon: "📄" },
+    { title: "أوراق عمل درس الأشكال الهندسية", type: "pdf", category: "worksheets", sectionLabel: "أوراق العمل والأنشطة التعليمية", desc: "ورقة عمل تعليمية منظمة لدرس الأشكال الهندسية.", link: "pdfs/teachers/geometric-shapes-worksheet.pdf", icon: "📄" },
+    { title: "مطويات تعليمية", type: "pdf", category: "worksheets", sectionLabel: "أوراق العمل والأنشطة التعليمية", desc: "مطويات جاهزة بتنسيق حديث ومناسب للاستخدام التعليمي والتوعوي.", link: "pdfs/teachers/educational-brochures.pdf", icon: "📄" },
 
-    {
-      title: "خطط علاجية",
-      type: "pdf",
-      category: "research-support",
-      sectionLabel: "الخطط العلاجية والإثرائية والبحوث",
-      desc: "خطط علاجية منظمة لمعالجة جوانب الضعف ودعم التحسن التدريجي.",
-      link: "pdfs/teachers/remedial-plans.pdf",
-      icon: "📄"
-    },
-    {
-      title: "خطط إثرائية",
-      type: "pdf",
-      category: "research-support",
-      sectionLabel: "الخطط العلاجية والإثرائية والبحوث",
-      desc: "خطط إثرائية لدعم التميز وتوسيع الخبرات التعليمية.",
-      link: "pdfs/teachers/enrichment-plans.pdf",
-      icon: "📄"
-    },
-    {
-      title: "بحوث إجرائية",
-      type: "pdf",
-      category: "research-support",
-      sectionLabel: "الخطط العلاجية والإثرائية والبحوث",
-      desc: "ملفات بحوث إجرائية بصياغة عملية ومهنية.",
-      link: "pdfs/teachers/action-research.pdf",
-      icon: "📄"
-    },
-    {
-      title: "مشاريع تخرج",
-      type: "pdf",
-      category: "research-support",
-      sectionLabel: "الخطط العلاجية والإثرائية والبحوث",
-      desc: "ملفات مشاريع تخرج مرتبة وجاهزة للعرض أو التوثيق.",
-      link: "pdfs/teachers/graduation-projects.pdf",
-      icon: "📄"
-    },
+    { title: "خطط علاجية", type: "pdf", category: "research-support", sectionLabel: "الخطط العلاجية والإثرائية والبحوث", desc: "خطط علاجية منظمة لمعالجة جوانب الضعف ودعم التحسن التدريجي.", link: "pdfs/teachers/remedial-plans.pdf", icon: "📄" },
+    { title: "خطط إثرائية", type: "pdf", category: "research-support", sectionLabel: "الخطط العلاجية والإثرائية والبحوث", desc: "خطط إثرائية لدعم التميز وتوسيع الخبرات التعليمية.", link: "pdfs/teachers/enrichment-plans.pdf", icon: "📄" },
+    { title: "بحوث إجرائية", type: "pdf", category: "research-support", sectionLabel: "الخطط العلاجية والإثرائية والبحوث", desc: "ملفات بحوث إجرائية بصياغة عملية ومهنية.", link: "pdfs/teachers/action-research.pdf", icon: "📄" },
+    { title: "مشاريع تخرج", type: "pdf", category: "research-support", sectionLabel: "الخطط العلاجية والإثرائية والبحوث", desc: "ملفات مشاريع تخرج مرتبة وجاهزة للعرض أو التوثيق.", link: "pdfs/teachers/graduation-projects.pdf", icon: "📄" },
 
-    {
-      title: "سجل الشراكة المجتمعية",
-      type: "pdf",
-      category: "partnership",
-      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
-      desc: "سجل توثيقي منظم لأنشطة ومشاركات الشراكة المجتمعية.",
-      link: "pdfs/teachers/community-partnership-record.pdf",
-      icon: "📄"
-    },
-    {
-      title: "سجل العمل التطوعي",
-      type: "pdf",
-      category: "partnership",
-      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
-      desc: "سجل مرتب لتوثيق أعمال ومشاركات العمل التطوعي.",
-      link: "pdfs/teachers/volunteer-work-record.pdf",
-      icon: "📄"
-    },
-    {
-      title: "خطة الشراكة",
-      type: "pdf",
-      category: "partnership",
-      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
-      desc: "خطة عمل منظمة لتفعيل الشراكة المجتمعية داخل المدرسة.",
-      link: "pdfs/teachers/partnership-plan.pdf",
-      icon: "📄"
-    },
-    {
-      title: "ميثاق الشراكة والتطوع",
-      type: "pdf",
-      category: "partnership",
-      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
-      desc: "ميثاق واضح ومرتب لتنظيم الشراكة والتطوع.",
-      link: "pdfs/teachers/partnership-volunteering-charter.pdf",
-      icon: "📄"
-    },
-    {
-      title: "كتابة التقارير وإضافة الشواهد",
-      type: "pdf",
-      category: "partnership",
-      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
-      desc: "ملف منظم للتقارير وإضافة الشواهد الداعمة للتوثيق.",
-      link: "pdfs/teachers/reports-and-evidence.pdf",
-      icon: "📄"
-    },
-    {
-      title: "عمل باركودات وروابط للميثاق وحصر الخبرات",
-      type: "pdf",
-      category: "partnership",
-      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
-      desc: "ملف منظم لإنشاء الباركودات والروابط وتوثيق الخبرات.",
-      link: "pdfs/teachers/barcodes-links-experience-record.pdf",
-      icon: "📄"
-    },
-    {
-      title: "استبيان رضا المستفيد",
-      type: "pdf",
-      category: "partnership",
-      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
-      desc: "استبيان جاهز لقياس رضا المستفيدين وتحسين جودة التنفيذ.",
-      link: "pdfs/teachers/beneficiary-satisfaction-survey.pdf",
-      icon: "📄"
-    },
-    {
-      title: "تحليل النتائج",
-      type: "pdf",
-      category: "partnership",
-      sectionLabel: "الشراكة المجتمعية والعمل التطوعي",
-      desc: "ملف يدعم عرض وقراءة وتحليل النتائج بصورة واضحة.",
-      link: "pdfs/teachers/results-analysis.pdf",
-      icon: "📄"
-    },
+    { title: "سجل الشراكة المجتمعية", type: "pdf", category: "partnership", sectionLabel: "الشراكة المجتمعية والعمل التطوعي", desc: "سجل توثيقي منظم لأنشطة ومشاركات الشراكة المجتمعية.", link: "pdfs/teachers/community-partnership-record.pdf", icon: "📄" },
+    { title: "سجل العمل التطوعي", type: "pdf", category: "partnership", sectionLabel: "الشراكة المجتمعية والعمل التطوعي", desc: "سجل مرتب لتوثيق أعمال ومشاركات العمل التطوعي.", link: "pdfs/teachers/volunteer-work-record.pdf", icon: "📄" },
+    { title: "خطة الشراكة", type: "pdf", category: "partnership", sectionLabel: "الشراكة المجتمعية والعمل التطوعي", desc: "خطة عمل منظمة لتفعيل الشراكة المجتمعية داخل المدرسة.", link: "pdfs/teachers/partnership-plan.pdf", icon: "📄" },
+    { title: "ميثاق الشراكة والتطوع", type: "pdf", category: "partnership", sectionLabel: "الشراكة المجتمعية والعمل التطوعي", desc: "ميثاق واضح ومرتب لتنظيم الشراكة والتطوع.", link: "pdfs/teachers/partnership-volunteering-charter.pdf", icon: "📄" },
+    { title: "كتابة التقارير وإضافة الشواهد", type: "pdf", category: "partnership", sectionLabel: "الشراكة المجتمعية والعمل التطوعي", desc: "ملف منظم للتقارير وإضافة الشواهد الداعمة للتوثيق.", link: "pdfs/teachers/reports-and-evidence.pdf", icon: "📄" },
+    { title: "عمل باركودات وروابط للميثاق وحصر الخبرات", type: "pdf", category: "partnership", sectionLabel: "الشراكة المجتمعية والعمل التطوعي", desc: "ملف منظم لإنشاء الباركودات والروابط وتوثيق الخبرات.", link: "pdfs/teachers/barcodes-links-experience-record.pdf", icon: "📄" },
+    { title: "استبيان رضا المستفيد", type: "pdf", category: "partnership", sectionLabel: "الشراكة المجتمعية والعمل التطوعي", desc: "استبيان جاهز لقياس رضا المستفيدين وتحسين جودة التنفيذ.", link: "pdfs/teachers/beneficiary-satisfaction-survey.pdf", icon: "📄" },
+    { title: "تحليل النتائج", type: "pdf", category: "partnership", sectionLabel: "الشراكة المجتمعية والعمل التطوعي", desc: "ملف يدعم عرض وقراءة وتحليل النتائج بصورة واضحة.", link: "pdfs/teachers/results-analysis.pdf", icon: "📄" },
 
-    {
-      title: "بروشورات",
-      type: "pdf",
-      category: "designs",
-      sectionLabel: "التصميمات والمخرجات الرسمية",
-      desc: "نماذج بروشورات بتصميم رسمي وحديث قابلة للعرض والطباعة.",
-      link: "pdfs/teachers/brochures.pdf",
-      icon: "📄"
-    },
-    {
-      title: "شهادات تقدير",
-      type: "pdf",
-      category: "designs",
-      sectionLabel: "التصميمات والمخرجات الرسمية",
-      desc: "نماذج شهادات تقدير جاهزة للتخصيص والطباعة.",
-      link: "pdfs/teachers/certificates-of-appreciation.pdf",
-      icon: "📄"
-    },
-    {
-      title: "شهادات تطوع",
-      type: "pdf",
-      category: "designs",
-      sectionLabel: "التصميمات والمخرجات الرسمية",
-      desc: "شهادات تطوع بتنسيق أنيق ومناسب للتوثيق والتحفيز.",
-      link: "pdfs/teachers/volunteering-certificates.pdf",
-      icon: "📄"
-    },
+    { title: "بروشورات", type: "pdf", category: "designs", sectionLabel: "التصميمات والمخرجات الرسمية", desc: "نماذج بروشورات بتصميم رسمي وحديث قابلة للعرض والطباعة.", link: "pdfs/teachers/brochures.pdf", icon: "📄" },
+    { title: "شهادات تقدير", type: "pdf", category: "designs", sectionLabel: "التصميمات والمخرجات الرسمية", desc: "نماذج شهادات تقدير جاهزة للتخصيص والطباعة.", link: "pdfs/teachers/certificates-of-appreciation.pdf", icon: "📄" },
+    { title: "شهادات تطوع", type: "pdf", category: "designs", sectionLabel: "التصميمات والمخرجات الرسمية", desc: "شهادات تطوع بتنسيق أنيق ومناسب للتوثيق والتحفيز.", link: "pdfs/teachers/volunteering-certificates.pdf", icon: "📄" },
 
-    {
-      title: "عمل فيديوهات",
-      type: "video",
-      category: "videos",
-      sectionLabel: "الفيديوهات والمونتاج",
-      desc: "إنتاج فيديوهات تعليمية ومدرسية بمظهر حديث ومناسب للعرض والنشر.",
-      link: "videos/teachers/video-production.mp4",
-      icon: "🎬"
-    },
-    {
-      title: "فيديوهات بالذكاء الاصطناعي",
-      type: "video",
-      category: "videos",
-      sectionLabel: "الفيديوهات والمونتاج",
-      desc: "محتوى مرئي حديث يوظف أدوات الذكاء الاصطناعي بأسلوب جذاب.",
-      link: "videos/teachers/ai-videos.mp4",
-      icon: "🤖"
-    },
-    {
-      title: "مونتاج فيديوهات تعليمية واحتفالية وتوعوية",
-      type: "video",
-      category: "videos",
-      sectionLabel: "الفيديوهات والمونتاج",
-      desc: "مونتاج احترافي لمحتوى تعليمي واحتفالي وتوعوي بجودة عالية.",
-      link: "videos/teachers/educational-event-awareness-editing.mp4",
-      icon: "🎞️"
-    },
-    {
-      title: "اليوم الوطني",
-      type: "video",
-      category: "videos",
-      sectionLabel: "الفيديوهات والمونتاج",
-      desc: "فيديو احتفالي مدرسي بتصميم حديث ومونتاج أنيق للمناسبات الوطنية.",
-      link: "videos/teachers/national-day.mp4",
-      icon: "🎉"
-    },
-    {
-      title: "رؤية 2030",
-      type: "video",
-      category: "videos",
-      sectionLabel: "الفيديوهات والمونتاج",
-      desc: "فيديو توعوي واحتفالي يعرض مفاهيم رؤية 2030 بأسلوب بصري جذاب.",
-      link: "videos/teachers/vision-2030.mp4",
-      icon: "🎯"
-    },
-    {
-      title: "يوم المدير العالمي",
-      type: "video",
-      category: "videos",
-      sectionLabel: "الفيديوهات والمونتاج",
-      desc: "فيديو احتفالي مخصص للمناسبات التقديرية داخل المدرسة.",
-      link: "videos/teachers/world-principals-day.mp4",
-      icon: "🏆"
-    },
-    {
-      title: "العودة إلى المدرسة",
-      type: "video",
-      category: "videos",
-      sectionLabel: "الفيديوهات والمونتاج",
-      desc: "فيديو ترحيبي وتحفيزي مناسب لبداية العام الدراسي.",
-      link: "videos/teachers/back-to-school.mp4",
-      icon: "🏫"
-    },
-    {
-      title: "الموهبة",
-      type: "video",
-      category: "videos",
-      sectionLabel: "الفيديوهات والمونتاج",
-      desc: "فيديو مدرسي يبرز الموهبة والتميز بأسلوب بصري حديث.",
-      link: "videos/teachers/talent.mp4",
-      icon: "⭐"
-    },
+    { title: "عمل فيديوهات", type: "video", category: "videos", sectionLabel: "الفيديوهات والمونتاج", desc: "إنتاج فيديوهات تعليمية ومدرسية بمظهر حديث ومناسب للعرض والنشر.", link: "videos/teachers/video-production.mp4", icon: "🎬" },
+    { title: "فيديوهات بالذكاء الاصطناعي", type: "video", category: "videos", sectionLabel: "الفيديوهات والمونتاج", desc: "محتوى مرئي حديث يوظف أدوات الذكاء الاصطناعي بأسلوب جذاب.", link: "videos/teachers/ai-videos.mp4", icon: "🤖" },
+    { title: "مونتاج فيديوهات تعليمية واحتفالية وتوعوية", type: "video", category: "videos", sectionLabel: "الفيديوهات والمونتاج", desc: "مونتاج احترافي لمحتوى تعليمي واحتفالي وتوعوي بجودة عالية.", link: "videos/teachers/educational-event-awareness-editing.mp4", icon: "🎞️" },
+    { title: "اليوم الوطني", type: "video", category: "videos", sectionLabel: "الفيديوهات والمونتاج", desc: "فيديو احتفالي مدرسي بتصميم حديث ومونتاج أنيق للمناسبات الوطنية.", link: "videos/teachers/national-day.mp4", icon: "🎉" },
+    { title: "رؤية 2030", type: "video", category: "videos", sectionLabel: "الفيديوهات والمونتاج", desc: "فيديو توعوي واحتفالي يعرض مفاهيم رؤية 2030 بأسلوب بصري جذاب.", link: "videos/teachers/vision-2030.mp4", icon: "🎯" },
+    { title: "يوم المدير العالمي", type: "video", category: "videos", sectionLabel: "الفيديوهات والمونتاج", desc: "فيديو احتفالي مخصص للمناسبات التقديرية داخل المدرسة.", link: "videos/teachers/world-principals-day.mp4", icon: "🏆" },
+    { title: "العودة إلى المدرسة", type: "video", category: "videos", sectionLabel: "الفيديوهات والمونتاج", desc: "فيديو ترحيبي وتحفيزي مناسب لبداية العام الدراسي.", link: "videos/teachers/back-to-school.mp4", icon: "🏫" },
+    { title: "الموهبة", type: "video", category: "videos", sectionLabel: "الفيديوهات والمونتاج", desc: "فيديو مدرسي يبرز الموهبة والتميز بأسلوب بصري حديث.", link: "videos/teachers/talent.mp4", icon: "⭐" },
 
-    {
-      title: "صلاحيات قادة المدارس",
-      type: "guide",
-      category: "guides",
-      sectionLabel: "الأدلة والمواثيق والمحتوى التنظيمي",
-      desc: "دليل تنظيمي يوضح المهام والصلاحيات داخل البيئة المدرسية.",
-      link: "pdfs/teachers/school-leaders-authorities.pdf",
-      icon: "📘"
-    },
-    {
-      title: "دليل مكافحة الفساد لدى الموظف",
-      type: "guide",
-      category: "guides",
-      sectionLabel: "الأدلة والمواثيق والمحتوى التنظيمي",
-      desc: "دليل توعوي وتنظيمي يوضح الجوانب الأخلاقية والإجرائية المهمة.",
-      link: "pdfs/teachers/anti-corruption-guide.pdf",
-      icon: "📘"
-    },
-    {
-      title: "ميثاق أخلاقيات الموظف",
-      type: "guide",
-      category: "guides",
-      sectionLabel: "الأدلة والمواثيق والمحتوى التنظيمي",
-      desc: "ميثاق أخلاقي منظم ومناسب للعرض والاستخدام المؤسسي.",
-      link: "pdfs/teachers/employee-code-of-ethics.pdf",
-      icon: "📘"
-    },
-    {
-      title: "الدليل التنظيمي للمدارس",
-      type: "guide",
-      category: "guides",
-      sectionLabel: "الأدلة والمواثيق والمحتوى التنظيمي",
-      desc: "دليل مؤسسي شامل لتنظيم الجوانب الإدارية والتعليمية داخل المدرسة.",
-      link: "pdfs/teachers/schools-organizational-guide.pdf",
-      icon: "📘"
-    }
+    { title: "صلاحيات قادة المدارس", type: "guide", category: "guides", sectionLabel: "الأدلة والمواثيق والمحتوى التنظيمي", desc: "دليل تنظيمي يوضح المهام والصلاحيات داخل البيئة المدرسية.", link: "pdfs/teachers/school-leaders-authorities.pdf", icon: "📘" },
+    { title: "دليل مكافحة الفساد لدى الموظف", type: "guide", category: "guides", sectionLabel: "الأدلة والمواثيق والمحتوى التنظيمي", desc: "دليل توعوي وتنظيمي يوضح الجوانب الأخلاقية والإجرائية المهمة.", link: "pdfs/teachers/anti-corruption-guide.pdf", icon: "📘" },
+    { title: "ميثاق أخلاقيات الموظف", type: "guide", category: "guides", sectionLabel: "الأدلة والمواثيق والمحتوى التنظيمي", desc: "ميثاق أخلاقي منظم ومناسب للعرض والاستخدام المؤسسي.", link: "pdfs/teachers/employee-code-of-ethics.pdf", icon: "📘" },
+    { title: "الدليل التنظيمي للمدارس", type: "guide", category: "guides", sectionLabel: "الأدلة والمواثيق والمحتوى التنظيمي", desc: "دليل مؤسسي شامل لتنظيم الجوانب الإدارية والتعليمية داخل المدرسة.", link: "pdfs/teachers/schools-organizational-guide.pdf", icon: "📘" }
   ];
 
   const researcherServices = [
-    {
-      title: "تنسيق الرسائل العلمية",
-      type: "pdf",
-      category: "researchers-all",
-      sectionLabel: "خدمات الباحثين",
-      desc: "تنسيق الرسائل والأبحاث بأسلوب أكاديمي احترافي ومنظم.",
-      link: "#",
-      icon: "📚"
-    },
-    {
-      title: "مراجعة لغوية",
-      type: "pdf",
-      category: "researchers-all",
-      sectionLabel: "خدمات الباحثين",
-      desc: "مراجعة لغوية وصياغية للمحتوى الأكاديمي والبحثي.",
-      link: "#",
-      icon: "📝"
-    },
-    {
-      title: "تنظيم المراجع",
-      type: "pdf",
-      category: "researchers-all",
-      sectionLabel: "خدمات الباحثين",
-      desc: "إعادة ترتيب وتنسيق المراجع والمصادر بطريقة أكاديمية سليمة.",
-      link: "#",
-      icon: "🔖"
-    }
+    { title: "تنسيق الرسائل العلمية", type: "pdf", category: "researchers-all", sectionLabel: "خدمات الباحثين", desc: "تنسيق الرسائل والأبحاث بأسلوب أكاديمي احترافي ومنظم.", link: "#", icon: "📚" },
+    { title: "مراجعة لغوية", type: "pdf", category: "researchers-all", sectionLabel: "خدمات الباحثين", desc: "مراجعة لغوية وصياغية للمحتوى الأكاديمي والبحثي.", link: "#", icon: "📝" },
+    { title: "تنظيم المراجع", type: "pdf", category: "researchers-all", sectionLabel: "خدمات الباحثين", desc: "إعادة ترتيب وتنسيق المراجع والمصادر بطريقة أكاديمية سليمة.", link: "#", icon: "🔖" }
   ];
 
   const extraServices = [
-    {
-      title: "تصميم عروض وبروشورات",
-      type: "pdf",
-      category: "extras-all",
-      sectionLabel: "خدمات إضافية",
-      desc: "تصميم مخرجات بصرية احترافية للعرض والطباعة.",
-      link: "#",
-      icon: "🎨"
-    },
-    {
-      title: "مونتاج الفيديو",
-      type: "video",
-      category: "extras-all",
-      sectionLabel: "خدمات إضافية",
-      desc: "تحرير ومونتاج الفيديوهات التعليمية والتوعوية والاحتفالية.",
-      link: "#",
-      icon: "🎬"
-    },
-    {
-      title: "إنشاء مواقع إلكترونية",
-      type: "pdf",
-      category: "extras-all",
-      sectionLabel: "خدمات إضافية",
-      desc: "بناء واجهات ومواقع إلكترونية حديثة ومنظمة.",
-      link: "#",
-      icon: "💻"
-    }
+    { title: "تصميم عروض وبروشورات", type: "pdf", category: "extras-all", sectionLabel: "خدمات إضافية", desc: "تصميم مخرجات بصرية احترافية للعرض والطباعة.", link: "#", icon: "🎨" },
+    { title: "مونتاج الفيديو", type: "video", category: "extras-all", sectionLabel: "خدمات إضافية", desc: "تحرير ومونتاج الفيديوهات التعليمية والتوعوية والاحتفالية.", link: "#", icon: "🎬" },
+    { title: "إنشاء مواقع إلكترونية", type: "pdf", category: "extras-all", sectionLabel: "خدمات إضافية", desc: "بناء واجهات ومواقع إلكترونية حديثة ومنظمة.", link: "#", icon: "💻" }
   ];
 
   const studentsSections = [

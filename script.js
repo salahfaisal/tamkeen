@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const startAdsAutoplay = () => {
       stopAdsAutoplay();
-      adsTimer = setInterval(nextAdSlide, 4500);
+      adsTimer = setInterval(nextAdSlide, 3500);
     };
 
     adsNext?.addEventListener("click", () => {

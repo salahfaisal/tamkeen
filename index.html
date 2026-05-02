@@ -17,7 +17,6 @@
     rel="stylesheet"
   />
 
-  <!-- Font Awesome للأيقونات -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -148,7 +147,6 @@
     </div>
   </header>
 
-  <!-- الشريط الإعلاني المطور -->
   <div class="announcement-bar" id="announcementBar" role="region" aria-label="إعلانات منصة تمكين">
     <div class="container announcement-bar-inner">
       <div class="announcement-badge">
@@ -243,6 +241,159 @@
   <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
 
   <main>
+    <!-- اللوحة الإعلانية المتقلبة -->
+    <section class="ads-showcase reveal" id="adsShowcase" aria-label="اللوحة الإعلانية">
+      <div class="container">
+        <div class="ads-showcase-shell">
+          <div class="ads-showcase-head">
+            <div>
+              <span class="section-kicker">لوحة إعلانية</span>
+              <h2>أحدث الإعلانات والخدمات المميزة</h2>
+              <p class="section-sub">
+                استعرض الإعلانات والخدمات البارزة داخل منصة تمكين بأسلوب بصري حديث ومتجدد.
+              </p>
+            </div>
+
+            <div class="ads-showcase-meta">
+              <span class="ads-badge">
+                <i class="fa-solid fa-images"></i>
+                إعلانات المنصة
+              </span>
+              <div class="ads-counter">
+                <strong id="adsCurrentIndex">01</strong>
+                <span>/</span>
+                <span id="adsTotalCount">10</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ads-slider" id="adsSlider">
+            <div class="ads-slides">
+              <a class="ad-slide is-active" href="#services" data-index="0">
+                <img src="images2/advs1.png" alt="إعلان منصة تمكين 1" />
+                <div class="ad-slide-overlay">
+                  <span class="ad-slide-tag">منصة تمكين</span>
+                  <h3>خدمات تعليمية إلكترونية متكاملة</h3>
+                  <p>حلول منظمة وحديثة للطلاب والمعلمين والباحثين.</p>
+                  <span class="ad-slide-btn">استعرض الخدمات</span>
+                </div>
+              </a>
+
+              <a class="ad-slide" href="#teachers-portfolio" data-index="1">
+                <img src="images2/advs2.png" alt="إعلان منصة تمكين 2" />
+                <div class="ad-slide-overlay">
+                  <span class="ad-slide-tag">خدمات المعلمين</span>
+                  <h3>ملفات مهنية وخطط وبرامج جاهزة</h3>
+                  <p>تنظيم احترافي للملفات التعليمية والأنشطة والمبادرات.</p>
+                  <span class="ad-slide-btn">عرض خدمات المعلمين</span>
+                </div>
+              </a>
+
+              <a class="ad-slide" href="#students-engineering" data-index="2">
+                <img src="images2/advs3.png" alt="إعلان منصة تمكين 3" />
+                <div class="ad-slide-overlay">
+                  <span class="ad-slide-tag">الخدمات الطلابية</span>
+                  <h3>مشاريع وبحوث وتقارير أكاديمية</h3>
+                  <p>مساندة جامعية منظمة لمختلف الكليات والتخصصات.</p>
+                  <span class="ad-slide-btn">عرض خدمات الطلاب</span>
+                </div>
+              </a>
+
+              <a class="ad-slide" href="#students-medical" data-index="3">
+                <img src="images2/advs4.png" alt="إعلان منصة تمكين 4" />
+                <div class="ad-slide-overlay">
+                  <span class="ad-slide-tag">كلية الطب</span>
+                  <h3>تقارير ودراسات حالات وعروض طبية</h3>
+                  <p>تنسيق أكاديمي حديث ومناسب لطلبة التخصصات الطبية.</p>
+                  <span class="ad-slide-btn">استكشاف القسم</span>
+                </div>
+              </a>
+
+              <a class="ad-slide" href="#students-business" data-index="4">
+                <img src="images2/advs5.png" alt="إعلان منصة تمكين 5" />
+                <div class="ad-slide-overlay">
+                  <span class="ad-slide-tag">الإدارة والاقتصاد</span>
+                  <h3>دراسات جدوى وعروض وتقارير احترافية</h3>
+                  <p>خدمات مرتبة لطلبة العلوم الإدارية والاقتصادية.</p>
+                  <span class="ad-slide-btn">عرض التفاصيل</span>
+                </div>
+              </a>
+
+              <a class="ad-slide" href="#teachers-videos" data-index="5">
+                <img src="images2/advs6.png" alt="إعلان منصة تمكين 6" />
+                <div class="ad-slide-overlay">
+                  <span class="ad-slide-tag">فيديوهات ومونتاج</span>
+                  <h3>إنتاج مرئي جذاب وحديث</h3>
+                  <p>فيديوهات تعليمية واحتفالية وتوعوية بأسلوب أنيق.</p>
+                  <span class="ad-slide-btn">شاهد الخدمات</span>
+                </div>
+              </a>
+
+              <a class="ad-slide" href="#researchers-services" data-index="6">
+                <img src="images2/advs7.png" alt="إعلان منصة تمكين 7" />
+                <div class="ad-slide-overlay">
+                  <span class="ad-slide-tag">خدمات الباحثين</span>
+                  <h3>تنسيق ومراجعة وتنظيم مراجع</h3>
+                  <p>دعم أكاديمي متقن للرسائل والأبحاث العلمية.</p>
+                  <span class="ad-slide-btn">استعرض القسم</span>
+                </div>
+              </a>
+
+              <a class="ad-slide" href="#extras-services" data-index="7">
+                <img src="images2/advs8.png" alt="إعلان منصة تمكين 8" />
+                <div class="ad-slide-overlay">
+                  <span class="ad-slide-tag">خدمات إضافية</span>
+                  <h3>تصميم ومونتاج وإنشاء مواقع</h3>
+                  <p>حلول بصرية وتقنية حديثة تخدم المحتوى التعليمي والمهني.</p>
+                  <span class="ad-slide-btn">استكشاف المزيد</span>
+                </div>
+              </a>
+
+              <a class="ad-slide" href="#catalog" data-index="8">
+                <img src="images2/advs9.png" alt="إعلان منصة تمكين 9" />
+                <div class="ad-slide-overlay">
+                  <span class="ad-slide-tag">نماذج أعمال</span>
+                  <h3>شاهد نماذج من الأعمال المنفذة</h3>
+                  <p>مخرجات منظمة تعكس مستوى الجودة والاحترافية.</p>
+                  <span class="ad-slide-btn">عرض الأعمال</span>
+                </div>
+              </a>
+
+              <a class="ad-slide" href="#order" data-index="9">
+                <img src="images2/advs10.png" alt="إعلان منصة تمكين 10" />
+                <div class="ad-slide-overlay">
+                  <span class="ad-slide-tag">ابدأ الآن</span>
+                  <h3>اطلب خدمتك بسهولة عبر المنصة</h3>
+                  <p>واجهة أنيقة، وصول سريع، وتجربة أكثر احترافية.</p>
+                  <span class="ad-slide-btn">طلب خدمة</span>
+                </div>
+              </a>
+            </div>
+
+            <button class="ads-nav ads-prev" id="adsPrev" aria-label="السابق">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <button class="ads-nav ads-next" id="adsNext" aria-label="التالي">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <div class="ads-dots" id="adsDots">
+              <button class="ads-dot is-active" type="button" aria-label="الإعلان 1" data-slide="0"></button>
+              <button class="ads-dot" type="button" aria-label="الإعلان 2" data-slide="1"></button>
+              <button class="ads-dot" type="button" aria-label="الإعلان 3" data-slide="2"></button>
+              <button class="ads-dot" type="button" aria-label="الإعلان 4" data-slide="3"></button>
+              <button class="ads-dot" type="button" aria-label="الإعلان 5" data-slide="4"></button>
+              <button class="ads-dot" type="button" aria-label="الإعلان 6" data-slide="5"></button>
+              <button class="ads-dot" type="button" aria-label="الإعلان 7" data-slide="6"></button>
+              <button class="ads-dot" type="button" aria-label="الإعلان 8" data-slide="7"></button>
+              <button class="ads-dot" type="button" aria-label="الإعلان 9" data-slide="8"></button>
+              <button class="ads-dot" type="button" aria-label="الإعلان 10" data-slide="9"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="hero" class="hero hero-enhanced">
       <div class="container hero-shell hero-shell-enhanced">
         <div class="hero-copy reveal">

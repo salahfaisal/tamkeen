@@ -761,6 +761,272 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("hashchange", handleHashDrivenTab);
 
+
+
+
+    /* =========================
+     AI assistant
+  ========================= */
+  const aiFab = document.getElementById("aiFab");
+  const aiAssistant = document.getElementById("aiAssistant");
+  const aiAssistantBackdrop = document.getElementById("aiAssistantBackdrop");
+  const aiAssistantClose = document.getElementById("aiAssistantClose");
+  const aiAssistantForm = document.getElementById("aiAssistantForm");
+  const aiAssistantInput = document.getElementById("aiAssistantInput");
+  const aiChatLog = document.getElementById("aiChatLog");
+  const aiRecommendations = document.getElementById("aiRecommendations");
+  const aiResetBtn = document.getElementById("aiResetBtn");
+  const aiPromptChips = document.querySelectorAll(".ai-prompt-chip");
+
+  const aiCatalog = [
+    ...studentServices.map((item) => ({ ...item, audience: "students", sectionHash: studentsSections.find((section) => section.key === item.group)?.hash || "services" })),
+    ...teacherServices.map((item) => ({ ...item, audience: "teachers", sectionHash: teachersSections.find((section) => section.key === item.category)?.hash || "services" })),
+    ...researcherServices.map((item) => ({ ...item, audience: "researchers", sectionHash: researchersSections.find((section) => section.key === item.category)?.hash || "services" })),
+    ...extraServices.map((item) => ({ ...item, audience: "extras", sectionHash: extrasSections.find((section) => section.key === item.category)?.hash || "services" }))
+  ];
+
+  const aiKeywordMap = {
+    students: ["طالب", "طالبة", "جامعة", "مقرر", "مشروع", "واجب", "تخرج", "هندسة", "طب", "إدارة", "اقتصاد"],
+    teachers: ["معلم", "معلمة", "مدرسة", "ملف", "انجاز", "نافس", "خطة", "مطوية", "أوراق عمل"],
+    researchers: ["باحث", "بحث", "رسالة", "مراجع", "مراجعة لغوية", "علمي"],
+    extras: ["موقع", "مونتاج", "تصميم", "بروشور", "فيديو", "هوية"]
+  };
+
+  const aiPriorityKeywords = {
+    engineering: ["هندسة", "هندسي", "محاكاة", "لاب", "رسم هندسي"],
+    business: ["إدارة", "اقتصاد", "جدوى", "تسويق", "محاسبة", "حالة"],
+    medical: ["طب", "طبي", "حالة سريرية", "عرض طبي", "مقرر طبي"],
+    other: ["واجب", "أنشطة", "تفريغ", "تلخيص", "عرض تقديمي"],
+    portfolio: ["ملف", "إنجاز", "نافس", "انضباط", "موهوبات", "قراءة"],
+    training: ["نماذج", "تدريب", "أسئلة", "محاكية", "forms"],
+    plans: ["خطة", "برنامج", "مبادرة", "رمضان", "تطوير الذات", "غرسة"],
+    worksheets: ["ورقة عمل", "مطوية", "رياضيات", "أشكال هندسية"],
+    research_support: ["علاجية", "إثرائية", "بحث إجرائي", "مشروع تخرج"],
+    partnership: ["شراكة", "تطوع", "ميثاق", "استبيان", "تقارير", "شواهد"],
+    designs: ["بروشورات", "شهادات", "تقدير"],
+    videos: ["فيديو", "مونتاج", "إذاعة", "احتفال", "ذكاء اصطناعي"],
+    guides: ["دليل", "ميثاق", "صلاحيات", "تنظيمي", "فساد"],
+    researchers_all: ["تنسيق", "رسالة", "مراجع", "مراجعة", "بحث"],
+    extras_all: ["موقع", "مونتاج", "تصميم", "هوية", "فيديو"]
+  };
+
+  const normalizeArabic = (value = "") => value
+    .toLowerCase()
+    .replace(/[أإآا]/g, "ا")
+    .replace(/ة/g, "ه")
+    .replace(/ى/g, "ي")
+    .replace(/ؤ/g, "و")
+    .replace(/ئ/g, "ي")
+    .replace(/[^؀-ۿ\w\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  const slugToPriorityKey = (item) => {
+    if (item.group) return item.group;
+    if (item.category === "research-support") return "research_support";
+    if (item.category === "researchers-all") return "researchers_all";
+    if (item.category === "extras-all") return "extras_all";
+    return item.category || "";
+  };
+
+  const detectAudience = (query) => {
+    const text = normalizeArabic(query);
+    let bestAudience = "students";
+    let bestScore = 0;
+
+    Object.entries(aiKeywordMap).forEach(([audience, keywords]) => {
+      const score = keywords.reduce((sum, keyword) => sum + (text.includes(normalizeArabic(keyword)) ? 1 : 0), 0);
+      if (score > bestScore) {
+        bestScore = score;
+        bestAudience = audience;
+      }
+    });
+
+    return bestAudience;
+  };
+
+  const scoreService = (service, query, preferredAudience) => {
+    const text = normalizeArabic(query);
+    const haystack = normalizeArabic(`${service.title} ${service.desc} ${service.sectionLabel || ""}`);
+    let score = service.audience === preferredAudience ? 8 : 0;
+
+    text.split(" ").forEach((token) => {
+      if (!token || token.length < 2) return;
+      if (haystack.includes(token)) score += token.length > 4 ? 4 : 2;
+    });
+
+    const priorityKey = slugToPriorityKey(service);
+    (aiPriorityKeywords[priorityKey] || []).forEach((keyword) => {
+      if (text.includes(normalizeArabic(keyword))) score += 5;
+    });
+
+    if (service.type === "video" && (text.includes("فيديو") || text.includes("مونتاج") || text.includes("اذاعه"))) score += 6;
+    if ((service.type === "pdf" || service.type === "guide") && (text.includes("ملف") || text.includes("pdf") || text.includes("نموذج"))) score += 3;
+
+    return score;
+  };
+
+  const recommendServices = (query) => {
+    const audience = detectAudience(query);
+    const ranked = aiCatalog
+      .map((service) => ({ service, score: scoreService(service, query, audience) }))
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3)
+      .map((item) => item.service);
+
+    const fallback = aiCatalog.filter((service) => service.audience === audience).slice(0, 3);
+    return { audience, items: ranked.length ? ranked : fallback };
+  };
+
+  const audienceLabelMap = {
+    students: "خدمات الطلاب",
+    teachers: "خدمات المعلمين",
+    researchers: "خدمات الباحثين",
+    extras: "الخدمات الإضافية"
+  };
+
+  const addAiMessage = (content, role = "bot") => {
+    if (!aiChatLog) return;
+    const message = document.createElement("div");
+    message.className = `ai-message ${role}`;
+    message.innerHTML = content;
+    aiChatLog.appendChild(message);
+    aiChatLog.scrollTop = aiChatLog.scrollHeight;
+  };
+
+  const fillOrderFormFromAi = (service) => {
+    if (!orderForm) return;
+    const serviceField = orderForm.querySelector('select[name="service"]');
+    const detailsField = orderForm.querySelector('textarea[name="details"]');
+
+    if (serviceField) {
+      if (service.audience === "students") serviceField.value = "خدمات الطلاب";
+      else if (service.audience === "teachers") serviceField.value = "خدمات المعلمين";
+      else if (service.audience === "researchers") serviceField.value = "خدمات الباحثين";
+      else serviceField.value = "تصميم ومونتاج";
+    }
+
+    if (detailsField) {
+      detailsField.value = `أرغب في طلب خدمة: ${service.title}
+القسم: ${service.sectionLabel || audienceLabelMap[service.audience]}
+الوصف المقترح: ${service.desc}
+الرابط المرجعي: #${service.sectionHash}`;
+    }
+
+    window.location.hash = "order";
+    setTimeout(() => {
+      document.getElementById("order")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      detailsField?.focus();
+    }, 120);
+  };
+
+  const renderAiRecommendations = (items, audience, originalQuery) => {
+    if (!aiRecommendations) return;
+
+    aiRecommendations.innerHTML = items
+      .map((service, index) => `
+        <article class="ai-rec-card">
+          <div class="ai-rec-top">
+            <span class="ai-rec-icon">${service.icon || "✨"}</span>
+            <div class="ai-rec-title">${index + 1}. ${service.title}</div>
+            <span class="ai-rec-meta">${service.sectionLabel || audienceLabelMap[audience]}</span>
+          </div>
+          <p>${service.desc}</p>
+          <div class="ai-rec-actions">
+            <a href="#${service.sectionHash}" class="btn btn-soft">فتح القسم</a>
+            <button type="button" class="btn btn-primary ai-use-rec" data-title="${service.title}">تجهيز الطلب</button>
+            <button type="button" class="btn btn-soft library-resource-open"
+              data-kind="${service.type}"
+              data-title="${service.title}"
+              data-desc="${service.desc}"
+              data-link="${service.link}">
+              ${service.type === "video" ? "معاينة الفيديو" : service.type === "guide" ? "معاينة الدليل" : "معاينة الملف"}
+            </button>
+          </div>
+        </article>
+      `)
+      .join("");
+
+    aiRecommendations.querySelectorAll(".ai-use-rec").forEach((button) => {
+      button.addEventListener("click", () => {
+        const service = items.find((item) => item.title === button.dataset.title);
+        if (!service) return;
+        fillOrderFormFromAi(service);
+        addAiMessage(`<span class="ai-message-title">تم تجهيز الطلب</span>تم نقل الخدمة <strong>${service.title}</strong> إلى نموذج الطلب، ويمكنك الآن تعديل التفاصيل ثم الإرسال.`, "bot");
+      });
+    });
+
+    bindLibraryResourceButtons();
+
+    addAiMessage(`
+      <span class="ai-message-title">تحليل ذكي لطلبك</span>
+      فهمت أن طلبك الأقرب هو ضمن <strong>${audienceLabelMap[audience]}</strong> بناءً على: <strong>${originalQuery}</strong>.<br>
+      اختر من الترشيحات التالية أو أرسل تفاصيل أدق للحصول على نتيجة أكثر تخصيصًا.
+    `, "bot");
+  };
+
+  const runAiAssistant = (query) => {
+    const cleanQuery = normalizeArabic(query);
+    if (!cleanQuery) return;
+
+    addAiMessage(query, "user");
+    const { audience, items } = recommendServices(query);
+    renderAiRecommendations(items, audience, query);
+  };
+
+  const resetAiAssistant = () => {
+    if (aiChatLog) aiChatLog.innerHTML = "";
+    if (aiRecommendations) aiRecommendations.innerHTML = "";
+    if (aiAssistantInput) aiAssistantInput.value = "";
+
+    addAiMessage(`
+      <span class="ai-message-title">مرحبًا بك في المساعد الذكي</span>
+      أساعدك في ثلاث مراحل:<br>
+      1) فهم احتياجك بسرعة.<br>
+      2) ترشيح أفضل الخدمات من منصة تمكين.<br>
+      3) تجهيز الطلب وإرساله مباشرة إلى نموذج الخدمة.<br><br>
+      اكتب مثلًا: <strong>أنا طالب إدارة وأحتاج دراسة جدوى</strong> أو <strong>أنا معلمة وأريد ملف إنجاز وخطة</strong>.
+    `, "bot");
+  };
+
+  const openAiAssistant = () => {
+    if (!aiAssistant) return;
+    aiAssistant.classList.add("is-open");
+    aiAssistant.setAttribute("aria-hidden", "false");
+    body.style.overflow = "hidden";
+    if (!aiChatLog?.children.length) resetAiAssistant();
+    setTimeout(() => aiAssistantInput?.focus(), 80);
+  };
+
+  const closeAiAssistant = () => {
+    if (!aiAssistant) return;
+    aiAssistant.classList.remove("is-open");
+    aiAssistant.setAttribute("aria-hidden", "true");
+    body.style.overflow = "";
+  };
+
+  aiFab?.addEventListener("click", openAiAssistant);
+  aiAssistantClose?.addEventListener("click", closeAiAssistant);
+  aiAssistantBackdrop?.addEventListener("click", closeAiAssistant);
+  aiResetBtn?.addEventListener("click", resetAiAssistant);
+
+  aiPromptChips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      openAiAssistant();
+      runAiAssistant(chip.dataset.aiPrompt || chip.textContent || "");
+    });
+  });
+
+  aiAssistantForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const value = aiAssistantInput?.value?.trim();
+    if (!value) return;
+    runAiAssistant(value);
+    aiAssistantInput.value = "";
+  });
+
+  
   handleHashDrivenTab();
   if (!location.hash || location.hash === "#services") {
     renderLibrary("students");

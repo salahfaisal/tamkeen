@@ -192,7 +192,6 @@
     </div>
   </div>
 
-  <!-- اللوحة الإعلانية المتقلبة -->
   <section class="ads-showcase reveal" id="adsShowcase" aria-label="اللوحة الإعلانية">
     <div class="container">
       <div class="ads-showcase-shell">
@@ -817,6 +816,58 @@
       </div>
     </div>
   </div>
+
+  <button class="ai-fab" id="aiFab" aria-label="فتح المساعد الذكي">
+    <span class="ai-fab-icon"><i class="fa-solid fa-sparkles"></i></span>
+    <span class="ai-fab-label">المساعد الذكي</span>
+  </button>
+
+  <aside class="ai-assistant" id="aiAssistant" aria-hidden="true">
+    <div class="ai-assistant-backdrop" id="aiAssistantBackdrop"></div>
+    <div class="ai-assistant-panel" role="dialog" aria-modal="true" aria-labelledby="aiAssistantTitle">
+      <div class="ai-assistant-header">
+        <div class="ai-assistant-brand">
+          <span class="ai-brand-icon"><i class="fa-solid fa-brain"></i></span>
+          <div>
+            <strong id="aiAssistantTitle">المساعد الذكي لمنصة تمكين</strong>
+            <small>إرشاد ذكي + ترشيح خدمات + تجهيز الطلب</small>
+          </div>
+        </div>
+        <button class="ai-assistant-close" id="aiAssistantClose" aria-label="إغلاق المساعد">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="ai-assistant-body">
+        <div class="ai-stage-strip">
+          <span class="ai-stage-pill active">المرحلة 1: الإرشاد</span>
+          <span class="ai-stage-pill">المرحلة 2: الترشيح</span>
+          <span class="ai-stage-pill">المرحلة 3: تجهيز الطلب</span>
+        </div>
+
+        <div class="ai-quick-prompts" id="aiQuickPrompts">
+          <button type="button" class="ai-prompt-chip" data-ai-prompt="أنا طالب هندسة وأريد مشروع تخرج">طالب هندسة</button>
+          <button type="button" class="ai-prompt-chip" data-ai-prompt="أنا طالبة طب وأحتاج عرضًا تقديميًا ودراسة حالة">طالبة طب</button>
+          <button type="button" class="ai-prompt-chip" data-ai-prompt="أنا معلمة وأبحث عن ملف إنجاز وخطة أو نموذج تدريبي">معلم / معلمة</button>
+          <button type="button" class="ai-prompt-chip" data-ai-prompt="أنا باحث وأحتاج تنسيقًا ومراجعة لغوية وتنظيم مراجع">باحث</button>
+        </div>
+
+        <div class="ai-chat-log" id="aiChatLog"></div>
+
+        <div class="ai-recommendations" id="aiRecommendations"></div>
+      </div>
+
+      <form class="ai-assistant-form" id="aiAssistantForm">
+        <label class="ai-input-wrap">
+          <textarea id="aiAssistantInput" rows="1" placeholder="اكتب احتياجك مثل: أنا طالب إدارة وأحتاج دراسة جدوى وعرض تقديمي"></textarea>
+        </label>
+        <div class="ai-assistant-actions">
+          <button type="button" class="btn btn-soft ai-reset-btn" id="aiResetBtn">إعادة البدء</button>
+          <button type="submit" class="btn btn-primary">إرسال</button>
+        </div>
+      </form>
+    </div>
+  </aside>
 
   <script src="script.js"></script>
 </body>

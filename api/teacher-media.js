@@ -1,8 +1,8 @@
 const NEON_TEACHER_API = "https://br-proud-wind-b8qdt9gb-teacherapi.compute.c-14.us-east-1.aws.neon.tech";
 
 module.exports = async function handler(req, res) {
-  if (req.method !== "GET") {
-    res.setHeader("Allow", "GET");
+  if (!["GET", "HEAD"].includes(req.method)) {
+    res.setHeader("Allow", "GET, HEAD");
     return res.status(405).json({ ok: false, error: "Method not allowed" });
   }
 
@@ -22,6 +22,7 @@ module.exports = async function handler(req, res) {
       res.status(upstream.status);
       res.setHeader("Content-Type", upstream.headers.get("content-type") || "application/json; charset=utf-8");
       res.setHeader("Cache-Control", "public, max-age=60, s-maxage=60, stale-while-revalidate=300");
+      if (req.method === "HEAD") return res.end();
       return res.send(body);
     }
 
@@ -35,6 +36,7 @@ module.exports = async function handler(req, res) {
     res.setHeader("Cache-Control", "private, max-age=300");
     res.setHeader("X-Content-Type-Options", "nosniff");
 
+    if (req.method === "HEAD") return res.end();
     const buffer = Buffer.from(await upstream.arrayBuffer());
     return res.send(buffer);
   } catch (error) {

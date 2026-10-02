@@ -1,6 +1,27 @@
 (() => {
   "use strict";
 
+  const TEACHER_OVERRIDES = {
+    "Q-lDIYckc600eL5KafRBjb_TVPoLZV6z": {
+      title: "ملف شواهد الأداء الوظيفي لمعلمة رياض الأطفال",
+      category: "شواهد الأداء الوظيفي",
+      subcategory: "رياض الأطفال",
+      desc: "نموذج مخصص لتوثيق وترتيب شواهد الأداء الوظيفي لمعلمة رياض الأطفال."
+    },
+    "wyJmnHpt6xG3F8nJA64jkSfmlvKZpqkl": {
+      title: "ملف الأداء الوظيفي للموجهة الطلابية",
+      category: "الإرشاد الطلابي",
+      subcategory: "الموجهة الطلابية",
+      desc: "نموذج مهني لتنظيم وتوثيق مهام وأعمال وشواهد الموجهة الطلابية."
+    },
+    "CAzhR-M2OU8islw06tjXglVDRGuSLDsm": {
+      title: "ملف الإنجاز وشواهد الأداء للموجه الصحي",
+      category: "الصحة المدرسية",
+      subcategory: "الموجه الصحي",
+      desc: "نموذج لتنظيم الإنجاز والتقييم وتوثيق شواهد الأداء المرتبطة بالصحة المدرسية."
+    }
+  };
+
   const CATEGORY_ORDER = [
     "الأداء الوظيفي",
     "شواهد الأداء الوظيفي",
@@ -227,7 +248,9 @@
       })
       .then(data => {
         if (!data?.ok || !Array.isArray(data.items)) throw new Error("Invalid teacher catalog");
-        teacherItems = numberRepeatedTitles(data.items);
+        teacherItems = numberRepeatedTitles(
+          data.items.map(item => ({ ...item, ...(TEACHER_OVERRIDES[item.id] || {}) }))
+        );
         loaded = true;
         return teacherItems;
       })

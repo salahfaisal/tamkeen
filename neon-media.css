@@ -1,0 +1,88 @@
+.neon-file-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.55rem;
+  margin-top:.7rem;
+  color:var(--muted);
+  font-size:.78rem;
+  font-weight:700
+}
+.neon-file-meta span{
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  padding:.3rem .65rem;
+  border-radius:999px;
+  background:#faf6fc;
+  border:1px solid var(--border)
+}
+.neon-media-viewer{
+  width:100%;
+  min-width:0;
+  margin-top:.25rem
+}
+.neon-media-frame{
+  width:100%;
+  height:min(72vh,820px);
+  min-height:520px;
+  display:block;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:#f7f4f9
+}
+.neon-media-video{
+  width:100%;
+  max-height:72vh;
+  display:block;
+  border-radius:18px;
+  background:#111
+}
+.neon-media-image{
+  max-width:100%;
+  max-height:72vh;
+  display:block;
+  margin-inline:auto;
+  border-radius:18px;
+  object-fit:contain;
+  user-select:none
+}
+.neon-media-note,
+.neon-empty-state,
+.neon-library-error{
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:22px;
+  padding:1.2rem;
+  color:var(--muted)
+}
+.neon-empty-state{
+  grid-column:1/-1;
+  text-align:center
+}
+.neon-library-error{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:.7rem
+}
+.neon-library-error i{
+  font-size:1.6rem;
+  color:var(--primary)
+}
+.neon-library-error strong{
+  color:var(--primary-dark)
+}
+.neon-student-card .library-card-actions a{
+  display:none!important
+}
+@media (max-width:720px){
+  .neon-media-frame{
+    min-height:62vh;
+    height:62vh;
+    border-radius:14px
+  }
+  .modal-dialog{
+    width:min(96vw,1100px)
+  }
+}

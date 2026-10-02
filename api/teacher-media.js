@@ -21,7 +21,7 @@ module.exports = async function handler(req, res) {
       const body = await upstream.text();
       res.status(upstream.status);
       res.setHeader("Content-Type", upstream.headers.get("content-type") || "application/json; charset=utf-8");
-      res.setHeader("Cache-Control", "public, max-age=60, s-maxage=60, stale-while-revalidate=300");
+      res.setHeader("Cache-Control", "no-store, max-age=0");
       if (req.method === "HEAD") return res.end();
       return res.send(body);
     }

@@ -54,6 +54,36 @@
     other: "أخرى"
   };
 
+  const ARABIC_FOLDER_MAP = {
+    "مختبر الأنظمة الديناميكية": "Dynamic_Systems_Lab",
+    "الأنظمة الديناميكية": "Dynamic_Systems_Lab",
+    "الهندسة الكهربائية": "Electrical_Engineering",
+    "معالجة الإشارات الرقمية": "Digital_Signal_Processing",
+    "الدوائر الإلكترونية": "Electronic_Circuits",
+    "ماتلاب": "MATLAB",
+    "matlab": "MATLAB",
+    "التصميم الهندسي": "Engineering_Design",
+    "المحاسبة": "Accounting",
+    "اتخاذ القرار": "Decision_Making",
+    "التمويل": "Finance",
+    "الموارد البشرية": "Human_Resources",
+    "استراتيجية الموارد البشرية": "HR_Strategy",
+    "إدارة المواهب": "Talent_Management",
+    "السلوك التنظيمي": "Organizational_Behavior",
+    "علم النفس": "Psychology",
+    "الإرشاد والعلاج": "Counseling_and_Therapy",
+    "الارشاد والعلاج": "Counseling_and_Therapy",
+    "التقييم النفسي": "Psychological_Assessment",
+    "الحوسبة": "Computing",
+    "أنظمة التشغيل والأمن السيبراني": "Operating_Systems_and_Cybersecurity",
+    "انظمة التشغيل والأمن السيبراني": "Operating_Systems_and_Cybersecurity",
+    "العلوم": "Science",
+    "الأحياء": "Biology",
+    "الاحياء": "Biology",
+    "الرياضيات": "Mathematics",
+    "التفاضل والتكامل": "Calculus"
+  };
+
   const CURRENT_FILE_FOLDERS = [
     [/financial[ _-]*statement[ _-]*analysis/i, ["Accounting"]],
     [/hospital[ _-]*site[ _-]*selection/i, ["Decision_Making"]],
@@ -115,6 +145,35 @@
     return after;
   };
 
+  const pathFromDescription = item => {
+    const raw = [item.desc, item.description, item.subtitle, item.categoryLabel]
+      .filter(Boolean)
+      .join(" - ")
+      .trim();
+    if (!raw) return [];
+
+    const normalized = raw
+      .replace(/[›>\/|]+/g, " - ")
+      .split(/\s+-\s+/)
+      .map(x => x.trim())
+      .filter(Boolean);
+
+    const result = [];
+    for (const part of normalized) {
+      const direct = ARABIC_FOLDER_MAP[part] || ARABIC_FOLDER_MAP[part.toLowerCase()];
+      if (direct && !result.includes(direct)) {
+        result.push(direct);
+        continue;
+      }
+
+      const entry = Object.entries(ARABIC_FOLDER_MAP).find(([label]) =>
+        part.includes(label) || label.includes(part)
+      );
+      if (entry && !result.includes(entry[1])) result.push(entry[1]);
+    }
+    return result;
+  };
+
   const fallbackFolderPath = item => {
     const haystack = [
       item.title,
@@ -122,6 +181,9 @@
       item.filename,
       item.originalFilename,
       item.original_filename,
+      item.desc,
+      item.description,
+      item.sectionLabel,
       item.id
     ].filter(Boolean).join(" ");
     for (const [pattern, folders] of CURRENT_FILE_FOLDERS) {
@@ -132,7 +194,12 @@
 
   const getFolderPath = item => {
     const fromPath = pathFromItem(item);
-    return fromPath.length ? fromPath : fallbackFolderPath(item);
+    if (fromPath.length) return fromPath;
+
+    const fromDescription = pathFromDescription(item);
+    if (fromDescription.length) return fromDescription;
+
+    return fallbackFolderPath(item);
   };
 
   const injectStyles = () => {
@@ -258,7 +325,6 @@
         <div class="library-card-meta">
           <span class="library-type ${escapeHtml(item.type || "pdf")}">${item.type === "video" ? "فيديو" : item.type === "image" ? "صورة" : "ملف PDF"}</span>
           <span class="library-category">${escapeHtml(item.sectionLabel || "")}</span>
-          <span class="neon-live-badge"><span class="neon-live-dot"></span>Neon</span>
         </div>
         <h4>${escapeHtml(item.title)}</h4>
         <p>${escapeHtml(item.desc || "")}</p>
@@ -321,7 +387,7 @@
     const sidebar = document.getElementById("librarySidebarLinks");
     if (!landing || !pages || !sidebar) return;
 
-    pages.innerHTML = '<div class="neon-media-status">جارٍ تحميل ملفات الطلاب من Neon…</div>';
+    pages.innerHTML = '<div class="neon-media-status">جارٍ تحميل ملفات الطلاب…</div>';
 
     try {
       const items = await loadCatalog();
@@ -337,14 +403,13 @@
 
       if (badge) badge.textContent = "خدمات الطلاب";
       if (title) title.textContent = "مكتبة أعمال الطلاب";
-      if (desc) desc.textContent = "ملفات الطلاب المرفوعة فعليًا إلى التخزين الخاص في Neon، مرتبة حسب الكلية والتخصص والمقرر.";
+      if (desc) desc.textContent = "نماذج أعمال وملفات طلابية مرتبة حسب الكلية والتخصص والمقرر، مع معاينة مباشرة داخل المنصة.";
       if (count) count.textContent = String(items.length);
       if (sectionsCount) sectionsCount.textContent = String(SECTION_MAP.length);
       if (sideTitle) sideTitle.textContent = "كليات وأقسام الطلاب";
 
       sidebar.innerHTML = SECTION_MAP.map(section => {
-        const n = byGroup(section.key).length;
-        return `<a class="library-sidebar-link" href="#${section.hash}">${section.label}<span>${n}</span></a>`;
+        return `<a class="library-sidebar-link" href="#${section.hash}">${section.label}</a>`;
       }).join("");
 
       landing.innerHTML = SECTION_MAP.map(section => {
@@ -394,7 +459,7 @@
         setTimeout(() => document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
       }
     } catch (error) {
-      console.error("Tamkeen Neon media error", error);
+      console.error("Tamkeen student media error", error);
       pages.innerHTML = `
         <div class="neon-media-status">
           تعذر تحميل الملفات مؤقتًا.

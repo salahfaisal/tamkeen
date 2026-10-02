@@ -235,11 +235,11 @@
       .student-document-preview{
         position:relative;
         width:100%;
-        aspect-ratio:1.47 / 1;
-        min-height:238px;
-        max-height:315px;
+        aspect-ratio:0.72 / 1;
+        min-height:360px;
+        max-height:470px;
         overflow:hidden;
-        background:#edf1f4;
+        background:#e9eef2;
         cursor:pointer;
         border:0;
         outline:0
@@ -252,19 +252,19 @@
         height:100%;
         border:0;
         display:block;
-        background:#edf1f4;
+        background:#fff;
         pointer-events:none;
         user-select:none
       }
       .student-preview-shade{
         position:absolute;
         inset:auto 0 0;
-        min-height:64px;
+        min-height:48px;
         display:flex;
         align-items:flex-end;
         justify-content:space-between;
         gap:1rem;
-        padding:.85rem 1rem;
+        padding:.6rem .85rem;
         color:#fff;
         background:linear-gradient(180deg,rgba(20,28,34,0),rgba(20,28,34,.88));
         pointer-events:none
@@ -341,12 +341,12 @@
 
       @media(max-width:900px){
         .neon-folder-block .service-page-grid{grid-template-columns:1fr}
-        .student-document-preview{min-height:245px;max-height:300px}
+        .student-document-preview{min-height:330px;max-height:430px}
       }
       @media(max-width:700px){
         .neon-media-viewer{padding:0}
         .neon-media-viewer__dialog{width:100vw;height:100vh;border-radius:0}
-        .student-document-preview{min-height:220px;max-height:270px}
+        .student-document-preview{min-height:300px;max-height:390px}
         .student-credential-body{padding:.95rem 1rem 1.05rem}
         .neon-folder-tree{gap:1.6rem}
       }
@@ -437,7 +437,7 @@
     const leaf = folders[folders.length - 1] || item.sectionLabel || "ملف";
     const breadcrumb = folders.join(" - ") || item.sectionLabel || "";
     const typeLabel = item.type === "video" ? "VIDEO" : item.type === "image" ? "IMAGE" : "PDF";
-    const previewUrl = `/api/student-media?view=${encodeURIComponent(item.id)}#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH`;
+    const previewUrl = `/api/student-media?view=${encodeURIComponent(item.id)}#page=1&zoom=page-fit&toolbar=0&navpanes=0&scrollbar=0&view=Fit`;
 
     return `
       <article class="student-credential-card reveal visible">

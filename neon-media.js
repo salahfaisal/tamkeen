@@ -220,121 +220,112 @@
 
       .student-credential-card{
         background:#fff;
-        border:1px solid #d9e0e6;
-        border-radius:16px;
+        border:1px solid #d8e0e6;
+        border-radius:15px;
         overflow:hidden;
-        box-shadow:0 10px 30px rgba(29,42,54,.06);
-        transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+        box-shadow:0 5px 18px rgba(31,48,61,.055);
+        transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
         min-width:0
       }
       .student-credential-card:hover{
-        transform:translateY(-3px);
-        box-shadow:0 18px 38px rgba(37,24,42,.12);
-        border-color:#cdb6d2
+        transform:translateY(-2px);
+        box-shadow:0 12px 28px rgba(31,48,61,.10);
+        border-color:#c8d1d9
       }
       .student-document-preview{
         position:relative;
-        height:286px;
+        width:100%;
+        aspect-ratio:1.47 / 1;
+        min-height:238px;
+        max-height:315px;
         overflow:hidden;
-        background:linear-gradient(180deg,#eef2f5,#dde4e9);
+        background:#edf1f4;
         cursor:pointer;
         border:0;
         outline:0
       }
       .student-document-preview:focus-visible{box-shadow:inset 0 0 0 3px rgba(111,74,112,.35)}
       .student-document-preview iframe{
+        position:absolute;
+        inset:0;
         width:100%;
         height:100%;
         border:0;
         display:block;
-        background:#eef2f5;
+        background:#edf1f4;
         pointer-events:none;
         user-select:none
       }
       .student-preview-shade{
         position:absolute;
         inset:auto 0 0;
-        min-height:62px;
+        min-height:64px;
         display:flex;
-        align-items:end;
+        align-items:flex-end;
         justify-content:space-between;
         gap:1rem;
-        padding:1rem;
+        padding:.85rem 1rem;
         color:#fff;
-        background:linear-gradient(180deg,transparent,rgba(17,25,31,.82));
+        background:linear-gradient(180deg,rgba(20,28,34,0),rgba(20,28,34,.88));
         pointer-events:none
       }
       .student-preview-badge{
         display:inline-flex;
         align-items:center;
-        min-height:32px;
-        padding:.28rem .58rem;
-        border-radius:7px;
-        background:rgba(255,255,255,.16);
-        border:1px solid rgba(255,255,255,.34);
+        min-height:29px;
+        padding:.2rem .52rem;
+        border-radius:6px;
+        background:rgba(255,255,255,.18);
+        border:1px solid rgba(255,255,255,.38);
         backdrop-filter:blur(5px);
-        font-size:.78rem;
-        font-weight:900
+        font-size:.72rem;
+        font-weight:900;
+        letter-spacing:.03em
       }
       .student-preview-action{
         display:inline-flex;
         align-items:center;
-        gap:.35rem;
-        font-size:.79rem;
-        font-weight:900
+        gap:.36rem;
+        font-size:.76rem;
+        font-weight:800
       }
-      .student-credential-body{padding:1.05rem 1.15rem 1.2rem}
+      .student-credential-body{padding:1.05rem 1.05rem 1.12rem}
       .student-credential-meta{
         display:flex;
         align-items:center;
         justify-content:space-between;
         gap:.8rem;
-        margin-bottom:.65rem;
-        color:#6b7680;
-        font-size:.72rem;
+        margin-bottom:.52rem;
+        color:#65727d;
+        font-size:.67rem;
         font-weight:900;
-        letter-spacing:.06em
+        letter-spacing:.07em;
+        text-transform:uppercase
       }
       .student-credential-meta .student-category{
         color:var(--primary);
         letter-spacing:.03em
       }
       .student-credential-card h4{
-        margin:.15rem 0 .5rem;
-        color:#1e2830;
-        font-size:1.07rem;
-        line-height:1.55;
+        margin:.12rem 0 .42rem;
+        color:#183044;
+        font-size:1.02rem;
+        line-height:1.5;
         font-weight:900
       }
       .student-credential-path{
-        margin:0 0 .55rem;
-        color:#4b5862;
-        font-size:.83rem;
+        margin:0 0 .46rem;
+        color:#354653;
+        font-size:.78rem;
         font-weight:800;
-        line-height:1.6
+        line-height:1.55
       }
       .student-credential-card p{
         margin:0;
-        color:#6b7680;
-        font-size:.86rem;
-        line-height:1.75
+        color:#63727e;
+        font-size:.79rem;
+        line-height:1.7
       }
-      .student-open-inline{
-        margin-top:.85rem;
-        display:inline-flex;
-        align-items:center;
-        gap:.4rem;
-        border:0;
-        background:transparent;
-        color:var(--primary);
-        font:inherit;
-        font-size:.82rem;
-        font-weight:900;
-        cursor:pointer;
-        padding:0
-      }
-      .student-open-inline:hover{text-decoration:underline}
-
       .neon-media-viewer{position:fixed;inset:0;z-index:220;display:none;align-items:center;justify-content:center;padding:1rem}
       .neon-media-viewer.is-open{display:flex}
       .neon-media-viewer__backdrop{position:absolute;inset:0;background:rgba(24,14,29,.72);backdrop-filter:blur(6px)}
@@ -350,12 +341,12 @@
 
       @media(max-width:900px){
         .neon-folder-block .service-page-grid{grid-template-columns:1fr}
-        .student-document-preview{height:300px}
+        .student-document-preview{min-height:245px;max-height:300px}
       }
       @media(max-width:700px){
         .neon-media-viewer{padding:0}
         .neon-media-viewer__dialog{width:100vw;height:100vh;border-radius:0}
-        .student-document-preview{height:255px}
+        .student-document-preview{min-height:220px;max-height:270px}
         .student-credential-body{padding:.95rem 1rem 1.05rem}
         .neon-folder-tree{gap:1.6rem}
       }
@@ -454,24 +445,17 @@
           <iframe src="${previewUrl}" title="" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
           <div class="student-preview-shade">
             <span class="student-preview-badge">${typeLabel}</span>
-            <span class="student-preview-action">معاينة الملف <i class="fa-solid fa-arrow-left"></i></span>
+            <span class="student-preview-action">عرض الملف <i class="fa-solid fa-arrow-left"></i></span>
           </div>
         </div>
         <div class="student-credential-body">
           <div class="student-credential-meta">
             <span class="student-category">${escapeHtml(leaf)}</span>
-            <span>${typeLabel}</span>
+            <span>أعمال طلابية</span>
           </div>
           <h4>${escapeHtml(item.title)}</h4>
           <div class="student-credential-path">${escapeHtml(breadcrumb)}</div>
           <p>${escapeHtml(item.desc || "نموذج عمل أكاديمي متاح للمعاينة داخل منصة تمكين.")}</p>
-          <div class="neon-file-note">
-            ${item.size ? `<span>الحجم: ${escapeHtml(formatBytes(item.size))}</span>` : ""}
-            <span><i class="fa-solid fa-shield-halved"></i> معاينة داخل المنصة</span>
-          </div>
-          <button type="button" class="student-open-inline neon-media-open" data-neon-id="${escapeHtml(item.id)}">
-            فتح العرض الكامل <i class="fa-solid fa-arrow-left"></i>
-          </button>
         </div>
       </article>
     `;

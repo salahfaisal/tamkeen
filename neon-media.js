@@ -25,6 +25,12 @@
       label: "الكليات الأخرى",
       hash: "students-other",
       desc: "ملفات الحوسبة والأمن السيبراني والعلوم والأحياء والرياضيات."
+    },
+    {
+      key: "powerpoint",
+      label: "عروض PowerPoint",
+      hash: "students-powerpoint",
+      desc: "نماذج عروض تقديمية طلابية في مجالات علمية وتجارية وتوعوية، مع معاينة مباشرة للشرائح داخل المنصة."
     }
   ];
 
@@ -51,7 +57,8 @@
     biology: "الأحياء",
     mathematics: "الرياضيات",
     calculus: "التفاضل والتكامل",
-    other: "أخرى"
+    other: "أخرى",
+    powerpoint: "عروض PowerPoint"
   };
 
   const ARABIC_FOLDER_MAP = {
@@ -102,6 +109,44 @@
     [/biology[ _-]*summary/i, ["Science", "Biology"]],
     [/calculus[ _-]*summary/i, ["Science", "Mathematics", "Calculus"]]
   ];
+
+  const POWERPOINT_META = {
+    "84461fc64feab6c2033ac1ef": {
+      title: "الانقسام الخلوي والأنسجة النباتية",
+      desc: "عرض في الأحياء عن الانقسام الميتوزي والميوزي والأنسجة النباتية ووظائفها الأساسية."
+    },
+    "c9be6b4990a45ddf344ec537": {
+      title: "الكمبيالة في النظام السعودي",
+      desc: "عرض عن الكمبيالة في النظام السعودي: تعريفها وأطرافها وتداولها وضمانات الوفاء."
+    },
+    "f16eaa1b119335dfaa219c1b": {
+      title: "Persister Cell Formation under Stress",
+      desc: "عرض في فسيولوجيا الأحياء الدقيقة عن الخلايا المستديمة وآليات تكوّنها تحت الإجهاد والتحمل المؤقت للمضادات."
+    },
+    "62766ae9496ecaf5c5c35929": {
+      title: "Scent Signature — Your Scent Identity",
+      desc: "مشروع أعمال افتراضي لعلامة عطور فاخرة مخصصة، يشمل السوق والمنافسين وتحليل SWOT والهيكل التنظيمي وخطط التوسع."
+    },
+    "21811fe1f442a23203c5f2dc": {
+      title: "Smart Fuel — Smart and Sustainable Fuel Solutions",
+      desc: "مشروع أعمال لحلول وقود ذكية ومستدامة، يتناول السوق والمنافسة والمخاطر وSWOT والاستثمار والتوظيف وسلسلة الإمداد."
+    },
+    "d797ef2b5654062bb9a90a57": {
+      title: "تحليل حملة العلاقات العامة «نعود بحذر»",
+      desc: "تحليل لحملة «نعود بحذر» لوزارة الصحة السعودية عام 2020، ووسائل الاتصال والجمهور المستهدف والنتائج وعوامل النجاح."
+    }
+  };
+
+  const enrichItem = item => {
+    if (!item || item.group !== "powerpoint") return item;
+    const meta = POWERPOINT_META[String(item.id)] || {};
+    return {
+      ...item,
+      title: meta.title || String(item.title || "").replace(/\s+Tamkeen$/i, ""),
+      desc: meta.desc || "عرض تقديمي طلابي متاح للمعاينة داخل منصة تمكين.",
+      sectionLabel: "عروض PowerPoint"
+    };
+  };
 
   let neonItems = [];
   let loaded = false;
@@ -193,6 +238,8 @@
   };
 
   const getFolderPath = item => {
+    if (item?.group === "powerpoint") return ["powerpoint"];
+
     const fromPath = pathFromItem(item);
     if (fromPath.length) return fromPath;
 
@@ -705,7 +752,7 @@
       })
       .then(data => {
         if (!data || !Array.isArray(data.items)) throw new Error("Invalid catalog payload");
-        neonItems = data.items;
+        neonItems = data.items.map(enrichItem);
         loaded = true;
         return neonItems;
       })
@@ -724,7 +771,7 @@
     const folders = getFolderPath(item).map(labelFolder);
     const leaf = folders[folders.length - 1] || item.sectionLabel || "ملف";
     const breadcrumb = folders.join(" - ") || item.sectionLabel || "";
-    const typeLabel = item.type === "video" ? "VIDEO" : item.type === "image" ? "IMAGE" : "PDF";
+    const typeLabel = item.group === "powerpoint" ? "PRESENTATION" : item.type === "video" ? "VIDEO" : item.type === "image" ? "IMAGE" : "PDF";
     const viewUrl = mediaViewUrl(item);
 
     return `
@@ -743,11 +790,12 @@
         <div class="student-credential-body">
           <div class="student-credential-meta">
             <span class="student-category">${escapeHtml(leaf)}</span>
-            <span>أعمال طلابية</span>
+            <span>${item.group === "powerpoint" ? "عرض تقديمي" : "أعمال طلابية"}</span>
           </div>
           <h4>${escapeHtml(item.title)}</h4>
           <div class="student-credential-path">${escapeHtml(breadcrumb)}</div>
           <p>${escapeHtml(item.desc || "نموذج عمل أكاديمي متاح للمعاينة داخل منصة تمكين.")}</p>
+          ${item.size ? `<div class="neon-file-note"><span><i class="fa-regular fa-file"></i> ${formatBytes(item.size)}</span>${item.group === "powerpoint" ? '<span><i class="fa-regular fa-images"></i> عرض شرائح</span>' : ""}</div>` : ""}
         </div>
       </article>
     `;

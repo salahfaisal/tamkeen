@@ -202,6 +202,119 @@
     return fallbackFolderPath(item);
   };
 
+
+  const PDFJS_SRC = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+  const PDFJS_WORKER = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  let pdfJsPromise = null;
+
+  const ensurePdfJs = () => {
+    if (window.pdfjsLib) {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+      return Promise.resolve(window.pdfjsLib);
+    }
+    if (pdfJsPromise) return pdfJsPromise;
+
+    pdfJsPromise = new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[data-tamkeen-pdfjs]');
+      const finish = () => {
+        if (!window.pdfjsLib) {
+          reject(new Error("PDF.js failed to initialize"));
+          return;
+        }
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+        resolve(window.pdfjsLib);
+      };
+
+      if (existing) {
+        existing.addEventListener("load", finish, { once: true });
+        existing.addEventListener("error", () => reject(new Error("PDF.js failed to load")), { once: true });
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = PDFJS_SRC;
+      script.async = true;
+      script.dataset.tamkeenPdfjs = "true";
+      script.onload = finish;
+      script.onerror = () => reject(new Error("PDF.js failed to load"));
+      document.head.appendChild(script);
+    });
+
+    return pdfJsPromise;
+  };
+
+  const mediaViewUrl = item => `/api/student-media?view=${encodeURIComponent(item.id)}`;
+
+  const renderPdfPage = async (pdf, pageNumber, canvas, width) => {
+    const page = await pdf.getPage(pageNumber);
+    const baseViewport = page.getViewport({ scale: 1 });
+    const cssWidth = Math.max(220, width || canvas.parentElement?.clientWidth || 320);
+    const cssScale = cssWidth / baseViewport.width;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const viewport = page.getViewport({ scale: cssScale * dpr });
+
+    canvas.width = Math.max(1, Math.floor(viewport.width));
+    canvas.height = Math.max(1, Math.floor(viewport.height));
+    canvas.style.width = Math.floor(viewport.width / dpr) + "px";
+    canvas.style.height = Math.floor(viewport.height / dpr) + "px";
+
+    const ctx = canvas.getContext("2d", { alpha: false });
+    await page.render({ canvasContext: ctx, viewport }).promise;
+  };
+
+  const renderPdfThumbnail = async canvas => {
+    if (!canvas || canvas.dataset.rendered === "1" || canvas.dataset.rendering === "1") return;
+    canvas.dataset.rendering = "1";
+    const shell = canvas.closest(".student-document-preview");
+    const loading = shell?.querySelector(".student-pdf-loading");
+    const fallback = shell?.querySelector(".student-pdf-fallback");
+
+    try {
+      const pdfjsLib = await ensurePdfJs();
+      const pdf = await pdfjsLib.getDocument({
+        url: canvas.dataset.pdfUrl,
+        disableAutoFetch: false,
+        disableStream: false,
+        disableRange: false,
+        rangeChunkSize: 262144
+      }).promise;
+
+      const width = Math.max(240, shell?.clientWidth || 320);
+      await renderPdfPage(pdf, 1, canvas, width);
+      canvas.dataset.rendered = "1";
+      canvas.classList.add("is-ready");
+      if (loading) loading.hidden = true;
+      if (fallback) fallback.hidden = true;
+      await pdf.destroy();
+    } catch (error) {
+      console.error("Tamkeen PDF thumbnail error", error);
+      if (loading) loading.hidden = true;
+      if (fallback) fallback.hidden = false;
+    } finally {
+      canvas.dataset.rendering = "0";
+    }
+  };
+
+  const observePdfPreviews = root => {
+    const canvases = [...root.querySelectorAll("canvas[data-pdf-url]")];
+    if (!canvases.length) return;
+
+    if (!("IntersectionObserver" in window)) {
+      canvases.forEach(renderPdfThumbnail);
+      return;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        renderPdfThumbnail(entry.target);
+      });
+    }, { rootMargin: "450px 0px", threshold: 0.01 });
+
+    canvases.forEach(canvas => observer.observe(canvas));
+  };
+
   const injectStyles = () => {
     if (document.getElementById("neonMediaStyles")) return;
     const style = document.createElement("style");
@@ -339,6 +452,105 @@
       .neon-library-summary{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:.7rem}
       .neon-library-summary span{padding:.35rem .7rem;border-radius:999px;background:#f7f1f8;border:1px solid var(--border);font-size:.76rem;font-weight:800;color:var(--primary-deep)}
 
+
+      .student-pdf-canvas{
+        position:absolute;
+        inset:0;
+        width:100%!important;
+        height:100%!important;
+        object-fit:cover;
+        display:block;
+        background:#fff;
+        opacity:0;
+        transition:opacity .18s ease
+      }
+      .student-pdf-canvas.is-ready{opacity:1}
+      .student-pdf-loading,
+      .student-pdf-fallback{
+        position:absolute;
+        inset:0;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap:.7rem;
+        color:#687680;
+        background:linear-gradient(180deg,#f8fafb,#eef2f5);
+        text-align:center;
+        font-weight:800;
+        font-size:.82rem
+      }
+      .student-pdf-fallback[hidden],
+      .student-pdf-loading[hidden]{display:none!important}
+      .student-pdf-fallback i{font-size:3rem;color:#b8bec4}
+      .neon-media-viewer__body{
+        flex:1;
+        min-height:0;
+        background:#e9edf0;
+        overflow:auto;
+        overscroll-behavior:contain
+      }
+      .neon-pdf-reader{
+        min-height:100%;
+        display:flex;
+        flex-direction:column;
+        align-items:center
+      }
+      .neon-pdf-toolbar{
+        position:sticky;
+        top:0;
+        z-index:3;
+        width:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:.7rem;
+        padding:.65rem .75rem;
+        background:rgba(255,255,255,.96);
+        border-bottom:1px solid var(--border);
+        backdrop-filter:blur(8px)
+      }
+      .neon-pdf-toolbar button{
+        min-width:42px;
+        min-height:38px;
+        border:1px solid var(--border);
+        border-radius:11px;
+        background:#fff;
+        color:var(--primary-deep);
+        font-weight:900;
+        cursor:pointer
+      }
+      .neon-pdf-toolbar button:disabled{opacity:.4;cursor:not-allowed}
+      .neon-pdf-page-label{
+        min-width:92px;
+        text-align:center;
+        color:#354653;
+        font-size:.8rem;
+        font-weight:900
+      }
+      .neon-pdf-stage{
+        width:100%;
+        flex:1;
+        display:flex;
+        align-items:flex-start;
+        justify-content:center;
+        padding:1rem;
+        overflow:auto
+      }
+      .neon-pdf-stage canvas{
+        display:block;
+        max-width:100%;
+        height:auto!important;
+        background:#fff;
+        box-shadow:0 8px 30px rgba(26,35,43,.14)
+      }
+      .neon-pdf-loading-page{
+        padding:2rem 1rem;
+        color:#56636d;
+        font-weight:800;
+        text-align:center
+      }
+
       @media(max-width:900px){
         .neon-folder-block .service-page-grid{grid-template-columns:1fr}
         .student-document-preview{min-height:330px;max-height:430px}
@@ -369,19 +581,21 @@
           <div class="neon-media-viewer__title" id="neonMediaTitle">معاينة الملف</div>
           <button class="neon-media-viewer__close" type="button" data-neon-close aria-label="إغلاق">×</button>
         </div>
-        <div class="neon-media-viewer__body">
-          <iframe id="neonMediaFrame" title="معاينة الملف" referrerpolicy="same-origin"></iframe>
-        </div>
+        <div class="neon-media-viewer__body" id="neonMediaViewerBody"></div>
       </div>
     `;
     document.body.appendChild(viewer);
 
-    const close = () => {
+    const close = async () => {
       viewer.classList.remove("is-open");
       viewer.setAttribute("aria-hidden", "true");
-      const frame = document.getElementById("neonMediaFrame");
-      if (frame) frame.src = "about:blank";
       document.body.style.overflow = "";
+      if (viewer._pdfDoc) {
+        try { await viewer._pdfDoc.destroy(); } catch (_) {}
+        viewer._pdfDoc = null;
+      }
+      const body = viewer.querySelector("#neonMediaViewerBody");
+      if (body) body.innerHTML = "";
     };
 
     viewer.querySelectorAll("[data-neon-close]").forEach(el => el.addEventListener("click", close));
@@ -392,14 +606,88 @@
     return viewer;
   };
 
-  const openViewer = item => {
+  const openViewer = async item => {
     const viewer = ensureViewer();
-    viewer.querySelector("#neonMediaTitle").textContent = item.title || "معاينة الملف";
-    const frame = viewer.querySelector("#neonMediaFrame");
-    frame.src = `/api/student-media?view=${encodeURIComponent(item.id)}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`;
+    const title = viewer.querySelector("#neonMediaTitle");
+    const body = viewer.querySelector("#neonMediaViewerBody");
+    title.textContent = item.title || "معاينة الملف";
     viewer.classList.add("is-open");
     viewer.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+
+    if (item.type && item.type !== "pdf") {
+      const src = mediaViewUrl(item);
+      if (item.type === "image") {
+        body.innerHTML = `<div class="neon-pdf-stage"><img src="${src}" alt="" style="max-width:100%;height:auto;display:block"></div>`;
+      } else if (item.type === "video") {
+        body.innerHTML = `<div class="neon-pdf-stage"><video src="${src}" controls controlsList="nodownload" style="width:min(100%,1000px);max-height:78vh"></video></div>`;
+      } else {
+        body.innerHTML = '<div class="neon-pdf-loading-page">هذا النوع غير مدعوم للمعاينة المباشرة.</div>';
+      }
+      return;
+    }
+
+    body.innerHTML = '<div class="neon-pdf-loading-page">جارٍ تجهيز ملف PDF…</div>';
+
+    try {
+      const pdfjsLib = await ensurePdfJs();
+      const pdf = await pdfjsLib.getDocument({
+        url: mediaViewUrl(item),
+        disableAutoFetch: false,
+        disableStream: false,
+        disableRange: false,
+        rangeChunkSize: 262144
+      }).promise;
+
+      viewer._pdfDoc = pdf;
+      let currentPage = 1;
+
+      body.innerHTML = `
+        <div class="neon-pdf-reader">
+          <div class="neon-pdf-toolbar">
+            <button type="button" data-pdf-next aria-label="الصفحة التالية"><i class="fa-solid fa-chevron-right"></i></button>
+            <span class="neon-pdf-page-label"></span>
+            <button type="button" data-pdf-prev aria-label="الصفحة السابقة"><i class="fa-solid fa-chevron-left"></i></button>
+          </div>
+          <div class="neon-pdf-stage">
+            <canvas data-pdf-page-canvas></canvas>
+          </div>
+        </div>
+      `;
+
+      const canvas = body.querySelector("[data-pdf-page-canvas]");
+      const label = body.querySelector(".neon-pdf-page-label");
+      const prev = body.querySelector("[data-pdf-prev]");
+      const next = body.querySelector("[data-pdf-next]");
+      const stage = body.querySelector(".neon-pdf-stage");
+
+      const draw = async () => {
+        label.textContent = `الصفحة ${currentPage} من ${pdf.numPages}`;
+        prev.disabled = currentPage <= 1;
+        next.disabled = currentPage >= pdf.numPages;
+        const availableWidth = Math.max(280, Math.min((stage.clientWidth || body.clientWidth || 900) - 28, 1000));
+        await renderPdfPage(pdf, currentPage, canvas, availableWidth);
+        stage.scrollTop = 0;
+        body.scrollTop = 0;
+      };
+
+      prev.addEventListener("click", async () => {
+        if (currentPage <= 1) return;
+        currentPage -= 1;
+        await draw();
+      });
+
+      next.addEventListener("click", async () => {
+        if (currentPage >= pdf.numPages) return;
+        currentPage += 1;
+        await draw();
+      });
+
+      await draw();
+    } catch (error) {
+      console.error("Tamkeen PDF viewer error", error);
+      body.innerHTML = '<div class="neon-pdf-loading-page">تعذر عرض الملف داخل المتصفح حاليًا. أعد المحاولة بعد قليل.</div>';
+    }
   };
 
   const loadCatalog = async () => {
@@ -437,12 +725,16 @@
     const leaf = folders[folders.length - 1] || item.sectionLabel || "ملف";
     const breadcrumb = folders.join(" - ") || item.sectionLabel || "";
     const typeLabel = item.type === "video" ? "VIDEO" : item.type === "image" ? "IMAGE" : "PDF";
-    const previewUrl = `/api/student-media?view=${encodeURIComponent(item.id)}#page=1&zoom=page-fit&toolbar=0&navpanes=0&scrollbar=0&view=Fit`;
+    const viewUrl = mediaViewUrl(item);
 
     return `
       <article class="student-credential-card reveal visible">
         <div class="student-document-preview neon-media-open" data-neon-id="${escapeHtml(item.id)}" role="button" tabindex="0" aria-label="معاينة ${escapeHtml(item.title)}">
-          <iframe src="${previewUrl}" title="" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+          ${item.type === "pdf" || !item.type ? `
+            <canvas class="student-pdf-canvas" data-pdf-url="${viewUrl}" aria-hidden="true"></canvas>
+            <div class="student-pdf-loading"><i class="fa-solid fa-spinner fa-spin"></i><span>جارٍ تحميل الصفحة الأولى…</span></div>
+            <div class="student-pdf-fallback" hidden><i class="fa-solid fa-file-pdf"></i><span>PDF</span></div>
+          ` : '<div class="student-pdf-fallback"><i class="fa-regular fa-file"></i><span>معاينة الملف</span></div>'}
           <div class="student-preview-shade">
             <span class="student-preview-badge">${typeLabel}</span>
             <span class="student-preview-action">عرض الملف <i class="fa-solid fa-arrow-left"></i></span>
@@ -565,6 +857,8 @@
           </section>
         `;
       }).join("");
+
+      observePdfPreviews(pages);
 
       pages.querySelectorAll(".neon-media-open").forEach(button => {
         const activate = () => {

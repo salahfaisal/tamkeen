@@ -48,6 +48,9 @@
     hr_strategy: "استراتيجية الموارد البشرية",
     talent_management: "إدارة المواهب",
     organizational_behavior: "السلوك التنظيمي",
+    marketing: "التسويق",
+    business_projects: "مشاريع الأعمال",
+    infographics: "الإنفوجرافيك",
     psychology: "علم النفس",
     counseling_and_therapy: "الإرشاد والعلاج",
     psychological_assessment: "التقييم النفسي",
@@ -77,6 +80,10 @@
     "استراتيجية الموارد البشرية": "HR_Strategy",
     "إدارة المواهب": "Talent_Management",
     "السلوك التنظيمي": "Organizational_Behavior",
+    "التسويق": "Marketing",
+    "مشاريع الأعمال": "Business_Projects",
+    "الإنفوجرافيك": "Infographics",
+    "الانفوجرافيك": "Infographics",
     "علم النفس": "Psychology",
     "الإرشاد والعلاج": "Counseling_and_Therapy",
     "الارشاد والعلاج": "Counseling_and_Therapy",
@@ -98,6 +105,10 @@
     [/hr[ _-]*strategy[ _-]*structure/i, ["Human_Resources", "HR_Strategy"]],
     [/(king[ _-]*fahd|king[ _-]*faisal|nwc|red[ _-]*crescent).*talent[ _-]*management/i, ["Human_Resources", "Talent_Management"]],
     [/zatca[ _-]*organizational[ _-]*behavior/i, ["Organizational_Behavior"]],
+    [/ifrs[ _-]*ias/i, ["Accounting"]],
+    [/marketing[ _-]*tamkeen/i, ["Marketing"]],
+    [/smart[ _-]*fuel[ _-]*tamkeen/i, ["Business_Projects"]],
+    [/(انفوجرافيك|infographic)/i, ["Infographics"]],
     [/tensile[ _-]*test/i, ["Dynamic_Systems_Lab"]],
     [/dsp[ _-]*matlab[ _-]*labs/i, ["Electrical_Engineering", "Digital_Signal_Processing"]],
     [/(bjt[ _-]*logic[ _-]*families|kirchhoff[ _-]*laws|ohms?[ _-]*law|semiconductor[ _-]*diodes|sinusoidal[ _-]*ac[ _-]*analysis)/i, ["Electrical_Engineering", "Electronic_Circuits"]],
@@ -137,15 +148,49 @@
     }
   };
 
+  const NEW_STUDENT_FILE_META = [
+    {
+      test: /IFRS_IAS_Tamkeen\.pdf$/i,
+      title: "معايير IFRS وIAS",
+      desc: "نموذج عمل طلابي في المحاسبة والمعايير الدولية للتقارير المالية."
+    },
+    {
+      test: /Marketing_Tamkeen\.pdf$/i,
+      title: "التسويق",
+      desc: "نموذج عمل طلابي في مجال التسويق ضمن كلية العلوم الإدارية والاقتصادية."
+    },
+    {
+      test: /Smart_Fuel_Tamkeen\.pdf$/i,
+      title: "Smart Fuel",
+      desc: "نموذج مشروع أعمال طلابي متاح للمعاينة داخل منصة تمكين."
+    },
+    {
+      test: /انفوجرافيك4_Tamkeen\.pdf$/i,
+      title: "إنفوجرافيك",
+      desc: "نموذج إنفوجرافيك طلابي متاح للمعاينة داخل منصة تمكين."
+    }
+  ];
+
+  const enrichNewStudentFile = item => {
+    if (!item) return item;
+    const raw = item.objectKey || item.object_key || item.key || item.path || "";
+    const meta = NEW_STUDENT_FILE_META.find(entry => entry.test.test(raw));
+    return meta ? { ...item, title: meta.title, desc: meta.desc } : item;
+  };
+
   const enrichItem = item => {
-    if (!item || item.group !== "powerpoint") return item;
-    const meta = POWERPOINT_META[String(item.id)] || {};
-    return {
-      ...item,
-      title: meta.title || String(item.title || "").replace(/\s+Tamkeen$/i, ""),
-      desc: meta.desc || "عرض تقديمي طلابي متاح للمعاينة داخل منصة تمكين.",
-      sectionLabel: "عروض PowerPoint"
-    };
+    if (!item) return item;
+    let enriched = item;
+    if (item.group === "powerpoint") {
+      const meta = POWERPOINT_META[String(item.id)] || {};
+      enriched = {
+        ...item,
+        title: meta.title || String(item.title || "").replace(/\s+Tamkeen$/i, ""),
+        desc: meta.desc || "عرض تقديمي طلابي متاح للمعاينة داخل منصة تمكين.",
+        sectionLabel: "عروض PowerPoint"
+      };
+    }
+    return enrichNewStudentFile(enriched);
   };
 
   let neonItems = [];

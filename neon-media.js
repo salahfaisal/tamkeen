@@ -342,7 +342,7 @@
     const baseViewport = page.getViewport({ scale: 1 });
     const cssWidth = Math.max(220, width || canvas.parentElement?.clientWidth || 320);
     const cssScale = cssWidth / baseViewport.width;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(Math.max(window.devicePixelRatio || 1, 2.5), 3);
     const viewport = page.getViewport({ scale: cssScale * dpr });
 
     canvas.width = Math.max(1, Math.floor(viewport.width));
@@ -371,7 +371,7 @@
         rangeChunkSize: 262144
       }).promise;
 
-      const width = Math.max(240, shell?.clientWidth || 320);
+      const width = Math.max(240, (shell?.clientWidth || 320) - 24);
       await renderPdfPage(pdf, 1, canvas, width);
       canvas.dataset.rendered = "1";
       canvas.classList.add("is-ready");
@@ -499,7 +499,7 @@
         font-size:.76rem;
         font-weight:800
       }
-      .student-credential-body{padding:1.05rem 1.05rem 1.12rem}
+      .student-credential-body{padding:1.15rem 1.15rem 1.22rem;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
       .student-credential-meta{
         display:flex;
         align-items:center;
@@ -507,7 +507,7 @@
         gap:.8rem;
         margin-bottom:.52rem;
         color:#65727d;
-        font-size:.67rem;
+        font-size:.74rem;
         font-weight:900;
         letter-spacing:.07em;
         text-transform:uppercase
@@ -519,22 +519,23 @@
       .student-credential-card h4{
         margin:.12rem 0 .42rem;
         color:#183044;
-        font-size:1.02rem;
-        line-height:1.5;
+        font-size:1.14rem;
+        line-height:1.55;
         font-weight:900
       }
       .student-credential-path{
         margin:0 0 .46rem;
         color:#354653;
-        font-size:.78rem;
+        font-size:.86rem;
         font-weight:800;
-        line-height:1.55
+        line-height:1.65
       }
       .student-credential-card p{
         margin:0;
-        color:#63727e;
-        font-size:.79rem;
-        line-height:1.7
+        color:#435563;
+        font-size:.89rem;
+        font-weight:600;
+        line-height:1.8
       }
       .neon-media-viewer{position:fixed;inset:0;z-index:220;display:none;align-items:center;justify-content:center;padding:1rem}
       .neon-media-viewer.is-open{display:flex}

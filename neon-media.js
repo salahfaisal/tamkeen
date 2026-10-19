@@ -375,6 +375,7 @@
       await renderPdfPage(pdf, 1, canvas, width);
       canvas.dataset.rendered = "1";
       canvas.classList.add("is-ready");
+      shell?.classList.add("pdf-ready");
       if (loading) loading.hidden = true;
       if (fallback) fallback.hidden = true;
       await pdf.destroy();
@@ -440,15 +441,18 @@
       .student-document-preview{
         position:relative;
         width:100%;
-        aspect-ratio:0.72 / 1;
         min-height:360px;
-        max-height:470px;
+        max-height:none;
         overflow:hidden;
         background:#e9eef2;
         cursor:pointer;
         border:0;
-        outline:0
+        outline:0;
+        display:flex;
+        flex-direction:column;
+        align-items:stretch
       }
+      .student-document-preview.pdf-ready{min-height:0}
       .student-document-preview:focus-visible{box-shadow:inset 0 0 0 3px rgba(111,74,112,.35)}
       .student-document-preview iframe{
         position:absolute;
@@ -462,17 +466,18 @@
         user-select:none
       }
       .student-preview-shade{
-        position:absolute;
-        inset:auto 0 0;
-        min-height:48px;
+        position:relative;
+        inset:auto;
+        min-height:50px;
         display:flex;
-        align-items:flex-end;
+        align-items:center;
         justify-content:space-between;
         gap:1rem;
-        padding:.6rem .85rem;
+        padding:.65rem .9rem;
         color:#fff;
-        background:linear-gradient(180deg,rgba(20,28,34,0),rgba(20,28,34,.88));
-        pointer-events:none
+        background:linear-gradient(135deg,#26343d,#3b4650);
+        pointer-events:none;
+        flex:0 0 auto
       }
       .student-preview-badge{
         display:inline-flex;
@@ -546,15 +551,18 @@
 
 
       .student-pdf-canvas{
-        position:absolute;
-        inset:0;
-        width:100%!important;
-        height:100%!important;
-        object-fit:cover;
+        position:relative;
+        inset:auto;
+        width:calc(100% - 24px)!important;
+        height:auto!important;
+        margin:12px auto;
+        object-fit:contain;
         display:block;
         background:#fff;
+        box-shadow:0 4px 16px rgba(31,48,61,.08);
         opacity:0;
-        transition:opacity .18s ease
+        transition:opacity .18s ease;
+        flex:0 0 auto
       }
       .student-pdf-canvas.is-ready{opacity:1}
       .student-pdf-loading,

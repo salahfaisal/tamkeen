@@ -121,7 +121,7 @@
     const page = await pdf.getPage(pageNumber);
     const base = page.getViewport({ scale:1 });
     const cssWidth = Math.max(220, width || 320);
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(Math.max(window.devicePixelRatio || 1, 2.5), 3);
     const viewport = page.getViewport({ scale:(cssWidth/base.width)*dpr });
     canvas.width = Math.floor(viewport.width);
     canvas.height = Math.floor(viewport.height);
@@ -139,7 +139,7 @@
     try {
       const lib = await ensurePdfJs();
       const pdf = await lib.getDocument({ url:canvas.dataset.pdfUrl, rangeChunkSize:262144 }).promise;
-      await renderPage(pdf,1,canvas,Math.max(240,shell?.clientWidth || 320));
+      await renderPage(pdf,1,canvas,Math.max(240,(shell?.clientWidth || 320) - 24));
       canvas.dataset.rendered = "1";
       canvas.classList.add("is-ready");
       shell?.classList.add("pdf-ready");
@@ -184,7 +184,7 @@
       .research-pdf-fallback i{font-size:3rem;color:#b9bfc5}
       .researcher-media-canvas{position:relative;inset:auto;width:calc(100% - 24px)!important;height:auto!important;margin:12px auto;object-fit:contain;display:block;opacity:0;background:#fff;box-shadow:0 4px 16px rgba(31,48,61,.08);transition:opacity .18s ease;flex:0 0 auto}
       .researcher-media-canvas.is-ready{opacity:1}
-      .researcher-family-note{display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;font-weight:800;color:var(--muted);margin-top:.55rem}
+      .researcher-family-note{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:800;color:#536472;margin-top:.65rem}
       .researcher-viewer{position:fixed;inset:0;z-index:10020;display:none}
       .researcher-viewer.is-open{display:block}
       .researcher-viewer__backdrop{position:absolute;inset:0;background:rgba(24,18,28,.72);backdrop-filter:blur(4px)}

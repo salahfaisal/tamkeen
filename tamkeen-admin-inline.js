@@ -18,7 +18,7 @@ async function start(){
   box.setAttribute("role","status");
   box.style.cssText="position:fixed;bottom:16px;left:12px;right:12px;z-index:2147483001;max-width:440px;margin:auto;background:#fff;border:2px solid #79448f;color:#25172c;padding:16px;border-radius:14px;box-shadow:0 8px 24px #0005;direction:rtl;font:16px/1.7 system-ui";
   const text=document.createElement("p");text.textContent=message;box.append(text);
-  const a=document.createElement("a");a.href="/admin.html";a.textContent="فتح تسجيل دخول المدير على نفس الرابط";
+  const a=document.createElement("a");a.href="/admin";a.textContent="فتح تسجيل دخول المدير على نفس الرابط";
   a.style.cssText="display:inline-block;padding:8px 12px;background:#79448f;color:white;text-decoration:none;border-radius:8px";
   box.append(a);document.body.append(box);
  }
@@ -33,7 +33,7 @@ async function start(){
  css.textContent=".tamkeen-admin-toolbar{position:fixed;z-index:2147482000;bottom:20px;left:20px;background:#25172c;color:#fff;padding:12px;border-radius:14px;box-shadow:0 9px 30px #0004;display:flex;gap:9px;align-items:center;font-family:system-ui}.tamkeen-admin-toolbar button{background:#fff;color:#25172c;border:0;border-radius:9px;padding:9px 13px;font-weight:700;cursor:pointer}.tamkeen-admin-toolbar button.active{background:#e7c4ff}.tamkeen-edit-mode .tamkeen-edit-target{outline:2px dashed #a22bc7!important;outline-offset:3px;cursor:pointer!important}.admin-editor{position:fixed;z-index:2147483000;inset:0;background:#0008;display:grid;place-items:center;padding:16px;font-family:system-ui;direction:rtl}.admin-editor-panel{background:white;color:#22182a;width:min(660px,96vw);max-height:88vh;overflow:auto;border-radius:16px;padding:22px;box-shadow:0 15px 40px #0005}.admin-editor textarea{width:100%;min-height:150px;padding:12px;font:inherit;box-sizing:border-box;direction:rtl;border:1px solid #b9a5c3;border-radius:10px}.admin-editor-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.admin-editor button{font:inherit;cursor:pointer;border:0;border-radius:9px;background:#704583;color:white;padding:9px 13px}.admin-editor button.secondary{background:#eee;color:#333}.admin-editor .message{min-height:24px;color:#663876;font-weight:700;margin-top:10px}.admin-editor .history{border-top:1px solid #ddd;margin-top:10px;display:grid;gap:7px}.admin-editor .history-row{display:flex;gap:7px;align-items:center;justify-content:space-between;padding:7px;background:#faf7fc;border-radius:7px}.admin-editor .history-row button{flex-shrink:0}";
  document.head.append(css);
  const bar=document.createElement("div");bar.className="tamkeen-admin-toolbar";
- bar.innerHTML="<strong>تمكين • المدير</strong><button type='button' id='tamkeenEditToggle'>✏️ تفعيل التحرير</button><a href='/admin.html' style='color:#fff'>الحساب</a>";
+ bar.innerHTML="<strong>تمكين • المدير</strong><button type='button' id='tamkeenEditToggle'>✏️ تفعيل التحرير</button><a href='/admin' style='color:#fff'>الحساب</a>";
  document.body.append(bar);
  const toggle=bar.querySelector("#tamkeenEditToggle");let active=false;
  function mark(){

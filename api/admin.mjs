@@ -15,20 +15,6 @@ export default async function handler(req,res) {
     if(req.method==="GET"&&action==="session"){
       const owner=await session(req);return respond(res,200,{ok:true,authenticated:!!owner,email:owner?.email||null});
     }
-    if(req.method==="POST"&&action==="bootstrap"){
-      if(!process.env.ADMIN_BOOTSTRAP_TOKEN)return respond(res,503,{ok:false,error:"Owner activation must be configured in Vercel"});
-      const b=parseBody(req),expected=process.env.ADMIN_BOOTSTRAP_TOKEN;
-      if(typeof b.token!=="string"||!safe(b.token,expected))return deny(res);
-      if(String(b.email||"").trim().toLowerCase()!==process.env.ADMIN_OWNER_EMAIL.trim().toLowerCase())return deny(res);
-      if(typeof b.password!=="string"||b.password.length<14||b.password.length>128)return fail(res,"استخدم كلمة مرور من 14 حرفًا على الأقل.");
-      const existing=await query("SELECT 1 FROM tamkeen_admin_accounts LIMIT 1");
-      if(existing.rowCount)return respond(res,409,{ok:false,error:"تم إنشاء حساب المدير مسبقًا."});
-      const salt=randomSalt();
-      const r=await query("INSERT INTO tamkeen_admin_accounts(email,password_salt,password_hash) VALUES($1,$2,$3) ON CONFLICT DO NOTHING RETURNING id",[b.email.trim().toLowerCase(),salt,passwordHash(b.password,salt)]);
-      if(!r.rowCount)return respond(res,409,{ok:false});
-      await event("owner_created",r.rows[0].id);
-      return respond(res,201,{ok:true,message:"تم إنشاء الحساب. سجّل الدخول لتفعيل المصادقة الثنائية."});
-    }
     if(req.method==="POST"&&action==="login") {
       const b=parseBody(req),email=String(b.email||"").trim().toLowerCase();
       const r=await query("SELECT * FROM tamkeen_admin_accounts WHERE email=$1",[email]);
@@ -38,7 +24,7 @@ export default async function handler(req,res) {
       if(!safe(actual,a.password_hash)){await failure(a.id);await event("login_failed",a.id);return deny(res);}
       await resetFailures(a.id);
       await clearSession(req,res,"preauth");
-      await createSession(res,a.id,"preauth");
+      await createSession(req,res,a.id,"preauth");
       return respond(res,200,{ok:true,next:a.totp_enabled?"verify":"setup"});
     }
     if(req.method==="GET"&&action==="setup") {
@@ -69,7 +55,7 @@ export default async function handler(req,res) {
       const codes=Array.from({length:10},()=>crypto.randomBytes(9).toString("hex").toUpperCase());
       await query("UPDATE tamkeen_admin_accounts SET totp_secret=totp_pending,totp_pending=NULL,totp_enabled=true,recovery_hashes=$1,failed_attempts=0,locked_until=NULL WHERE id=$2",[codes.map(recoveryHash),pre.id]);
       await clearSession(req,res,"preauth");
-      await createSession(res,pre.id,"full");
+      await createSession(req,res,pre.id,"full");
       await event("totp_enabled",pre.id);
       return respond(res,200,{ok:true,recoveryCodes:codes});
     }
@@ -85,7 +71,7 @@ export default async function handler(req,res) {
       if(recoveryOk)await query("UPDATE tamkeen_admin_accounts SET recovery_hashes=array_remove(recovery_hashes,$1) WHERE id=$2",[hashed,pre.id]);
       await resetFailures(pre.id);
       await clearSession(req,res,"preauth");
-      await createSession(res,pre.id,"full");
+      await createSession(req,res,pre.id,"full");
       await event(recoveryOk?"recovery_used":"login_success",pre.id);
       return respond(res,200,{ok:true});
     }
@@ -95,6 +81,26 @@ export default async function handler(req,res) {
     }
     const owner=await session(req);
     if(!owner)return deny(res);
+    if(req.method==="GET"&&action==="devices"){
+      const result=await query("SELECT session_id AS id,device_label AS device,created_at,last_seen_at,expires_at,(session_id=$2) AS current FROM tamkeen_admin_sessions WHERE account_id=$1 AND assurance='full' AND expires_at>now() ORDER BY created_at DESC LIMIT 50",[owner.id,owner.session_id]);
+      return respond(res,200,{ok:true,devices:result.rows});
+    }
+    if(req.method==="POST"&&action==="revoke-device"){
+      const body=parseBody(req),id=String(body.id||"");
+      if(!/^[0-9a-f]{8}-[0-9a-f-]{27,36}$/i.test(id))return fail(res,"معرّف الجلسة غير صحيح");
+      const result=await query("DELETE FROM tamkeen_admin_sessions WHERE session_id=$1 AND account_id=$2 AND assurance='full' RETURNING session_id",[id,owner.id]);
+      if(!result.rowCount)return respond(res,404,{ok:false,error:"الجلسة غير موجودة أو منتهية"});
+      await event("session_revoked",owner.id);
+      if(id===String(owner.session_id))await clearSession(req,res,"full");
+      return respond(res,200,{ok:true,loggedOut:id===String(owner.session_id)});
+    }
+    if(req.method==="POST"&&action==="revoke-all"){
+      await query("DELETE FROM tamkeen_admin_sessions WHERE account_id=$1",[owner.id]);
+      await event("all_sessions_revoked",owner.id);
+      await clearSession(req,res,"full");
+      await clearSession(req,res,"preauth");
+      return respond(res,200,{ok:true});
+    }
     if(req.method==="GET"&&action==="content"){
       const key=safeKey(req.query?.key);
       const r=await query("SELECT content_key,published_text,draft_text,version FROM tamkeen_content_items WHERE content_key=$1",[key]);

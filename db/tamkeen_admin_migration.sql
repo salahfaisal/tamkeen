@@ -37,3 +37,10 @@ DO $$ BEGIN
  CREATE TRIGGER tamkeen_content_audit AFTER INSERT OR UPDATE ON tamkeen_content_items FOR EACH ROW EXECUTE FUNCTION tamkeen_content_audit_fn();
  END IF;
 END $$;
+
+-- Universal multi-device administration (additive)
+ALTER TABLE public.tamkeen_admin_sessions ADD COLUMN IF NOT EXISTS session_id uuid NOT NULL DEFAULT gen_random_uuid();
+ALTER TABLE public.tamkeen_admin_sessions ADD COLUMN IF NOT EXISTS device_label text NOT NULL DEFAULT 'جهاز سابق';
+ALTER TABLE public.tamkeen_admin_sessions ADD COLUMN IF NOT EXISTS last_seen_at timestamptz NOT NULL DEFAULT now();
+CREATE UNIQUE INDEX IF NOT EXISTS tamkeen_admin_sessions_session_id_idx ON public.tamkeen_admin_sessions(session_id);
+CREATE INDEX IF NOT EXISTS tamkeen_admin_sessions_active_idx ON public.tamkeen_admin_sessions(account_id,expires_at);

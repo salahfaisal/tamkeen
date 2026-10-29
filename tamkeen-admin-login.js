@@ -38,7 +38,20 @@ async function setup(){
   const done=document.createElement("a");done.href="/#hero";done.textContent="الذهاب إلى المنصة وتفعيل وضع التحرير";
   root.append(text,pre,done);status.textContent="اكتمل التفعيل.";
  });
- root.prepend(description,secret,deep);
+
+ const warning=document.createElement("p");
+ warning.textContent="مهم: مفتاح المصادقة سري. إذا ظهر في لقطة شاشة شاركتها، أنشئ مفتاحًا جديدًا قبل التفعيل.";
+ const rotate=document.createElement("button");
+ rotate.type="button";
+ rotate.textContent="إلغاء المفتاح الحالي وإنشاء مفتاح جديد";
+ rotate.style.marginBottom="14px";
+ rotate.onclick=async()=>{
+  if(!confirm("سيصبح المفتاح الحالي غير صالح. هل تريد إنشاء مفتاح جديد؟"))return;
+  rotate.disabled=true;msg.textContent="";
+  try{await request("rotate-setup",{});await setup();msg.textContent="تم إنشاء مفتاح جديد. لا تشاركه أو ترسل صورته.";}
+  catch(err){msg.textContent=err.message;rotate.disabled=false;}
+ };
+ root.prepend(warning,description,secret,deep,rotate);
 }
 function verification(){
  const c=input("text","رمز التحقق أو رمز الاسترداد","000000");

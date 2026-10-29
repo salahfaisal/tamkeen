@@ -23,6 +23,15 @@ function keyOf(el){
  return key.length<=200?key:null;
 }
 function targets(){return Array.from(document.querySelectorAll(selector)).filter(editable);}
+function findTarget(origin){
+ let node=origin;
+ // Walk up only the few ancestors of the tapped element, not all page text.
+ while(node && node!==document.body){
+  if(node.matches?.(selector)&&editable(node))return node;
+  node=node.parentElement;
+ }
+ return null;
+}
 let frame=0,observer=null,timer=0;
 function apply(){
  if(!values.size||frame)return;
@@ -61,6 +70,6 @@ async function load(){
   else if(observer){observer.disconnect();observer=null;}
  }catch{ /* original page remains fully usable when content API is offline */ }
 }
-window.TamkeenContent={values,editable,keyOf,targets,apply,load};
+window.TamkeenContent={values,editable,keyOf,targets,findTarget,apply,load};
 load();
 })();

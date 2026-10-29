@@ -57,3 +57,46 @@ test("permanent admin route is configured and bootstrap no longer advertised",as
   const ui=fs.readFileSync(new URL("../tamkeen-admin-login.js",import.meta.url),"utf8");
   assert.ok(ui.includes('location.assign("/?tamkeenEditor=1#hero")'));
 });
+
+test("visitor page does not eagerly load admin toolbar",async()=>{
+ const fs=await import("node:fs");
+ const html=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
+ assert.equal(html.includes('<script src="/tamkeen-admin-inline.js" defer>'),false);
+ assert.ok(html.includes('get("tamkeenEditor")==="1"'));
+});
+test("public content reader does not install a full-page observer when no edits exist",async()=>{
+ const fs=await import("node:fs");
+ const vm=await import("node:vm");
+ const code=fs.readFileSync(new URL("../tamkeen-content.js",import.meta.url),"utf8");
+ let observes=0,raf=0;
+ const sandbox={
+  Map,URLSearchParams,clearTimeout,setTimeout,
+  document:{body:{},querySelector:()=>null,querySelectorAll:()=>[]},
+  MutationObserver:class{observe(){observes++;}disconnect(){}},
+  requestAnimationFrame:()=>{raf++;},
+  fetch:async()=>({ok:true,json:async()=>({ok:true,items:{}})}),
+  window:{}
+ };
+ vm.runInNewContext(code,sandbox);
+ await new Promise(resolve=>setTimeout(resolve,20));
+ assert.equal(observes,0);
+ assert.equal(raf,0);
+ assert.ok(sandbox.window.TamkeenContent);
+});
+test("public content reader observes only when published edits exist",async()=>{
+ const fs=await import("node:fs");
+ const vm=await import("node:vm");
+ const code=fs.readFileSync(new URL("../tamkeen-content.js",import.meta.url),"utf8");
+ let observes=0;
+ const sandbox={
+  Map,clearTimeout,setTimeout,
+  document:{body:{},querySelector:()=>null,querySelectorAll:()=>[]},
+  MutationObserver:class{observe(){observes++;}disconnect(){}},
+  requestAnimationFrame:fn=>{fn();},
+  fetch:async()=>({ok:true,json:async()=>({ok:true,items:{"dom.hero.h11":"A new title"}})}),
+  window:{}
+ };
+ vm.runInNewContext(code,sandbox);
+ await new Promise(resolve=>setTimeout(resolve,20));
+ assert.equal(observes,1);
+});

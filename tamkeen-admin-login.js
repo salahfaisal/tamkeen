@@ -35,7 +35,7 @@ async function setup(){
   const result=await request("setup-verify",{code:value});root.replaceChildren();
   const text=document.createElement("p");text.textContent="احتفظ برموز الاسترداد في مكان آمن. تظهر مرة واحدة فقط.";
   const pre=document.createElement("pre");pre.id="codes";pre.textContent=result.recoveryCodes.join("\n");
-  const done=document.createElement("a");done.href="/#hero";done.textContent="الذهاب إلى المنصة وتفعيل وضع التحرير";
+  const done=document.createElement("a");done.href="/?tamkeenEditor=1#hero";done.textContent="الذهاب إلى المنصة وتفعيل وضع التحرير";
   root.append(text,pre,done);status.textContent="اكتمل التفعيل.";
  });
 
@@ -55,7 +55,7 @@ async function setup(){
 }
 function verification(){
  const c=input("text","رمز التحقق أو رمز الاسترداد","000000");
- form("التحقق الثنائي",[c],"دخول",async ([code])=>{await request("verify",{code});window.location.replace("/#hero");});
+ form("التحقق الثنائي",[c],"دخول",async ([code])=>{await request("verify",{code});window.location.replace("/?tamkeenEditor=1#hero");});
 }
 function bootstrap(){
  const t=input("password","رمز التفعيل الذي أضفته في إعدادات Vercel","رمز التفعيل");
@@ -69,7 +69,7 @@ async function boot(){
  status.textContent="";
  try{const state=await request("session");
   if(state.authenticated){
-   root.innerHTML="<p>تم تسجيل الدخول بصلاحية المدير.</p><p><a href='/#hero'>فتح المنصة وتفعيل التحرير</a></p><button type='button' id='logout'>تسجيل الخروج</button>";
+   root.innerHTML="<p>تم تسجيل الدخول بصلاحية المدير.</p><p><a href='/?tamkeenEditor=1#hero'>فتح المنصة وتفعيل التحرير على نفس نطاق تسجيل الدخول</a></p><button type='button' id='logout'>تسجيل الخروج</button>";
    root.querySelector("#logout").onclick=async()=>{try{await request("logout",{});login();}catch(e){msg.textContent=e.message;}};
   }else login();
  }catch(err){status.textContent=err.message;login();}

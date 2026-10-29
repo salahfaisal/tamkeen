@@ -100,3 +100,43 @@ test("public content reader observes only when published edits exist",async()=>{
  await new Promise(resolve=>setTimeout(resolve,20));
  assert.equal(observes,1);
 });
+
+test("selective editor does not outline or scan all text on toggle",async()=>{
+  const fs=await import("node:fs");
+  const code=fs.readFileSync(new URL("../tamkeen-admin-inline.js",import.meta.url),"utf8");
+  assert.ok(code.includes("content.findTarget(origin)"));
+  assert.ok(code.includes('node.classList.add("tamkeen-edit-selected")'));
+  assert.ok(code.includes('selected.classList.remove("tamkeen-edit-selected")'));
+  assert.equal(code.includes("content.targets()"),false);
+  assert.equal(code.includes("new MutationObserver"),false);
+  assert.equal(code.includes(".tamkeen-edit-mode .tamkeen-edit-target"),false);
+  assert.ok(code.includes('hint.hidden=!active'));
+});
+test("findTarget resolves just tapped text element without walking page",async()=>{
+  const fs=await import("node:fs");
+  const vm=await import("node:vm");
+  const code=fs.readFileSync(new URL("../tamkeen-content.js",import.meta.url),"utf8");
+  let fullPageScans=0;
+  const body={};
+  const paragraph={
+    matches:()=>true,
+    closest:()=>null,
+    querySelector:()=>null,
+    textContent:"نص محدد",
+    parentElement:body
+  };
+  const innerSpan={matches:()=>false,parentElement:paragraph};
+  const elsewhere={matches:()=>true,closest:()=>null,querySelector:()=>null,textContent:"نص آخر",parentElement:body};
+  const sandbox={
+    Map,setTimeout,clearTimeout,
+    document:{body,querySelector:()=>null,querySelectorAll:()=>{fullPageScans++;return [elsewhere];}},
+    MutationObserver:class{observe(){}disconnect(){}},
+    requestAnimationFrame:()=>{},
+    fetch:async()=>({ok:true,json:async()=>({ok:true,items:{}})}),
+    window:{}
+  };
+  vm.runInNewContext(code,sandbox);
+  assert.equal(sandbox.window.TamkeenContent.findTarget(innerSpan),paragraph);
+  assert.equal(fullPageScans,0);
+  await new Promise(resolve=>setTimeout(resolve,10));
+});

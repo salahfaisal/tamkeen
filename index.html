@@ -984,6 +984,23 @@
   <script src="teacher-neon.js"></script>
   <script src="researcher-neon.js?v=20261019-sharp1"></script>
   <script src="/tamkeen-content.js" defer></script>
-  <script src="/tamkeen-admin-inline.js" defer></script>
+  <script>
+    // Load the editor only when an owner explicitly enters admin mode.
+    // Regular visitor sessions never fetch or execute editor code.
+    if(new URLSearchParams(location.search).get("tamkeenEditor")==="1"){
+      addEventListener("DOMContentLoaded",function(){
+        const tag=document.createElement("script");
+        tag.src="/tamkeen-admin-inline.js";
+        tag.defer=true;
+        tag.onerror=function(){
+          const alert=document.createElement("p");
+          alert.textContent="تعذر تحميل أداة التحرير. افتح /admin ثم سجل الدخول مرة أخرى.";
+          alert.style.cssText="position:fixed;bottom:14px;left:14px;right:14px;background:white;color:#523263;border:2px solid #704583;padding:14px;border-radius:12px;z-index:2147483000;direction:rtl";
+          document.body.append(alert);
+        };
+        document.body.append(tag);
+      },{once:true});
+    }
+  </script>
 </body>
 </html>

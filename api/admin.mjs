@@ -51,6 +51,14 @@ export default async function handler(req,res) {
       const uri="otpauth://totp/"+encodeURIComponent("Tamkeen Admin:"+pre.email)+"?secret="+secret+"&issuer="+encodeURIComponent("Tamkeen Admin")+"&algorithm=SHA1&digits=6&period=30";
       return respond(res,200,{ok:true,secret,uri});
     }
+    if(req.method==="POST"&&action==="rotate-setup"){
+      const pre=await session(req,"preauth");if(!pre)return deny(res);
+      const nextSecret=encrypt(base32(crypto.randomBytes(20)));
+      const changed=await query("UPDATE tamkeen_admin_accounts SET totp_pending=$1,updated_at=now() WHERE id=$2 AND totp_enabled=false AND (locked_until IS NULL OR locked_until<=now()) RETURNING id",[nextSecret,pre.id]);
+      if(!changed.rowCount)return fail(res,"لا يمكن إنشاء مفتاح جديد؛ تأكد من حالة حسابك.");
+      await event("totp_pending_rotated",pre.id);
+      return respond(res,200,{ok:true,message:"تم إلغاء المفتاح السابق وإنشاء مفتاح مصادقة جديد."});
+    }
     if(req.method==="POST"&&action==="setup-verify"){
       const pre=await session(req,"preauth");if(!pre)return deny(res);
       const r=await query("SELECT totp_pending,totp_enabled,locked_until FROM tamkeen_admin_accounts WHERE id=$1",[pre.id]);

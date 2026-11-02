@@ -103,7 +103,7 @@ async function start(){
     for(const row of data.history){
      const r=document.createElement("div");r.className="history-row";
      const label=document.createElement("span");label.textContent=row.action+" • "+new Date(row.created_at).toLocaleString("ar")+" • "+String(row.new_text||"").slice(0,70);r.append(label);
-     if(row.new_text!==null){
+     if(row.new_text!==null&&row.action==="publish"){
       const restore=document.createElement("button");restore.textContent="استعادة";
       restore.onclick=async()=>{
        if(!confirm("هل تريد نشر هذا الإصدار باعتباره إصدارًا جديدًا؟"))return;

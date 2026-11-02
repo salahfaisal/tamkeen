@@ -24,11 +24,15 @@ CREATE TABLE IF NOT EXISTS tamkeen_admin_events (
 CREATE OR REPLACE FUNCTION tamkeen_content_audit_fn() RETURNS trigger LANGUAGE plpgsql AS $$
 BEGIN
  IF TG_OP = 'INSERT' THEN
- INSERT INTO tamkeen_content_history(content_key,action,old_text,new_text,version)
- VALUES (NEW.content_key,CASE WHEN NEW.published_text IS NULL THEN 'draft' ELSE 'publish' END,NULL,COALESCE(NEW.published_text,NEW.draft_text),NEW.version);
- ELSIF NEW.published_text IS DISTINCT FROM OLD.published_text OR NEW.draft_text IS DISTINCT FROM OLD.draft_text THEN
- INSERT INTO tamkeen_content_history(content_key,action,old_text,new_text,version)
- VALUES (NEW.content_key,CASE WHEN NEW.published_text IS DISTINCT FROM OLD.published_text THEN 'publish' ELSE 'draft' END,COALESCE(OLD.published_text,OLD.draft_text),COALESCE(NEW.published_text,NEW.draft_text),NEW.version);
+  INSERT INTO tamkeen_content_history(content_key,action,old_text,new_text,version)
+  VALUES (NEW.content_key,CASE WHEN NEW.published_text IS NULL THEN 'draft' ELSE 'publish' END,
+          NULL,CASE WHEN NEW.published_text IS NULL THEN NEW.draft_text ELSE NEW.published_text END,NEW.version);
+ ELSIF NEW.published_text IS DISTINCT FROM OLD.published_text THEN
+  INSERT INTO tamkeen_content_history(content_key,action,old_text,new_text,version)
+  VALUES (NEW.content_key,'publish',OLD.published_text,NEW.published_text,NEW.version);
+ ELSIF NEW.draft_text IS DISTINCT FROM OLD.draft_text THEN
+  INSERT INTO tamkeen_content_history(content_key,action,old_text,new_text,version)
+  VALUES (NEW.content_key,'draft',OLD.draft_text,NEW.draft_text,NEW.version);
  END IF;
  RETURN NEW;
 END $$;

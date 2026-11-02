@@ -122,7 +122,7 @@ export default async function handler(req,res) {
     if(req.method==="POST"&&action==="restore"){
       const b=parseBody(req),key=safeKey(b.key),id=Number(b.historyId),version=b.expectedVersion;
       if(!Number.isSafeInteger(id)||id<1||!Number.isInteger(version)||version<0)return fail(res);
-      const previous=await query("SELECT new_text FROM tamkeen_content_history WHERE content_key=$1 AND id=$2",[key,id]);
+      const previous=await query("SELECT new_text FROM tamkeen_content_history WHERE content_key=$1 AND id=$2 AND action='publish'",[key,id]);
       if(!previous.rowCount||previous.rows[0].new_text===null)return fail(res,"الإصدار غير متاح.");
       const saved=await saveContent(key,previous.rows[0].new_text,"publish",version);
       if(!saved.rowCount)return respond(res,409,{ok:false,error:"حدث تعارض في الإصدار."});
